@@ -1,0 +1,83 @@
+package com.example.animal_adoption.entity;
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name ="member")
+public class Member {
+	
+	@Id
+	@Column(name = "member_id")
+	private String memberId;
+	
+	@Column(name = "member_name")
+	private String memberName;
+	
+	@Column(name = "phone")
+	private String phone;
+	
+	@Column(name = "birth")
+	private LocalDate birth;
+	
+	@Column(name = "fav")
+	private String fav;
+	
+	@Column(name = "car_id")
+	private String carId;
+
+	
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public LocalDate getBirth() {
+		return birth;
+	}
+
+	public void setBirth(LocalDate birth) {
+		this.birth = birth;
+	}
+
+	public String getFav() {
+		return fav;
+	}
+
+	public void setFav(String fav) {
+		this.fav = fav;
+	}
+
+	public String getCarId() {
+		return carId;
+	}
+
+	public void setCarId(String carId) {
+		this.carId = carId;
+	}
+
+	
+}
