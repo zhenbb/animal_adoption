@@ -8,11 +8,13 @@ import com.example.animal_adoption.service.ifs.AnimalAdoptionService;
 import com.example.animal_adoption.vo.AdoptionRequest;
 import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+@Service
 public class AnimalAdoptionImpl implements AnimalAdoptionService {
 
   @Autowired
@@ -22,13 +24,13 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
   AnimalDao animalDao;
   public AnimalAdoptionResponse adoption(AdoptionRequest adoptionRequest){
 
-    // 取得客戶端Session
+    /*// 取得客戶端Session
     HttpSession clientSession = adoptionRequest.getHttpSession();
     // 驗證客戶端Id與伺服器端Id，判斷是否有登入
     String serviceSession = (String)session.getAttribute(clientSession.getId());
     if (!StringUtils.hasText(serviceSession)){
       return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
-    }
+    }*/
 
     // 取出欲領養動物資訊
     Animal animal = adoptionRequest.getAnimal();
