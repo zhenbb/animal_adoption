@@ -8,44 +8,44 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="car")
+@Table(name = "car")
 public class Car {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "car_id")
-	private String carId;
-	
-	@Column(name = "product_id")
-	private String productId;
-	
-	@Column(name = "quantity")
-	private int quantity;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "car_id")
+  private int carId;
 
-	
-	public String getCarId() {
-		return carId;
-	}
+  @Column(name = "product_id")
+  private String productId;
 
-	public void setCarId(String carId) {
-		this.carId = carId;
-	}
+  @Column(name = "quantity")
+  private int quantity;
 
-	public String getProductId() {
-		return productId;
-	}
 
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
+  public int getCarId() {
+    return carId;
+  }
 
-	public int getQuantity() {
-		return quantity;
-	}
+  public void setCarId(int carId) {
+    this.carId = carId;
+  }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	
-	
+  public String getProductId() {
+    return productId;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
+  }
+
+  public int getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
+
+
 }
