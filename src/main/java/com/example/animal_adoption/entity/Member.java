@@ -21,7 +21,7 @@ public class Member {
 	@Column(name = "phone")
 	private String phone;
 	
-	@Column(name = "birth")
+	@Column(name = "birthday")
 	private LocalDate birth;
 	
 	@Column(name = "fav")
@@ -30,6 +30,11 @@ public class Member {
 	@Column(name = "car_id")
 	private String carId;
 
+  @Column(name = "order_id")
+  private String orderId;
+
+  @Column(name = "is_administrator")
+  private boolean isAdministrator;
 	
 	public String getMemberId() {
 		return memberId;
@@ -79,5 +84,19 @@ public class Member {
 		this.carId = carId;
 	}
 
-	
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public boolean isAdministrator() {
+    return isAdministrator;
+  }
+
+  public void setAdministrator(boolean administrator) {
+    isAdministrator = administrator;
+  }
 }
