@@ -8,72 +8,72 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="member")
+@Table(name = "member")
 public class Member {
-	
-	@Id
-	@Column(name = "member_id")
-	private String memberId;
-	
-	@Column(name = "member_name")
-	private String memberName;
-	
-	@Column(name = "phone")
-	private String phone;
-	
-	@Column(name = "birth")
-	private LocalDate birth;
-	
-	@Column(name = "fav")
-	private String fav;
-	
-	@Column(name = "car_id")
-	private String carId;
 
-	
-	public String getMemberId() {
-		return memberId;
-	}
+  @Id
+  @Column(name = "member_id")
+  private String memberId;
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
+  @Column(name = "member_name")
+  private String memberName;
 
-	public String getMemberName() {
-		return memberName;
-	}
+  @Column(name = "phone")
+  private String phone;
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
+  @Column(name = "birth")
+  private LocalDate birth;
 
-	public String getPhone() {
-		return phone;
-	}
+  @Column(name = "fav")
+  private String fav;
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+  @Column(name = "car_id")
+  private String carId;
 
-	public LocalDate getBirth() {
-		return birth;
-	}
 
-	public void setBirth(LocalDate birth) {
-		this.birth = birth;
-	}
+  public String getMemberId() {
+    return memberId;
+  }
 
-	public String getFav() {
-		return fav;
-	}
+  public void setMemberId(String memberId) {
+    this.memberId = memberId;
+  }
 
-	public void setFav(String fav) {
-		this.fav = fav;
-	}
+  public String getMemberName() {
+    return memberName;
+  }
 
-	public String getCarId() {
-		return carId;
-	}
+  public void setMemberName(String memberName) {
+    this.memberName = memberName;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public LocalDate getBirth() {
+    return birth;
+  }
+
+  public void setBirth(LocalDate birth) {
+    this.birth = birth;
+  }
+
+  public String getFav() {
+    return fav;
+  }
+
+  public void setFav(String fav) {
+    this.fav = fav;
+  }
+
+  public String getCarId() {
+    return carId;
+  }
 
 	public void setCarId(String carId) {
 		this.carId = carId;
