@@ -25,7 +25,7 @@ public class Animal {
 	private boolean  sex;
 	
 	@Column(name = "species")
-	private  boolean  species;
+	private  boolean  species = true;
 	
 	@Column(name = "type")
 	private String type;
