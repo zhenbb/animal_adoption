@@ -3,14 +3,15 @@ package com.example.animal_adoption.vo;
 import com.example.animal_adoption.entity.Animal;
 import com.example.animal_adoption.entity.Member;
 
+import javax.servlet.http.HttpSession;
+
 public class AdoptionRequest {
 
   private Member member;
 
   private Animal animal;
 
-  private String sessionId;
-
+  private HttpSession httpSession;
   public AdoptionRequest() {
   }
 
@@ -22,7 +23,7 @@ public class AdoptionRequest {
     return animal;
   }
 
-  public String getSessionId() {
-    return sessionId;
+  public HttpSession getHttpSession() {
+    return httpSession;
   }
 }

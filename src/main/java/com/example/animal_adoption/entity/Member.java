@@ -21,7 +21,7 @@ public class Member {
   @Column(name = "phone")
   private String phone;
 
-  @Column(name = "birth")
+  @Column(name = "birthday")
   private LocalDate birth;
 
   @Column(name = "fav")
