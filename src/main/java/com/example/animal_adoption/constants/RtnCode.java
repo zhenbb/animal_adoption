@@ -9,7 +9,7 @@ public enum RtnCode {
   DROP_COURSE_SUCCESS("200", "退選成功"),
   FIND_SUCCESS("200", "尋找成功"),
   SUBMIT_SUCCESS("200", "送審成功"),
-  SELECT_COURSE_SUCCESS("200", "選修成功"),
+  REVIEW_SUCCESS("200", "審核通過"),
   UPDATE_COURSE_SUCCESS("200", "更新課程成功"),
   NOT_LOGGED_IN("400", "未登錄"),
   CANNOT_DELETE_STUDENT_ERROR("400", "該學生仍有選修課程，無法刪除"),

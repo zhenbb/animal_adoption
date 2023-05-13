@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.servlet.http.HttpSession;
 
-public class AdoptionRequest {
+public class EligibilityReviewRequest {
 
   @JsonProperty("member")
   private Member member;
@@ -16,7 +16,7 @@ public class AdoptionRequest {
 
   @JsonProperty()
   private HttpSession httpSession;
-  public AdoptionRequest() {
+  public EligibilityReviewRequest() {
   }
 
   public Member getMember() {

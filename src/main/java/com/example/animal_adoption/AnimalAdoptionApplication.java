@@ -8,9 +8,10 @@ public class AnimalAdoptionApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnimalAdoptionApplication.class, args);
-    // 梁 上午 5/12 11:16:00 Merge "feature_animal_adoption"
-    // 梁 上午 5/12 06:01:00 Merge "refactor_member_entity"
-    // 梁 下午 5/12 11:59:00 Merge "feature_animal_adoption2"
+    // 梁 5/12 11:16:00 Merge "feature_animal_adoption"
+    // 梁 5/12 06:01:00 Merge "refactor_member_entity"
+    // 梁 5/12 23:59:00 Merge "feature_animal_adoption2"
+    // 梁 5/13 20:04:00 Merge "feature_eligibility_review"
 
 	}
 
