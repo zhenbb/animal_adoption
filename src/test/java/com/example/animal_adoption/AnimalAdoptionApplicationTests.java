@@ -8,6 +8,9 @@ class AnimalAdoptionApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
+    StringBuffer temp = new StringBuffer("123");
+    System.out.println(temp);
+    System.out.println(temp.toString());
+  }
 
 }

@@ -2,7 +2,7 @@ package com.example.animal_adoption.constants;
 
 public enum RtnCode {
 
-  ADD_COURSE_SUCCESS("200", "新增課程成功"),
+  ADD_FAVORITE_SUCCESS("200", "新增收藏成功"),
   ADD_STUDENT_SUCCESS("200", "新增學生成功"),
   DELETE_COURSE_SUCCESS("200", "課程刪除成功"),
   DELETE_STUDENT_SUCCESS("200", "學生刪除成功"),
