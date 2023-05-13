@@ -124,7 +124,7 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
   }
 
   @Override
-  // 批次增加我的最愛，僅保存寵物資訊正確收藏，不正確寵物不保存
+  // 批次增加收藏，僅保存寵物資訊正確收藏，不正確寵物不保存
   // 會員需先登入
   public AnimalAdoptionResponse addFavorite(FavoriteRequest favoriteRequest) {
 
@@ -182,6 +182,76 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     memberDao.save(member);
     return new AnimalAdoptionResponse(failAnimal,messageList);
   }
+
+  @Override
+  // 批次刪除，僅刪除寵物資訊正確收藏，不正確寵物不執行
+  // 會員需先登入
+  public AnimalAdoptionResponse deleteFavorite(FavoriteRequest favoriteRequest){
+
+    // 取得客戶端Session
+    HttpSession clientSession = favoriteRequest.getHttpSession();
+    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+    String serviceSession = (String) session.getAttribute(clientSession.getId());
+    if (!StringUtils.hasText(serviceSession)) {
+      return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
+    }
+
+    // 取出會員資訊
+    Member member = favoriteRequest.getMember();
+    // 取出會員收寵物資訊
+    StringBuffer favAnimal = new StringBuffer(member.getFav());
+    // 用於保存失敗訊息
+    List<String> messageList = new ArrayList<>();
+    // 用於保存刪除失敗寵物訊息
+    List<Animal> failAnimal = new ArrayList<>();
+    // 用於計算第幾筆資料
+    int count = 1;
+
+    // 判斷資料是否為空
+    if(memberCheck(member)){
+      return new AnimalAdoptionResponse(RtnCode.INCORRECT_INFO_ERROR.getMessage());
+    }
+
+    // 判斷領養人是否存在
+    if (!memberDao.existsById(member.getMemberId())) {
+      return new AnimalAdoptionResponse(RtnCode.INCORRECT_INFO_ERROR.getMessage());
+    }
+
+    for (Animal animal : favoriteRequest.getAnimal()) {
+
+      // 判斷資料是否為空
+      if (animalCheck(animal)) {
+        messageList.add("第"+count+"筆資料: "+RtnCode.INCORRECT_INFO_ERROR.getMessage());
+        failAnimal.add(animal);
+        continue;
+      }
+
+      // 判斷領寵物是否存在
+      if (animalDao.existsById(animal.getAnimalId())) {
+        messageList.add("第"+count+"筆資料: "+RtnCode.INCORRECT_INFO_ERROR.getMessage());
+        failAnimal.add(animal);
+        continue;
+      }
+
+      // 取得收藏寵物的Id在收藏字串的哪個位置
+      String id = Integer.toString(animal.getAnimalId());
+      int index = favAnimal.indexOf(id);
+      // -1代表收藏寵物的Id不存在收藏字串裡
+      if (index < 0){
+        messageList.add("第"+count+"筆資料: "+RtnCode.INCORRECT_INFO_ERROR.getMessage());
+      }
+
+      // 刪除收藏。+1是因為包含逗號
+      favAnimal.delete(index,index+id.length()+1);
+      messageList.add("第"+count+"筆資料: "+RtnCode.ADD_FAVORITE_SUCCESS.getMessage());
+    }
+
+    member.setFav(favAnimal.toString());
+    memberDao.save(member);
+    return new AnimalAdoptionResponse(failAnimal,messageList);
+
+  }
+
 
   // 資料不符返回true
   private boolean animalCheck(Animal animal) {
