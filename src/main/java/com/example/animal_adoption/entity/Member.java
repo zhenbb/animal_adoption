@@ -30,6 +30,8 @@ public class Member {
 	@Column(name = "car_id")
 	private String carId;
 
+
+
 	
 	public String getMemberId() {
 		return memberId;
