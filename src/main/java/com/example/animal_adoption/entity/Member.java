@@ -28,8 +28,13 @@ public class Member {
 	private String fav;
 	
 	@Column(name = "car_id")
-	private String carId;
-
+	private int carId;
+	
+	@Column(name = "order_id")
+	private String orderId;
+	
+	@Column(name = "isAdministrator")
+	private boolean isAdministrator;
 	
 	public String getMemberId() {
 		return memberId;
@@ -71,12 +76,28 @@ public class Member {
 		this.fav = fav;
 	}
 
-	public String getCarId() {
+	public int getCarId() {
 		return carId;
 	}
 
-	public void setCarId(String carId) {
+	public void setCarId(int carId) {
 		this.carId = carId;
+	}
+
+	public boolean isAdministrator() {
+		return isAdministrator;
+	}
+
+	public void setAdministrator(boolean isAdministrator) {
+		this.isAdministrator = isAdministrator;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	
