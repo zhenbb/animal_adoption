@@ -22,7 +22,6 @@ public class Car {
   @Column(name = "quantity")
   private int quantity;
 
-
   public int getCarId() {
     return carId;
   }
