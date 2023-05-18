@@ -19,6 +19,9 @@ public class Car {
   @Column(name = "product_id")
   private String productId;
 
+  @Column(name = "quantity")
+  private int quantity;
+
 
   public int getCarId() {
     return carId;
@@ -36,5 +39,13 @@ public class Car {
     this.productId = productId;
   }
 
+  public int getQuantity() {
+    return quantity;
   }
 
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
+
+
+}

@@ -8,97 +8,96 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="member")
+@Table(name = "member")
 public class Member {
-	
-	@Id
-	@Column(name = "member_id")
-	private String memberId;
-	
-	@Column(name = "member_name")
-	private String memberName;
-	
-	@Column(name = "phone")
-	private String phone;
-	
-	@Column(name = "birth")
-	private LocalDate birth;
-	
-	@Column(name = "fav")
-	private String fav;
-	
-	@Column(name = "car_id")
-	private int carId;
-	
-	@Column(name = "order_id")
-	private String orderId;
-	
-	@Column(name = "isAdministrator")
-	private boolean isAdministrator;
-	
-	public String getMemberId() {
-		return memberId;
-	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
+  @Id
+  @Column(name = "member_id")
+  private String memberId;
 
-	public String getMemberName() {
-		return memberName;
-	}
+  @Column(name = "member_name")
+  private String memberName;
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
+  @Column(name = "phone")
+  private String phone;
 
-	public String getPhone() {
-		return phone;
-	}
+  @Column(name = "birthday")
+  private LocalDate birth;
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+  @Column(name = "fav")
+  private String fav;
 
-	public LocalDate getBirth() {
-		return birth;
-	}
+  @Column(name = "car_id")
+  private String carId;
 
-	public void setBirth(LocalDate birth) {
-		this.birth = birth;
-	}
+  @Column(name = "order_id")
+  private String orderId;
 
-	public String getFav() {
-		return fav;
-	}
+  @Column(name = "is_administrator")
+  private boolean isAdministrator;
 
-	public void setFav(String fav) {
-		this.fav = fav;
-	}
 
-	public int getCarId() {
-		return carId;
-	}
+  public String getMemberId() {
+    return memberId;
+  }
 
-	public void setCarId(int carId) {
-		this.carId = carId;
-	}
+  public void setMemberId(String memberId) {
+    this.memberId = memberId;
+  }
 
-	public boolean isAdministrator() {
-		return isAdministrator;
-	}
+  public String getMemberName() {
+    return memberName;
+  }
 
-	public void setAdministrator(boolean isAdministrator) {
-		this.isAdministrator = isAdministrator;
-	}
+  public void setMemberName(String memberName) {
+    this.memberName = memberName;
+  }
 
-	public String getOrderId() {
-		return orderId;
-	}
+  public String getPhone() {
+    return phone;
+  }
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 
-	
+  public LocalDate getBirth() {
+    return birth;
+  }
+
+  public void setBirth(LocalDate birth) {
+    this.birth = birth;
+  }
+
+  public String getFav() {
+    return fav;
+  }
+
+  public void setFav(String fav) {
+    this.fav = fav;
+  }
+
+  public String getCarId() {
+    return carId;
+  }
+
+  public void setCarId(String carId) {
+    this.carId = carId;
+  }
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
+  public boolean isAdministrator() {
+    return isAdministrator;
+  }
+
+  public void setAdministrator(boolean administrator) {
+    isAdministrator = administrator;
+  }
 }
