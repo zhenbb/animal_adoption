@@ -3,6 +3,7 @@ package com.example.animal_adoption.service.impl;
 import com.example.animal_adoption.constants.RtnCode;
 import com.example.animal_adoption.entity.Animal;
 import com.example.animal_adoption.entity.Member;
+import com.example.animal_adoption.entity.Product;
 import com.example.animal_adoption.repository.AnimalDao;
 import com.example.animal_adoption.repository.MemberDao;
 import com.example.animal_adoption.service.ifs.AnimalAdoptionService;
@@ -271,4 +272,9 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
             || !StringUtils.hasText(member.getPhone())
             || member.getBirth() == null;
   }
+
+@Override
+public AnimalAdoptionResponse addProduct(List<Product> product) {
+	return null;
+}
 }

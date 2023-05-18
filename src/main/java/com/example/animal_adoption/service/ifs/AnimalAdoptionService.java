@@ -1,11 +1,12 @@
 package com.example.animal_adoption.service.ifs;
 
+import java.util.List;
+
+import com.example.animal_adoption.entity.Product;
 import com.example.animal_adoption.vo.AdoptionRequest;
 import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.EligibilityReviewRequest;
 import com.example.animal_adoption.vo.FavoriteRequest;
-
-import java.util.List;
 
 public interface AnimalAdoptionService {
 
@@ -24,4 +25,10 @@ public interface AnimalAdoptionService {
   // 批次刪除，僅刪除寵物資訊正確收藏，不正確寵物不執行
   // 會員需先登入
   public AnimalAdoptionResponse deleteFavorite(FavoriteRequest favoriteRequest);
+  
+  
+  // 新增商品
+  // 審查員(管理員)需先登入
+  public AnimalAdoptionResponse addProduct(List<Product> product);
+  
 }
