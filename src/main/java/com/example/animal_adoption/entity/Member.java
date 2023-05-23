@@ -14,6 +14,9 @@ public class Member {
   @Id
   @Column(name = "member_id")
   private String memberId;
+  
+  @Column(name = "password")
+  private String pwd;
 
   @Column(name = "member_name")
   private String memberName;
@@ -43,6 +46,14 @@ public class Member {
 
   public void setMemberId(String memberId) {
     this.memberId = memberId;
+  }
+
+  public String getPwd() {
+	return pwd;
+  }
+
+  public void setPwd(String pwd) {
+	this.pwd = pwd;
   }
 
   public String getMemberName() {
