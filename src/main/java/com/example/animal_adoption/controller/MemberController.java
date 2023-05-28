@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.animal_adoption.service.ifs.MemberService;
-import com.example.animal_adoption.vo.AdoptionRequest;
-import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.MemberAccountRequest;
 import com.example.animal_adoption.vo.MemberResponse;
 import com.example.animal_adoption.vo.MemberSignupRequest;

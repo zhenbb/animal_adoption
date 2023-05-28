@@ -1,16 +1,16 @@
 package com.example.animal_adoption.service.ifs;
 
-import com.example.animal_adoption.vo.MemberSignupRequest;
 import com.example.animal_adoption.vo.MemberUpdateRequest;
 import com.example.animal_adoption.vo.MemberAccountRequest;
 import com.example.animal_adoption.vo.MemberResponse;
+import com.example.animal_adoption.vo.MemberSignupRequest;
 
 public interface MemberService {
 	
 	//會員註冊
 	public MemberResponse signUp(MemberSignupRequest signupRequest);
 	
-	//會員生效
+	//帳號生效
 	public MemberResponse activeAccount(MemberAccountRequest accountRequest);
 	
 	//會員登入

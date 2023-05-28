@@ -4,7 +4,11 @@ import java.time.LocalDate;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.animal_adoption.entity.Member;
+
 public class MemberSignupRequest {
+	
+	private Member member;
 	
 	private String memberId;
 	
@@ -19,9 +23,16 @@ public class MemberSignupRequest {
 	private HttpSession httpSession;
 
 	public MemberSignupRequest() {
-		
+	}
+	
+	public Member getMember() {
+		return member;
 	}
 
+	public void setMember(Member member) {
+		this.member = member;
+	}
+	
 	public String getMemberId() {
 		return memberId;
 	}

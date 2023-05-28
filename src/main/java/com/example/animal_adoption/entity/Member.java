@@ -40,6 +40,9 @@ public class Member {
   private boolean isAdministrator;
 
 
+  public Member() {
+}
+
   public String getMemberId() {
     return memberId;
   }
