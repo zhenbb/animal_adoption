@@ -29,20 +29,16 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//會員註冊
-	public MemberResponse signUp(MemberSignUpRequest signUpRequest) {		
+	public MemberResponse signUp(Member member) {		
 		// 取出輸入的會員資訊
-	    Member member = signUpRequest.getMember();
+//		Member member = new Member();
+//		signUpRequest.setMember(member);
+//	    Member member = signUpRequest.getMember();
 		String memberId = member.getMemberId();
 		String pwd = member.getPwd();
 		String memberName = member.getMemberName();
 		String phone = member.getPhone();
 		LocalDate birth = member.getBirth();
-		
-		// 判斷會員是否已經存在
-		Optional<Member> op = memberDao.findById(memberId);
-		if (op.isPresent()) {
-			return new MemberResponse(MemberRtnCode.MEMBER_IS_PRESENT.getMessage());
-		}
 		
 		// 判斷資料是否為空
 	    if (member == null

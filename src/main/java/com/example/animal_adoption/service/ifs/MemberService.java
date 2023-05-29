@@ -9,7 +9,7 @@ import com.example.animal_adoption.vo.MemberSignUpRequest;
 public interface MemberService {
 	
 	//會員註冊
-	public MemberResponse signUp(MemberSignUpRequest signUpRequest);
+	public MemberResponse signUp(Member member);
 	
 	//帳號生效
 	public MemberResponse activeAccount(MemberAccountRequest accountRequest);

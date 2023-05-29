@@ -48,7 +48,7 @@ public class MemberTest {
         memberRequest.setMember(member);
 
         // 執行測試
-        MemberResponse actualResponse = memberService.signUp(memberRequest);
+//        MemberResponse actualResponse = memberService.signUp(memberRequest);
 //        MemberResponse actualResponse = memberService.signUp(member);
         
         // 驗證結果
@@ -56,6 +56,42 @@ public class MemberTest {
 
 //        Assertions.assertEquals(expectedResponse, actualResponse);
         System.out.println("fini");
+	}
+	
+//	@Test
+//	// 判斷會員是否已經存在
+//	public void signupTest1() {
+//		Member member = new Member();
+//		member.setMemberId("E234567890");
+//        member.setPwd("bbb45678");
+//        member.setMemberName("謝二");
+//        member.setPhone("0912345678");
+//        LocalDate birthday = LocalDate.of(2001, 11, 11);
+//        member.setBirth(birthday);
+//		
+//        MemberSignUpRequest signUpRequest = new MemberSignUpRequest();
+//        signUpRequest.setMember(member);
+//        
+//		MemberResponse result = memberService.signUp(signUpRequest);
+//		System.out.println(result.getMessage());
+//	}
+	
+	@Test
+	// 判斷會員是否已經存在
+	public void signupTest2() {
+		Member member = new Member();
+//		member.setMemberId("E234567890");
+//        member.setPwd("bbb45678");
+//        member.setMemberName("謝二");
+//        member.setPhone("0912345678");
+//        LocalDate birthday = LocalDate.of(2001, 11, 11);
+//        member.setBirth(birthday);
+		MemberSignUpRequest signUpRequest = new MemberSignUpRequest();
+		
+        
+		MemberResponse result = memberService.signUp(signUpRequest.getMember());
+		System.out.println(result.getMessage());
+		System.out.println("fini");
 	}
 	
 	@Test

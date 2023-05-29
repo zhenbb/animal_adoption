@@ -12,20 +12,20 @@ public class MemberSignUpRequest {
 	@JsonProperty("member")
 	private Member member;
 	
-	@JsonProperty("member_id")
-	private String memberId;
-	
-	@JsonProperty("password")
-	private String pwd;
-	
-	@JsonProperty("member_name")
-	private String memberName;
-	
-	@JsonProperty("phone")
-	private String phone;
-	
-	@JsonProperty("birthday")
-	private LocalDate birth;
+//	@JsonProperty("member_id")
+//	private String memberId;
+//	
+//	@JsonProperty("password")
+//	private String pwd;
+//	
+//	@JsonProperty("member_name")
+//	private String memberName;
+//	
+//	@JsonProperty("phone")
+//	private String phone;
+//	
+//	@JsonProperty("birthday")
+//	private LocalDate birth;
 	
 	private HttpSession httpSession;
 
@@ -40,45 +40,45 @@ public class MemberSignUpRequest {
 		this.member = member;
 	}
 	
-	public String getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-
-	public String getMemberName() {
-		return memberName;
-	}
-
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public LocalDate getBirth() {
-		return birth;
-	}
-
-	public void setBirth(LocalDate birth) {
-		this.birth = birth;
-	}
+//	public String getMemberId() {
+//		return memberId;
+//	}
+//
+//	public void setMemberId(String memberId) {
+//		this.memberId = memberId;
+//	}
+//
+//	public String getPwd() {
+//		return pwd;
+//	}
+//
+//	public void setPwd(String pwd) {
+//		this.pwd = pwd;
+//	}
+//
+//	public String getMemberName() {
+//		return memberName;
+//	}
+//
+//	public void setMemberName(String memberName) {
+//		this.memberName = memberName;
+//	}
+//
+//	public String getPhone() {
+//		return phone;
+//	}
+//
+//	public void setPhone(String phone) {
+//		this.phone = phone;
+//	}
+//
+//	public LocalDate getBirth() {
+//		return birth;
+//	}
+//
+//	public void setBirth(LocalDate birth) {
+//		this.birth = birth;
+//	}
 
 	public HttpSession getHttpSession() {
 		return httpSession;
