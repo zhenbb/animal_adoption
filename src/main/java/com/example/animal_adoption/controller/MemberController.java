@@ -5,10 +5,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.animal_adoption.entity.Member;
 import com.example.animal_adoption.service.ifs.MemberService;
 import com.example.animal_adoption.vo.MemberAccountRequest;
 import com.example.animal_adoption.vo.MemberResponse;
-import com.example.animal_adoption.vo.MemberSignupRequest;
+import com.example.animal_adoption.vo.MemberSignUpRequest;
 import com.example.animal_adoption.vo.MemberUpdateRequest;
 
 @RestController
@@ -18,8 +19,8 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@PostMapping(value = "sign_up")
-	public MemberResponse signUp(@RequestBody MemberSignupRequest signupRequest) {
-	  return memberService.signUp(signupRequest);
+	public MemberResponse signUp(@RequestBody MemberSignUpRequest signUpRequest) {
+	  return memberService.signUp(signUpRequest);
 	}
 	
 	@PostMapping(value = "active_account")

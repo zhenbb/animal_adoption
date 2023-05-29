@@ -15,7 +15,7 @@ import com.example.animal_adoption.repository.MemberDao;
 import com.example.animal_adoption.service.ifs.MemberService;
 import com.example.animal_adoption.vo.MemberAccountRequest;
 import com.example.animal_adoption.vo.MemberResponse;
-import com.example.animal_adoption.vo.MemberSignupRequest;
+import com.example.animal_adoption.vo.MemberSignUpRequest;
 import com.example.animal_adoption.vo.MemberUpdateRequest;
 
 @Service
@@ -29,9 +29,9 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//會員註冊
-	public MemberResponse signUp(MemberSignupRequest memberRequest) {		
+	public MemberResponse signUp(MemberSignUpRequest signUpRequest) {		
 		// 取出輸入的會員資訊
-	    Member member = memberRequest.getMember();
+	    Member member = signUpRequest.getMember();
 		String memberId = member.getMemberId();
 		String pwd = member.getPwd();
 		String memberName = member.getMemberName();
@@ -73,7 +73,7 @@ public class MemberImpl implements MemberService{
 	   
 		memberDao.save(member);
 		
-		return new MemberResponse(MemberRtnCode.SIGN_UP_SUCCESS.getMessage());
+		return new MemberResponse(member, MemberRtnCode.SIGN_UP_SUCCESS.getMessage());
 	}
 
 	@Override

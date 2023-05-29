@@ -5,24 +5,31 @@ import java.time.LocalDate;
 import javax.servlet.http.HttpSession;
 
 import com.example.animal_adoption.entity.Member;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MemberSignupRequest {
+public class MemberSignUpRequest {
 	
+	@JsonProperty("member")
 	private Member member;
 	
+	@JsonProperty("member_id")
 	private String memberId;
 	
+	@JsonProperty("password")
 	private String pwd;
 	
+	@JsonProperty("member_name")
 	private String memberName;
 	
+	@JsonProperty("phone")
 	private String phone;
 	
+	@JsonProperty("birthday")
 	private LocalDate birth;
 	
 	private HttpSession httpSession;
 
-	public MemberSignupRequest() {
+	public MemberSignUpRequest() {
 	}
 	
 	public Member getMember() {

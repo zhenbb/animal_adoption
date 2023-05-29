@@ -1,6 +1,10 @@
 package com.example.animal_adoption.vo;
 
+import com.example.animal_adoption.entity.Member;
+
 public class MemberResponse {
+	
+	private Member member;
 	
 	private String message;
 
@@ -8,8 +12,12 @@ public class MemberResponse {
 		
 	}
 
+	public MemberResponse(Member member, String message) {
+		this.member = member;
+		this.message = message;
+	}
+
 	public MemberResponse(String message) {
-		super();
 		this.message = message;
 	}
 
