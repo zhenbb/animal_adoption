@@ -38,10 +38,13 @@ public class Member {
 
   @Column(name = "is_administrator")
   private boolean isAdministrator;
-
+  
+  
+  @Column(name = "is_active")
+  private boolean isActive;
 
   public Member() {
-}
+  }
 
   public String getMemberId() {
     return memberId;
@@ -114,4 +117,13 @@ public class Member {
   public void setAdministrator(boolean administrator) {
     isAdministrator = administrator;
   }
+
+  public boolean isActive() {
+	  return isActive;
+  }
+
+  public void setActive(boolean isActive) {
+	  this.isActive = isActive;
+  }
+  
 }

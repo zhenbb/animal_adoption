@@ -80,16 +80,15 @@ public class MemberTest {
 	// 判斷會員是否已經存在
 	public void signupTest2() {
 		Member member = new Member();
-//		member.setMemberId("E234567890");
-//        member.setPwd("bbb45678");
-//        member.setMemberName("謝二");
-//        member.setPhone("0912345678");
-//        LocalDate birthday = LocalDate.of(2001, 11, 11);
-//        member.setBirth(birthday);
-		MemberSignUpRequest signUpRequest = new MemberSignUpRequest();
+		member.setMemberId("E234567890");
+        member.setPwd("bbb45678");
+        member.setMemberName("謝二");
+        member.setPhone("0912345678");
+        LocalDate birthday = LocalDate.of(2001, 11, 11);
+        member.setBirth(birthday);
 		
         
-		MemberResponse result = memberService.signUp(signUpRequest.getMember());
+		MemberResponse result = memberService.signUp(member);
 		System.out.println(result.getMessage());
 		System.out.println("fini");
 	}

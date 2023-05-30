@@ -46,9 +46,17 @@ public class MemberImpl implements MemberService{
 	    		|| !StringUtils.hasText(pwd)
 	    		|| !StringUtils.hasText(memberName)
 	    		|| !StringUtils.hasText(phone)
-			  	|| birth == null) {
+			  	|| birth == null
+			  	) {
 	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
+	    
+		// 判斷會員是否已經存在
+		Optional<Member> op = memberDao.findById(memberId);
+		if (op.isPresent()) {
+			return new MemberResponse(MemberRtnCode.MEMBER_IS_PRESENT.getMessage());
+		}
+		
 	    
 	    // 設定我的最愛、購物車、購買清單、管理者為預設值
 	    member.setFav(null);
@@ -74,42 +82,75 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//帳號生效
-	public MemberResponse activeAccount(MemberAccountRequest memberRequest) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberResponse activeAccount(String memberId, String pwd) {
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)
+	    		|| !StringUtils.hasText(pwd)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+	    
+		// 判斷會員是否已經存在
+		Optional<Member> op = memberDao.findById(memberId);
+		if (!op.isPresent()) {
+			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT.getMessage());
+		}
+		
+		// 判斷會員是否已經生效
+		Member member = op.get();
+		if (member.isActive() == true) {
+			return new MemberResponse(MemberRtnCode.MEMBER_ALREADY_ACTIVE.getMessage());
+		}
+		
+		// 已經生效的會員設定true
+		member.setActive(true);
+		
+		memberDao.save(member);
+		
+		return new MemberResponse(member, MemberRtnCode.ACTTIVE_MEMBER_SUCCESS.getMessage());
+		
 	}
 
 	@Override
 	//會員登入
-	public MemberResponse logIn(MemberAccountRequest memberRequest) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberResponse logIn(String memberId, String pwd) {
+		// 判斷會員是否已經存在
+		Member member = memberDao.findByMemberIdAndPwd(memberId, pwd);  //篩選出資料庫已經存在的account
+		if (member == null) {
+			return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+		}
+		
+		// 判斷會員是否已經生效
+		if (member.isActive() == false) {
+			return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+		}
+		
+		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
 	}
 
 	@Override
 	//修改會員密碼
-	public MemberResponse updatePwd(MemberUpdateRequest memberRequest) {
+	public MemberResponse updatePwd(String memberId, String pwd) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	//修改會員姓名
-	public MemberResponse updateMemberName(MemberUpdateRequest memberRequest) {
+	public MemberResponse updateMemberName(String memberId, String memberName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	//修改會員手機
-	public MemberResponse updatePhone(MemberUpdateRequest memberRequest) {
+	public MemberResponse updatePhone(String memberId, String phone) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	//修改會員生日
-	public MemberResponse updateBirthday(MemberUpdateRequest memberRequest) {
+	public MemberResponse updateBirthday(String memberId, LocalDate birth) {
 		// TODO Auto-generated method stub
 		return null;
 	}
