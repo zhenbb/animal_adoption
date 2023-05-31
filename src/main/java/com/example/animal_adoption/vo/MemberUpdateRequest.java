@@ -4,20 +4,37 @@ import java.time.LocalDate;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MemberUpdateRequest {
 	
+	@JsonProperty("member_id")
+	private String memberId;
+	
+	@JsonProperty("password")
 	private String pwd;
 	
+	@JsonProperty("member_name")
 	private String memberName;
 	
+	@JsonProperty("phone")
 	private String phone;
 	
-	private LocalDate birth;
+	@JsonProperty("birthday")
+	private String birth;
 	
 	private HttpSession httpSession;
 
 	public MemberUpdateRequest() {
 		
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getPwd() {
@@ -44,11 +61,11 @@ public class MemberUpdateRequest {
 		this.phone = phone;
 	}
 
-	public LocalDate getBirth() {
+	public String getBirth() {
 		return birth;
 	}
 
-	public void setBirth(LocalDate birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 

@@ -12,7 +12,7 @@ import com.example.animal_adoption.vo.MemberSignUpRequest;
 public interface MemberService {
 	
 	//會員註冊
-	public MemberResponse signUp(Member member);
+	public MemberResponse signUp(MemberSignUpRequest signUpRequest);
 	
 	//帳號生效
 	public MemberResponse activeAccount(String memberId, String pwd);
@@ -30,7 +30,7 @@ public interface MemberService {
 	public MemberResponse updatePhone(String memberId, String phone);
 
 	//修改會員生日
-	public MemberResponse updateBirthday(String memberId, LocalDate birth);
+	public MemberResponse updateBirthday(String memberId, String birth);
 
 	
 	

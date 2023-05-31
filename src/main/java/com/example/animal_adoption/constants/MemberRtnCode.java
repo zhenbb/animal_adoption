@@ -11,6 +11,10 @@ public enum MemberRtnCode {
 	MEMBER_IS_PRESENT("400", "已註冊會員"),
 	MEMBER_NOT_PRESENT("400", "尚未註冊會員"),
 	MEMBER_ALREADY_ACTIVE("400", "會員已經生效"),
+	SAME_PWD("400", "密碼不可與原本相同"),
+	SAME_MEMBER_NAME("400", "姓名不可與原本相同"),
+	SAME_PHONE("400", "手機不可與原本相同"),
+	SAME_BIRTHDAY("400", "生日不可與原本相同"),
 	
 	
 	INCORRECT_INFO_ERROR("400", "資料不正確"),

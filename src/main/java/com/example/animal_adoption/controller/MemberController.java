@@ -19,17 +19,17 @@ public class MemberController {
 	
 	@PostMapping(value = "sign_up")
 	public MemberResponse signUp(@RequestBody MemberSignUpRequest signUpRequest) {
-	  return memberService.signUp(signUpRequest.getMember());
+	  return memberService.signUp(signUpRequest);
 	}
 	
 	@PostMapping(value = "active_account")
 	public MemberResponse activeAccount(@RequestBody MemberAccountRequest accountRequest) {
-	  return memberService.activeAccount(accountRequest);
+	  return memberService.activeAccount(accountRequest.getMemberId(), accountRequest.getPwd());
 	}
 	
 	@PostMapping(value = "log_in")
 	public MemberResponse logIn(@RequestBody MemberAccountRequest accountRequest) {
-	  return memberService.logIn(accountRequest);
+	  return memberService.logIn(accountRequest.getMemberId(), accountRequest.getPwd());
 	}
 	
 	@PostMapping(value = "log_out")
@@ -41,22 +41,22 @@ public class MemberController {
 	
 	@PostMapping(value = "update_pwd")
 	public MemberResponse updatePwd(@RequestBody MemberUpdateRequest updateRequest) {
-	  return memberService.updatePwd(updateRequest);
+	  return memberService.updatePwd(updateRequest.getMemberId(), updateRequest.getPwd());
 	}
 	
 	@PostMapping(value = "update_member_name")
 	public MemberResponse updateMemberName(@RequestBody MemberUpdateRequest updateRequest) {
-	  return memberService.updateMemberName(updateRequest);
+	  return memberService.updateMemberName(updateRequest.getMemberId(), updateRequest.getMemberName());
 	}
 	
 	@PostMapping(value = "update_phone")
 	public MemberResponse updatePhone(@RequestBody MemberUpdateRequest updateRequest) {
-	  return memberService.updatePhone(updateRequest);
+	  return memberService.updatePhone(updateRequest.getMemberId(), updateRequest.getPhone());
 	}
 	
 	@PostMapping(value = "update_birthday")
 	public MemberResponse updateBirthday(@RequestBody MemberUpdateRequest updateRequest) {
-	  return memberService.updateBirthday(updateRequest);
+	  return memberService.updateBirthday(updateRequest.getMemberId(), updateRequest.getBirth());
 	}
 	
 

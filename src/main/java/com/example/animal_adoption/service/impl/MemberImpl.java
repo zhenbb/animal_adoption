@@ -1,6 +1,7 @@
 package com.example.animal_adoption.service.impl;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -29,40 +30,45 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//會員註冊
-	public MemberResponse signUp(Member member) {		
+	public MemberResponse signUp(MemberSignUpRequest signUpRequest) {		
 		// 取出輸入的會員資訊
-//		Member member = new Member();
-//		signUpRequest.setMember(member);
-//	    Member member = signUpRequest.getMember();
-		String memberId = member.getMemberId();
-		String pwd = member.getPwd();
-		String memberName = member.getMemberName();
-		String phone = member.getPhone();
-		LocalDate birth = member.getBirth();
+		String memberId = signUpRequest.getMemberId();
+		String pwd = signUpRequest.getPwd();
+		String memberName = signUpRequest.getMemberName();
+		String phone = signUpRequest.getPhone();
+		String birth = signUpRequest.getBirth();
 		
 		// 判斷資料是否為空
-	    if (member == null
-	    		|| !StringUtils.hasText(memberId)
-	    		|| !StringUtils.hasText(pwd)
-	    		|| !StringUtils.hasText(memberName)
-	    		|| !StringUtils.hasText(phone)
-			  	|| birth == null
-			  	) {
-	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    if (!StringUtils.hasText(memberId)) {
+	    	return new MemberResponse("memberId null");
 	    }
+	    if (!StringUtils.hasText(pwd)) {
+	    	return new MemberResponse("pwd null");
+	    }
+	    if (!StringUtils.hasText(memberName)) {
+	    	return new MemberResponse("memberName null");
+	    }
+	    if (!StringUtils.hasText(phone)) {
+	    	return new MemberResponse("phone null");
+	    }
+	    if (!StringUtils.hasText(birth)) {
+	    	return new MemberResponse("birth null");
+	    }
+	    
+	    
+//	    if (!StringUtils.hasText(memberId)
+//	    		|| !StringUtils.hasText(pwd)
+//	    		|| !StringUtils.hasText(memberName)
+//	    		|| !StringUtils.hasText(phone)
+//	    		|| !StringUtils.hasText(birth)) {
+//	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+//	    }
 	    
 		// 判斷會員是否已經存在
 		Optional<Member> op = memberDao.findById(memberId);
 		if (op.isPresent()) {
 			return new MemberResponse(MemberRtnCode.MEMBER_IS_PRESENT.getMessage());
 		}
-		
-	    
-	    // 設定我的最愛、購物車、購買清單、管理者為預設值
-	    member.setFav(null);
-	    member.setCarId(null);
-	    member.setOrderId(null);
-	    member.setAdministrator(false);
 	    
 	    // 確認格式: 身分證、密碼、手機
 	    String idPattern = "^[A-Z][1-2]\\d{8}$";
@@ -74,10 +80,26 @@ public class MemberImpl implements MemberService{
 	    		|| !phone.matches(phonePattern)) {
 	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
-	   
-		memberDao.save(member);
+	    
+	    // 新增會員資料
+		Member addMember = new Member();
+	    // 字串轉LocalDate
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDateBirth = LocalDate.parse(birth, formatter);
 		
-		return new MemberResponse(member, MemberRtnCode.SIGN_UP_SUCCESS.getMessage());
+		addMember.setMemberId(memberId);
+		addMember.setPwd(pwd);
+		addMember.setMemberName(memberName);
+		addMember.setPhone(phone);
+		addMember.setBirth(localDateBirth);
+		addMember.setFav(null);
+		addMember.setCarId(null);
+		addMember.setOrderId(null);
+		addMember.setAdministrator(false);
+	   
+		memberDao.save(addMember);
+		
+		return new MemberResponse(addMember, MemberRtnCode.SIGN_UP_SUCCESS.getMessage());
 	}
 
 	@Override
@@ -101,22 +123,29 @@ public class MemberImpl implements MemberService{
 			return new MemberResponse(MemberRtnCode.MEMBER_ALREADY_ACTIVE.getMessage());
 		}
 		
-		// 已經生效的會員設定true
-		member.setActive(true);
+		// 生效的會員設定true
+		Member newMember = new Member();
+		newMember.setActive(true);
 		
-		memberDao.save(member);
+		memberDao.save(newMember);
 		
-		return new MemberResponse(member, MemberRtnCode.ACTTIVE_MEMBER_SUCCESS.getMessage());
+		return new MemberResponse(newMember, MemberRtnCode.ACTTIVE_MEMBER_SUCCESS.getMessage());
 		
 	}
 
 	@Override
 	//會員登入
 	public MemberResponse logIn(String memberId, String pwd) {
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)
+	    		|| !StringUtils.hasText(pwd)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+		
 		// 判斷會員是否已經存在
-		Member member = memberDao.findByMemberIdAndPwd(memberId, pwd);  //篩選出資料庫已經存在的account
+		Member member = memberDao.findByMemberIdAndPwd(memberId, pwd);
 		if (member == null) {
-			return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT.getMessage());
 		}
 		
 		// 判斷會員是否已經生效
@@ -130,29 +159,101 @@ public class MemberImpl implements MemberService{
 	@Override
 	//修改會員密碼
 	public MemberResponse updatePwd(String memberId, String pwd) {
-		// TODO Auto-generated method stub
-		return null;
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)
+	    		|| !StringUtils.hasText(pwd)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+	    
+	    // 判斷資料是否與原本相同
+	    Optional<Member> op = memberDao.findById(memberId);
+	    String pwdOfDao = op.get().getPwd();
+	    if (pwd.equals(pwdOfDao)) {
+	    	return new MemberResponse(MemberRtnCode.SAME_PWD.getMessage());
+	    }
+	    
+	    // 更新密碼
+	    op.get().setPwd(pwd);
+ 		
+ 		memberDao.save(op.get());
+	    
+ 		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
 
 	@Override
 	//修改會員姓名
 	public MemberResponse updateMemberName(String memberId, String memberName) {
-		// TODO Auto-generated method stub
-		return null;
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)
+	    		|| !StringUtils.hasText(memberName)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+	    
+	    // 判斷資料是否與原本相同
+	    Optional<Member> op = memberDao.findById(memberId);
+	    String memberNameOfDao = op.get().getMemberName();
+	    if (memberName.equals(memberNameOfDao)) {
+	    	return new MemberResponse(MemberRtnCode.SAME_MEMBER_NAME.getMessage());
+	    }
+	    
+	    // 更新姓名
+	    op.get().setMemberName(memberName);
+ 		
+ 		memberDao.save(op.get());
+	    
+ 		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
 
 	@Override
 	//修改會員手機
 	public MemberResponse updatePhone(String memberId, String phone) {
-		// TODO Auto-generated method stub
-		return null;
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)
+	    		|| !StringUtils.hasText(phone)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+	    
+	    
+	    // 判斷資料是否與原本相同
+	    Optional<Member> op = memberDao.findById(memberId);
+	    String phoneOfDao = op.get().getPhone();
+	    if (phone.equals(phoneOfDao)) {
+	    	return new MemberResponse(MemberRtnCode.SAME_PHONE.getMessage());
+	    }
+	    
+	    // 更新手機
+	    op.get().setPhone(phone);
+ 		
+ 		memberDao.save(op.get());
+	    
+ 		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
 
 	@Override
 	//修改會員生日
-	public MemberResponse updateBirthday(String memberId, LocalDate birth) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemberResponse updateBirthday(String memberId, String birth) {
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)
+	    		|| birth == null) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+	    
+	    // 判斷資料是否與原本相同
+	    Optional<Member> op = memberDao.findById(memberId);
+	    LocalDate birthOfDao = op.get().getBirth();
+	    // 字串轉LocalDate
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate localDateBirth = LocalDate.parse(birth, formatter);
+	    if (localDateBirth.equals(birthOfDao)) {
+	    	return new MemberResponse(MemberRtnCode.SAME_BIRTHDAY.getMessage());
+	    }
+	    
+	    // 更新生日
+	    op.get().setBirth(localDateBirth);;
+ 		
+ 		memberDao.save(op.get());
+	    
+ 		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
 	
 	
