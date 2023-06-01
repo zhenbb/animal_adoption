@@ -14,7 +14,7 @@ import com.example.animal_adoption.entity.Member;
 import com.example.animal_adoption.repository.MemberDao;
 import com.example.animal_adoption.service.ifs.MemberService;
 import com.example.animal_adoption.vo.MemberResponse;
-import com.example.animal_adoption.vo.MemberSignUpRequest;
+import com.example.animal_adoption.vo.MemberRequest;
 
 @SpringBootTest(classes = AnimalAdoptionApplication.class)
 public class MemberTest {

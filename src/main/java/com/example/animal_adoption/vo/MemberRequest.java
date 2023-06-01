@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import com.example.animal_adoption.entity.Member;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MemberSignUpRequest {
+public class MemberRequest {
 	
 	@JsonProperty("member_id")
 	private String memberId;
@@ -26,7 +26,7 @@ public class MemberSignUpRequest {
 	
 	private HttpSession httpSession;
 
-	public MemberSignUpRequest() {
+	public MemberRequest() {
 	}
 	
 	public String getMemberId() {

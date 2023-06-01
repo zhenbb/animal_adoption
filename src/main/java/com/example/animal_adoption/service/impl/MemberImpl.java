@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.example.animal_adoption.constants.MemberRtnCode;
+import com.example.animal_adoption.constants.RtnCode;
 import com.example.animal_adoption.entity.Member;
 import com.example.animal_adoption.repository.MemberDao;
 import com.example.animal_adoption.service.ifs.MemberService;
-import com.example.animal_adoption.vo.MemberAccountRequest;
 import com.example.animal_adoption.vo.MemberResponse;
-import com.example.animal_adoption.vo.MemberSignUpRequest;
-import com.example.animal_adoption.vo.MemberUpdateRequest;
+import com.example.animal_adoption.vo.AnimalAdoptionResponse;
+import com.example.animal_adoption.vo.MemberRequest;
 
 @Service
 public class MemberImpl implements MemberService{
@@ -30,7 +30,7 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//會員註冊
-	public MemberResponse signUp(MemberSignUpRequest signUpRequest) {		
+	public MemberResponse signUp(MemberRequest signUpRequest) {		
 		// 取出輸入的會員資訊
 		String memberId = signUpRequest.getMemberId();
 		String pwd = signUpRequest.getPwd();
@@ -39,30 +39,13 @@ public class MemberImpl implements MemberService{
 		String birth = signUpRequest.getBirth();
 		
 		// 判斷資料是否為空
-	    if (!StringUtils.hasText(memberId)) {
-	    	return new MemberResponse("memberId null");
+	    if (!StringUtils.hasText(memberId)
+	    		|| !StringUtils.hasText(pwd)
+	    		|| !StringUtils.hasText(memberName)
+	    		|| !StringUtils.hasText(phone)
+	    		|| !StringUtils.hasText(birth)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
-	    if (!StringUtils.hasText(pwd)) {
-	    	return new MemberResponse("pwd null");
-	    }
-	    if (!StringUtils.hasText(memberName)) {
-	    	return new MemberResponse("memberName null");
-	    }
-	    if (!StringUtils.hasText(phone)) {
-	    	return new MemberResponse("phone null");
-	    }
-	    if (!StringUtils.hasText(birth)) {
-	    	return new MemberResponse("birth null");
-	    }
-	    
-	    
-//	    if (!StringUtils.hasText(memberId)
-//	    		|| !StringUtils.hasText(pwd)
-//	    		|| !StringUtils.hasText(memberName)
-//	    		|| !StringUtils.hasText(phone)
-//	    		|| !StringUtils.hasText(birth)) {
-//	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
-//	    }
 	    
 		// 判斷會員是否已經存在
 		Optional<Member> op = memberDao.findById(memberId);
@@ -104,7 +87,11 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//帳號生效
-	public MemberResponse activeAccount(String memberId, String pwd) {
+	public MemberResponse activeAccount(MemberRequest accountRequest) {
+		// 取出輸入的會員資訊
+		String memberId = accountRequest.getMemberId();
+		String pwd = accountRequest.getPwd();
+		
 		// 判斷資料是否為空
 	    if (!StringUtils.hasText(memberId)
 	    		|| !StringUtils.hasText(pwd)) {
@@ -132,30 +119,78 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//會員登入
-	public MemberResponse logIn(String memberId, String pwd) {
-		// 判斷資料是否為空
-	    if (!StringUtils.hasText(memberId)
-	    		|| !StringUtils.hasText(pwd)) {
-	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	public MemberResponse logIn(MemberRequest accountRequest) {
+	    // 取得客戶端Session
+	    HttpSession clientSession = accountRequest.getHttpSession();
+	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+	    String serviceSession = (String) session.getAttribute(clientSession.getId());
+	    if (!StringUtils.hasText(serviceSession)) {
+	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
 	    }
+	    
+	    
+		HttpSession httpSession = accountRequest.getHttpSession();
+		String sessionMemberId = (String) httpSession.getAttribute("memberId");  
+		String sessionPwd = (String) httpSession.getAttribute("pwd");
+		
+		// verifycode不確定寫哪
+//		Integer sessionVerifyCode = (Integer) httpSession.getAttribute("verifyCode"); 
+		
+		//request是要帶入輸入的verifyCode
+//		return registerService.getRegTime2(request, sessionAccount, sessionPwd, sessionVerifyCode);
+	    
+		
+		if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+			return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+		}
+//		if (sessionVerifyCode == null || sessionVerifyCode != request.getVerifyCode()) {
+//			return new MemberResponse("Verify code incorrect!");
+//		}
+		Member res = memberDao.findByMemberIdAndPwdAndIsActive(sessionMemberId, sessionPwd, true);
+		if (res == null) {
+			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
+		}
+		
+		
+		// 取出輸入的會員資訊
+//		String memberId = accountRequest.getMemberId();
+//		String pwd = accountRequest.getPwd();
+		
+		// 判斷資料是否為空
+//	    if (!StringUtils.hasText(memberId)
+//	    		|| !StringUtils.hasText(pwd)) {
+//	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+//	    }
 		
 		// 判斷會員是否已經存在
-		Member member = memberDao.findByMemberIdAndPwd(memberId, pwd);
-		if (member == null) {
-			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR.getMessage());
-		}
+//		Member member = memberDao.findByMemberIdAndPwdAndIsActive(memberId, pwd, true);
+//		if (member == null) {
+//			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
+//		}
 		
-		// 判斷會員是否已經生效
-		if (member.isActive() == false) {
-			return new MemberResponse(MemberRtnCode.MEMBER_NOT_ACTIVE.getMessage());
-		}
+//		// 判斷會員是否已經生效
+//		if (member.isActive() == false) {
+//			return new MemberResponse(MemberRtnCode.MEMBER_NOT_ACTIVE.getMessage());
+//		}
 		
 		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
 	}
 
 	@Override
 	//修改會員密碼
-	public MemberResponse updatePwd(String memberId, String pwd) {
+	public MemberResponse updatePwd(MemberRequest updateRequest) {
+//	    // 取得客戶端Session
+//	    HttpSession clientSession = updateRequest.getHttpSession();
+//	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+//	    String serviceSession = (String) session.getAttribute(clientSession.getId());
+//	    if (!StringUtils.hasText(serviceSession)) {
+//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//	    }
+		
+		// 取出輸入的會員資訊
+		String memberId = updateRequest.getMemberId();
+		String pwd = updateRequest.getPwd();
+		
 		// 判斷資料是否為空
 	    if (!StringUtils.hasText(memberId)
 	    		|| !StringUtils.hasText(pwd)) {
@@ -186,7 +221,11 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員姓名
-	public MemberResponse updateMemberName(String memberId, String memberName) {
+	public MemberResponse updateMemberName(MemberRequest updateRequest) {
+		// 取出輸入的會員資訊
+		String memberId = updateRequest.getMemberId();
+		String memberName = updateRequest.getMemberName();
+		
 		// 判斷資料是否為空
 	    if (!StringUtils.hasText(memberId)
 	    		|| !StringUtils.hasText(memberName)) {
@@ -210,7 +249,11 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員手機
-	public MemberResponse updatePhone(String memberId, String phone) {
+	public MemberResponse updatePhone(MemberRequest updateRequest) {
+		// 取出輸入的會員資訊
+		String memberId = updateRequest.getMemberId();
+		String phone = updateRequest.getPhone();
+		
 		// 判斷資料是否為空
 	    if (!StringUtils.hasText(memberId)
 	    		|| !StringUtils.hasText(phone)) {
@@ -242,10 +285,14 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員生日
-	public MemberResponse updateBirthday(String memberId, String birth) {
+	public MemberResponse updateBirthday(MemberRequest updateRequest) {
+		// 取出輸入的會員資訊
+		String memberId = updateRequest.getMemberId();
+		String birth = updateRequest.getBirth();
+		
 		// 判斷資料是否為空
 	    if (!StringUtils.hasText(memberId)
-	    		|| birth == null) {
+	    		|| !StringUtils.hasText(birth)) {
 	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
 	    
@@ -266,20 +313,5 @@ public class MemberImpl implements MemberService{
 	    
  		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
-	
-	
-	
-	
-	
-	
-    // 資料不符返回true
-//    private boolean memberCheck(Member member) {
-//    	return member == null
-//		  || !StringUtils.hasText(member.getMemberId())
-//		  || !StringUtils.hasText(member.getPwd())
-//		  || !StringUtils.hasText(member.getMemberName())
-//		  || !StringUtils.hasText(member.getPhone())
-//		  || member.getBirth() == null;			
-//    }
 		
 }
