@@ -9,9 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MemberSignUpRequest {
 	
-	@JsonProperty("member")
-	private Member member;
-	
 	@JsonProperty("member_id")
 	private String memberId;
 	
@@ -30,14 +27,6 @@ public class MemberSignUpRequest {
 	private HttpSession httpSession;
 
 	public MemberSignUpRequest() {
-	}
-	
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
 	}
 	
 	public String getMemberId() {

@@ -110,26 +110,23 @@ public class MemberImpl implements MemberService{
 	    		|| !StringUtils.hasText(pwd)) {
 	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
-	    
+		
 		// 判斷會員是否已經存在
-		Optional<Member> op = memberDao.findById(memberId);
-		if (!op.isPresent()) {
+		Member member = memberDao.findByMemberIdAndPwd(memberId, pwd);
+		if (member == null) {
 			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT.getMessage());
 		}
 		
 		// 判斷會員是否已經生效
-		Member member = op.get();
 		if (member.isActive() == true) {
 			return new MemberResponse(MemberRtnCode.MEMBER_ALREADY_ACTIVE.getMessage());
 		}
 		
-		// 生效的會員設定true
-		Member newMember = new Member();
-		newMember.setActive(true);
+		// 會員生效欄位設定true
+		member.setActive(true);
+		memberDao.save(member);
 		
-		memberDao.save(newMember);
-		
-		return new MemberResponse(newMember, MemberRtnCode.ACTTIVE_MEMBER_SUCCESS.getMessage());
+		return new MemberResponse(member, MemberRtnCode.ACTTIVE_MEMBER_SUCCESS.getMessage());
 		
 	}
 
@@ -145,12 +142,12 @@ public class MemberImpl implements MemberService{
 		// 判斷會員是否已經存在
 		Member member = memberDao.findByMemberIdAndPwd(memberId, pwd);
 		if (member == null) {
-			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT.getMessage());
+			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR.getMessage());
 		}
 		
 		// 判斷會員是否已經生效
 		if (member.isActive() == false) {
-			return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+			return new MemberResponse(MemberRtnCode.MEMBER_NOT_ACTIVE.getMessage());
 		}
 		
 		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
@@ -170,6 +167,13 @@ public class MemberImpl implements MemberService{
 	    String pwdOfDao = op.get().getPwd();
 	    if (pwd.equals(pwdOfDao)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_PWD.getMessage());
+	    }
+	    
+	    // 確認格式: 密碼
+	    String pwdPattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d\\S]{8,12}$";
+	    
+	    if (!pwd.matches(pwdPattern)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
 	    
 	    // 更新密碼
@@ -219,6 +223,13 @@ public class MemberImpl implements MemberService{
 	    String phoneOfDao = op.get().getPhone();
 	    if (phone.equals(phoneOfDao)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_PHONE.getMessage());
+	    }
+	    
+	    // 確認格式: 手機
+	    String phonePattern = "^09\\d{8}$";
+	    
+	    if (!phone.matches(phonePattern)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
 	    
 	    // 更新手機

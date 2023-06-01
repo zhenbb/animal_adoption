@@ -2,10 +2,14 @@ package com.example.animal_adoption.vo;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MemberAccountRequest {
 
+	@JsonProperty("member_id")
 	private String memberId;
 	
+	@JsonProperty("password")
 	private String pwd;
 	
 	private HttpSession httpSession;
