@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.animal_adoption.constants.MemberRtnCode;
 import com.example.animal_adoption.constants.RtnCode;
@@ -133,7 +134,7 @@ public class MemberImpl implements MemberService{
 		String sessionMemberId = (String) httpSession.getAttribute("memberId");  
 		String sessionPwd = (String) httpSession.getAttribute("pwd");
 		
-		// verifycode不確定寫哪
+		// verifycode
 //		Integer sessionVerifyCode = (Integer) httpSession.getAttribute("verifyCode"); 
 		
 		//request是要帶入輸入的verifyCode
@@ -174,6 +175,14 @@ public class MemberImpl implements MemberService{
 //		}
 		
 		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
+	}
+	
+	//會員登出
+	@Override
+	public MemberResponse logOut(MemberRequest accountRequest) {
+		accountRequest.getHttpSession().removeAttribute("memberId");
+		accountRequest.getHttpSession().removeAttribute("pwd");
+		return new MemberResponse(MemberRtnCode.LOG_OUT_SUCCESS.getMessage());
 	}
 
 	@Override

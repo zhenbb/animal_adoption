@@ -35,9 +35,7 @@ public class MemberController {
 	
 	@PostMapping(value = "log_out")
 	public MemberResponse logOut(@RequestBody MemberRequest accountRequest) {
-		accountRequest.getHttpSession().removeAttribute("memberId");
-		accountRequest.getHttpSession().removeAttribute("pwd");
-		return new MemberResponse(MemberRtnCode.LOG_OUT_SUCCESS.getMessage());
+		return memberService.logOut(accountRequest);
 	}
 	
 	@PostMapping(value = "update_pwd")
