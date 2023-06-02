@@ -1,12 +1,14 @@
 package com.example.animal_adoption.vo;
 
+import javax.servlet.http.HttpSession;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductAddRequest {
-	
+
 	@JsonProperty("is_admin")
 	private boolean isAdministrator;
-	
+
 	@JsonProperty("product")
 	private ProductRequest productRequest;
 
@@ -26,6 +28,4 @@ public class ProductAddRequest {
 		this.productRequest = productRequest;
 	}
 
-	
-	
 }

@@ -1,8 +1,12 @@
 package com.example.animal_adoption.vo;
 
+import javax.servlet.http.HttpSession;
+
 public class ProductRequest {
 
 
+	private HttpSession httpSession;
+	
 	private String productName;
 
 	private String category;
@@ -10,6 +14,15 @@ public class ProductRequest {
 	private int price;
 
 	private int stock;
+
+
+	public HttpSession getHttpSession() {
+		return httpSession;
+	}
+
+	public void setHttpSession(HttpSession httpSession) {
+		this.httpSession = httpSession;
+	}
 
 	public ProductRequest() {
 		super();

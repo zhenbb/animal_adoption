@@ -282,17 +282,27 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
 	
 	// 新增商品 nana
 	@Override
-	public ProductResponse addProduct(boolean isAdministrator, ProductRequest productRequest) {
+	public ProductResponse addProduct(ProductRequest productRequest) {
+
+		// 取得伺服器Session
+		HttpSession clientSession = productRequest.getHttpSession();
+		// 驗證客戶端Id與伺服器端Id，判斷是否有登入
+		String serviceSession = (String) session.getAttribute(clientSession.getId());
+		
+		if (!StringUtils.hasText(serviceSession)) {
+			return new ProductResponse(RtnCode.NOT_LOGGED_IN.getMessage());
+		}
+		// 非管理員
+		if (isAdministrator == false) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
+		}
+		
 		// 防呆 null/空白
 		if (productRequest == null || !StringUtils.hasText(productRequest.getProductName())
 				|| !StringUtils.hasText(productRequest.getCategory())) {
 			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
 		}
 
-		// 非管理員
-		if (isAdministrator == false) {
-			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
-		}
 
 		// 數字錯誤
 		if (productRequest.getPrice() <= 0 || productRequest.getStock() < 0) {
