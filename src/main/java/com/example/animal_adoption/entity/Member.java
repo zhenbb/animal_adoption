@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,6 +16,9 @@ public class Member {
   @Id
   @Column(name = "member_id")
   private String memberId;
+  
+  @Column(name = "password")
+  private String pwd;
 
   @Column(name = "member_name")
   private String memberName;
@@ -35,7 +40,13 @@ public class Member {
 
   @Column(name = "is_administrator")
   private boolean isAdministrator;
+  
+  
+  @Column(name = "is_active")
+  private boolean isActive;
 
+  public Member() {
+  }
 
   public String getMemberId() {
     return memberId;
@@ -43,6 +54,14 @@ public class Member {
 
   public void setMemberId(String memberId) {
     this.memberId = memberId;
+  }
+
+  public String getPwd() {
+	return pwd;
+  }
+
+  public void setPwd(String pwd) {
+	this.pwd = pwd;
   }
 
   public String getMemberName() {
@@ -100,4 +119,13 @@ public class Member {
   public void setAdministrator(boolean administrator) {
     isAdministrator = administrator;
   }
+
+  public boolean isActive() {
+	  return isActive;
+  }
+
+  public void setActive(boolean isActive) {
+	  this.isActive = isActive;
+  }
+  
 }
