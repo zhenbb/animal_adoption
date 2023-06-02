@@ -1,9 +1,20 @@
 package com.example.animal_adoption.repository;
 
-import com.example.animal_adoption.entity.Product;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.example.animal_adoption.entity.Product;
+
 @Repository
-public interface ProductDao extends JpaRepository<Product, String> {
+public interface ProductDao extends JpaRepository<Product,Integer> {
+	
+	//搜尋關鍵字(正則)
+	@Query(value="SELECT * FROM product AS p"
+			+ " WHERE p.name REGEXP %:keyword% OR p.category REGEXP %:keyword%", nativeQuery = true)
+	public List<Product> searchAllByKeywordRegexp(@Param("keyword") String str);
+
 }

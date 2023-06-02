@@ -16,5 +16,4 @@ public class AnimalAdoptionApplication {
     // 梁 5/14 01:58:00 Merge "feature_delete_favorite"
 
   }
-
 }

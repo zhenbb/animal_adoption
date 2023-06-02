@@ -28,7 +28,19 @@ public class Product {
 	@Column(name = "stock")
 	private int stock;
 
-	
+	public Product() {
+		super();
+	}
+
+	public Product(int productId, String productName, String category, int price, int stock) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.category = category;
+		this.price = price;
+		this.stock = stock;
+	}
+
 	public int getProductId() {
 		return productId;
 	}

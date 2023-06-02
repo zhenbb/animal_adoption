@@ -2,6 +2,7 @@ package com.example.animal_adoption.service.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +18,14 @@ import com.example.animal_adoption.entity.Member;
 import com.example.animal_adoption.entity.Product;
 import com.example.animal_adoption.repository.AnimalDao;
 import com.example.animal_adoption.repository.MemberDao;
+import com.example.animal_adoption.repository.ProductDao;
 import com.example.animal_adoption.service.ifs.AnimalAdoptionService;
 import com.example.animal_adoption.vo.AdoptionRequest;
 import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.EligibilityReviewRequest;
 import com.example.animal_adoption.vo.FavoriteRequest;
+import com.example.animal_adoption.vo.ProductRequest;
+import com.example.animal_adoption.vo.ProductResponse;
 
 @Service
 public class AnimalAdoptionImpl implements AnimalAdoptionService {
@@ -34,6 +38,9 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
 
 	@Autowired
 	MemberDao memberDao;
+
+	@Autowired
+	ProductDao productDao;
 
 	@Override
 	// 認養申請
@@ -269,8 +276,178 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
 				|| member.getBirth() == null;
 	}
 
+	
+	
+	
+	
+	// 新增商品 nana
 	@Override
-	public AnimalAdoptionResponse addProduct(List<Product> product) {
-		return null;
+	public ProductResponse addProduct(boolean isAdministrator, ProductRequest productRequest) {
+		// 防呆 null/空白
+		if (productRequest == null || !StringUtils.hasText(productRequest.getProductName())
+				|| !StringUtils.hasText(productRequest.getCategory())) {
+			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
+		}
+
+		// 非管理員
+		if (isAdministrator == false) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
+		}
+
+		// 數字錯誤
+		if (productRequest.getPrice() <= 0 || productRequest.getStock() < 0) {
+			return new ProductResponse(RtnCode.PRODUCT_DATA_ERROR.getMessage());
+		}
+
+		// 確認資料庫裡有沒有
+//		List<Product> resultList = productDao.findByName();
+//		if(!CollectionUtils.isEmpty(resultList)) {
+//			System.out.println("有重複名字的商品，是否要重複新增？");
+//		}
+		Product product = new Product(0, productRequest.getProductName(), productRequest.getCategory(),
+				productRequest.getPrice(), productRequest.getStock());
+		productDao.save(product);
+
+		return new ProductResponse(product, RtnCode.PRODUCT_ADD_SUCCESS.getMessage());
 	}
+
+	// 1. 更新商品庫存
+	@Override
+	public ProductResponse updateProductStock(boolean isAdministrator, int productId, int stock) {
+
+		// 非管理員
+		if (isAdministrator == false) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
+		}
+
+		// 防呆
+		if (productId <= 0 || stock < 0) {
+			return new ProductResponse(RtnCode.PRODUCT_DATA_ERROR.getMessage());
+		}
+
+		Product result = productDao.findById(productId).get();
+		result.setStock(stock);
+		productDao.save(result);
+		return new ProductResponse(RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
+	}
+
+	// 2. 更新商品名稱
+	@Override
+	public ProductResponse updateProductName(boolean isAdministrator, int productId, String productName) {
+
+		// 非管理員
+		if (isAdministrator == false) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
+		}
+
+		// 防呆
+		if (productId <= 0) {
+			return new ProductResponse(RtnCode.PRODUCT_DATA_ERROR.getMessage());
+		}
+		if (!StringUtils.hasText(productName)) {
+			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
+		}
+
+		Product result = productDao.findById(productId).get();
+		result.setProductName(productName);
+		productDao.save(result);
+		return new ProductResponse(RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
+	}
+
+	// 3. 更新商品價格
+	@Override
+	public ProductResponse updateProductPrice(boolean isAdministrator, int productId, int price) {
+
+		// 非管理員
+		if (isAdministrator == false) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
+		}
+
+		// 防呆
+		if (productId <= 0 || price < 0) {
+			return new ProductResponse(RtnCode.PRODUCT_DATA_ERROR.getMessage());
+		}
+
+		Product result = productDao.findById(productId).get();
+		result.setPrice(price);
+		productDao.save(result);
+		return new ProductResponse(RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
+	}
+
+	// 4. 更新商品分類
+	@Override
+	public ProductResponse updateProductCategory(boolean isAdministrator, int productId, String category) {
+		// 非管理員
+		if (isAdministrator == false) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
+		}
+		// 防呆
+		if (productId < 0) {
+			return new ProductResponse(RtnCode.PRODUCT_DATA_ERROR.getMessage());
+		}
+		if (!StringUtils.hasText(category)) {
+			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
+		}
+
+		// 搜尋是否有這本書
+		Product result = productDao.findById(productId).get();
+
+		if (result == null) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
+		}
+
+		// 檢查分類是否沒修改
+		// 步驟1/3--抓出字串+去頭去尾+分割+加入List
+		String opCate = result.getCategory().substring(1, result.getCategory().length() - 1);
+		String bookCate = category.substring(1, category.length() - 1);
+		List<String> opCateList = Arrays.asList(opCate.split(", "));
+		List<String> bookCateList = Arrays.asList(bookCate.split(", "));
+		// 步驟2/3--先比較List長度，只要不同就直接上傳
+		if (opCateList.size() != bookCateList.size()) {
+			result.setCategory(category);
+			productDao.save(result);
+			return new ProductResponse(RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
+		}
+		// 步驟3/3--同樣長度的[]-->比較內容是否完全一樣
+		int count = 0;
+		for (String bookArr : bookCateList) {
+			if (opCateList.contains(bookArr)) {
+				count++;
+				continue;
+			}
+		}
+		// 假如新的分類完全等於原始的分類 => 錯誤訊息"無項目變更"
+		if (count == opCateList.size()) {
+			return new ProductResponse(RtnCode.PRODUCT_NO_CHANGE.getMessage());
+		}
+		
+		//完成後上傳
+		result.setCategory(category);
+		productDao.save(result);
+		return new ProductResponse(result, RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
+	}
+
+	
+	//搜尋功能(可多關鍵字、可用空格區分)@Query+regexp
+	@Override
+	public ProductResponse searchKeyword(String keyword) {
+
+		//防呆
+		if(!StringUtils.hasText(keyword)) {
+			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
+		}
+		
+		//正則拆解
+		List<String> keywordList = Arrays.asList(keyword.trim().split(" "));
+		String regKeyword = String.join("|", keywordList);
+		
+		//搜尋
+		List<Product> result = productDao.searchAllByKeywordRegexp(regKeyword);
+		if(result.size()<=0) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
+		}
+
+		return new ProductResponse(result,RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
+	}
+
 }
