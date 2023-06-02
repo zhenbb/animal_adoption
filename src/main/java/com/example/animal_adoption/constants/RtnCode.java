@@ -3,6 +3,8 @@ package com.example.animal_adoption.constants;
 public enum RtnCode {
 
   ADD_FAVORITE_SUCCESS("200", "新增收藏成功"),
+  ADD_PRODUCT_SUCCESS("200","新增購物車成功"),
+  ADD_ORDER_SUCCESS("200","新增訂單成功"),
   ADD_STUDENT_SUCCESS("200", "新增學生成功"),
   DELETE_COURSE_SUCCESS("200", "課程刪除成功"),
   DELETE_STUDENT_SUCCESS("200", "學生刪除成功"),
@@ -25,11 +27,15 @@ public enum RtnCode {
   INCORRECT_INFO_ERROR("400", "資料不正確"),
   HAS_BEEN_ADOPTED_ERROR("400", "已被領養"),
   INPUT_EMPTY_VALUE_ERROR("400", "輸入值為空"),
+  ADD_PRODUCT_ERROR("400","商品庫存不足"),
   INPUT_NOT_ALLOWED_BLANK_ERROR("400", "輸入不得為空白"),
   NO_COURSE_FOUND_ERROR("400", "無找到課程"),
   NO_SAME_COURSE_ERROR("400", "無同名課程"),
   NOT_SELECTED_ERROR("400", "您沒有選修該門課"),
-  STUDENT_NOT_EXIST_ERROR("400", "學生不存在");
+  NOT_FOUND_PRODUCT_ERROR("400","找不到商品，可能已被下架或售完"),
+  STUDENT_NOT_EXIST_ERROR("400", "學生不存在"),
+  NOT_FOUND_CART_ERROR("400","購物車為空"),
+  OUT_OF_STOCK_ERROR("400","庫存不足");
 
 
 

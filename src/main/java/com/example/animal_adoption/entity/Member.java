@@ -28,7 +28,7 @@ public class Member {
 	private String fav;
 	
 	@Column(name = "car_id")
-	private String carId;
+	private Integer carId;
 
 	
 	public String getMemberId() {
@@ -71,13 +71,11 @@ public class Member {
 		this.fav = fav;
 	}
 
-	public String getCarId() {
+	public Integer getCarId() {
 		return carId;
 	}
 
-	public void setCarId(String carId) {
+	public void setCarId(Integer carId) {
 		this.carId = carId;
 	}
-
-	
 }
