@@ -121,18 +121,19 @@ public class MemberImpl implements MemberService{
 	@Override
 	//會員登入
 	public MemberResponse logIn(MemberRequest accountRequest) {
-	    // 取得客戶端Session
-	    HttpSession clientSession = accountRequest.getHttpSession();
-	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
-	    String serviceSession = (String) session.getAttribute(clientSession.getId());
-	    if (!StringUtils.hasText(serviceSession)) {
-	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-	    }
-	    
-	    
-		HttpSession httpSession = accountRequest.getHttpSession();
-		String sessionMemberId = (String) httpSession.getAttribute("memberId");  
-		String sessionPwd = (String) httpSession.getAttribute("pwd");
+//	    // 取得客戶端Session
+//	    HttpSession clientSession = accountRequest.getHttpSession();
+//	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+//	    String serviceSession = (String) session.getAttribute(clientSession.getId());
+//	    if (!StringUtils.hasText(serviceSession)) {
+//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//	    }
+//	    
+//	    
+//		HttpSession httpSession = accountRequest.getHttpSession();
+//		String sessionMemberId = (String) httpSession.getAttribute("memberId");  
+//		String sessionPwd = (String) httpSession.getAttribute("pwd");
+//		System.out.println(sessionMemberId);
 		
 		// verifycode
 //		Integer sessionVerifyCode = (Integer) httpSession.getAttribute("verifyCode"); 
@@ -141,38 +142,39 @@ public class MemberImpl implements MemberService{
 //		return registerService.getRegTime2(request, sessionAccount, sessionPwd, sessionVerifyCode);
 	    
 		
-		if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
-			return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-		}
+//		if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+//			return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//		}
+		// verifycode
 //		if (sessionVerifyCode == null || sessionVerifyCode != request.getVerifyCode()) {
 //			return new MemberResponse("Verify code incorrect!");
 //		}
-		Member res = memberDao.findByMemberIdAndPwdAndIsActive(sessionMemberId, sessionPwd, true);
-		if (res == null) {
-			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
-		}
-		
-		
-		// 取出輸入的會員資訊
-//		String memberId = accountRequest.getMemberId();
-//		String pwd = accountRequest.getPwd();
-		
-		// 判斷資料是否為空
-//	    if (!StringUtils.hasText(memberId)
-//	    		|| !StringUtils.hasText(pwd)) {
-//	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
-//	    }
-		
-		// 判斷會員是否已經存在
-//		Member member = memberDao.findByMemberIdAndPwdAndIsActive(memberId, pwd, true);
-//		if (member == null) {
+//		Member res = memberDao.findByMemberIdAndPwdAndIsActive(sessionMemberId, sessionPwd, true);
+//		if (res == null) {
 //			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
 //		}
 		
+		
+		// 取出輸入的會員資訊
+		String memberId = accountRequest.getMemberId();
+		String pwd = accountRequest.getPwd();
+		
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)
+	    		|| !StringUtils.hasText(pwd)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+		
+		// 判斷會員是否已經存在
+		Member member = memberDao.findByMemberIdAndPwdAndIsActive(memberId, pwd, true);
+		if (member == null) {
+			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
+		}
+		
 //		// 判斷會員是否已經生效
-//		if (member.isActive() == false) {
-//			return new MemberResponse(MemberRtnCode.MEMBER_NOT_ACTIVE.getMessage());
-//		}
+		if (member.isActive() == false) {
+			return new MemberResponse(MemberRtnCode.MEMBER_NOT_ACTIVE.getMessage());
+		}
 		
 		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
 	}
