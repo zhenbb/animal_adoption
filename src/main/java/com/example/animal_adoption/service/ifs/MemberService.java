@@ -1,11 +1,5 @@
 package com.example.animal_adoption.service.ifs;
 
-import com.example.animal_adoption.vo.MemberUpdateRequest;
-
-import java.time.LocalDate;
-
-import com.example.animal_adoption.entity.Member;
-import com.example.animal_adoption.vo.MemberAccountRequest;
 import com.example.animal_adoption.vo.MemberResponse;
 import com.example.animal_adoption.vo.MemberRequest;
 

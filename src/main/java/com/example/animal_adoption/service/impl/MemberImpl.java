@@ -9,15 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.animal_adoption.constants.MemberRtnCode;
-import com.example.animal_adoption.constants.RtnCode;
 import com.example.animal_adoption.entity.Member;
 import com.example.animal_adoption.repository.MemberDao;
 import com.example.animal_adoption.service.ifs.MemberService;
 import com.example.animal_adoption.vo.MemberResponse;
-import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.MemberRequest;
 
 @Service
@@ -120,41 +117,7 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//會員登入
-	public MemberResponse logIn(MemberRequest accountRequest) {
-//	    // 取得客戶端Session
-//	    HttpSession clientSession = accountRequest.getHttpSession();
-//	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
-//	    String serviceSession = (String) session.getAttribute(clientSession.getId());
-//	    if (!StringUtils.hasText(serviceSession)) {
-//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-//	    }
-//	    
-//	    
-//		HttpSession httpSession = accountRequest.getHttpSession();
-//		String sessionMemberId = (String) httpSession.getAttribute("memberId");  
-//		String sessionPwd = (String) httpSession.getAttribute("pwd");
-//		System.out.println(sessionMemberId);
-		
-		// verifycode
-//		Integer sessionVerifyCode = (Integer) httpSession.getAttribute("verifyCode"); 
-		
-		//request是要帶入輸入的verifyCode
-//		return registerService.getRegTime2(request, sessionAccount, sessionPwd, sessionVerifyCode);
-	    
-		
-//		if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
-//			return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-//		}
-		// verifycode
-//		if (sessionVerifyCode == null || sessionVerifyCode != request.getVerifyCode()) {
-//			return new MemberResponse("Verify code incorrect!");
-//		}
-//		Member res = memberDao.findByMemberIdAndPwdAndIsActive(sessionMemberId, sessionPwd, true);
-//		if (res == null) {
-//			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
-//		}
-		
-		
+	public MemberResponse logIn(MemberRequest accountRequest) {	 
 		// 取出輸入的會員資訊
 		String memberId = accountRequest.getMemberId();
 		String pwd = accountRequest.getPwd();
@@ -165,38 +128,67 @@ public class MemberImpl implements MemberService{
 	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
 	    }
 		
-		// 判斷會員是否已經存在
+		// 判斷會員是否已經存在和生效
 		Member member = memberDao.findByMemberIdAndPwdAndIsActive(memberId, pwd, true);
 		if (member == null) {
 			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
 		}
 		
-//		// 判斷會員是否已經生效
-		if (member.isActive() == false) {
-			return new MemberResponse(MemberRtnCode.MEMBER_NOT_ACTIVE.getMessage());
-		}
+
+//		String sessionMemberId = (String) clientSession.getAttribute("memberId");  
+//		String sessionPwd = (String) clientSession.getAttribute("pwd");
+//		Integer sessionVerifyCode = (Integer) clientSession.getAttribute("verifyCode"); 	    
+//		// 判斷資料是否為空
+//		if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+//			return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+//		}
+//		if (sessionVerifyCode == null || sessionVerifyCode != accountRequest.getVerifyCode()) {
+//			return new MemberResponse(MemberRtnCode.VERIFY_CODE_ERROR.getMessage());
+//		}
+//		
+//		// 判斷會員是否已經存在和生效
+//		Member member = memberDao.findByMemberIdAndPwdAndIsActive(sessionMemberId, sessionPwd, true);
+//		if (member == null) {
+//			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_PWD_ERROR_OR_NOT_ACTIVE.getMessage());
+//		}
 		
-		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
+		// 產生驗證碼
+		double random = Math.random()*10000;
+		int verifyCode = (int)Math.round(random);
+		
+		// 取得客戶端Session
+		HttpSession clientSession = accountRequest.getHttpSession();
+		// 儲存到Session並設定Session資料保存時間為1小時
+		clientSession.setAttribute("verifyCode", verifyCode);  
+		clientSession.setAttribute("memberId", accountRequest.getMemberId());
+		clientSession.setAttribute("pwd", accountRequest.getPwd());
+		clientSession.setMaxInactiveInterval(3600);
+		String sessionId = clientSession.getId();
+		
+		return new MemberResponse(sessionId, verifyCode, MemberRtnCode.LOG_IN_SUCCESS.getMessage());
 	}
 	
 	//會員登出
 	@Override
 	public MemberResponse logOut(MemberRequest accountRequest) {
-		accountRequest.getHttpSession().removeAttribute("memberId");
-		accountRequest.getHttpSession().removeAttribute("pwd");
+		// 取得客戶端Session
+		HttpSession clientSession = accountRequest.getHttpSession();
+		// 消除客戶端Session
+		clientSession.removeAttribute("memberId");
+		clientSession.removeAttribute("pwd");
 		return new MemberResponse(MemberRtnCode.LOG_OUT_SUCCESS.getMessage());
 	}
 
 	@Override
 	//修改會員密碼
 	public MemberResponse updatePwd(MemberRequest updateRequest) {
-//	    // 取得客戶端Session
-//	    HttpSession clientSession = updateRequest.getHttpSession();
-//	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
-//	    String serviceSession = (String) session.getAttribute(clientSession.getId());
-//	    if (!StringUtils.hasText(serviceSession)) {
-//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-//	    }
+	    // 取得客戶端Session
+	    HttpSession clientSession = updateRequest.getHttpSession();
+	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+	    String serviceSession = (String) session.getAttribute(clientSession.getId());
+	    if (!StringUtils.hasText(serviceSession)) {
+	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+	    }
 		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
@@ -233,6 +225,14 @@ public class MemberImpl implements MemberService{
 	@Override
 	//修改會員姓名
 	public MemberResponse updateMemberName(MemberRequest updateRequest) {
+	    // 取得客戶端Session
+	    HttpSession clientSession = updateRequest.getHttpSession();
+	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+	    String serviceSession = (String) session.getAttribute(clientSession.getId());
+	    if (!StringUtils.hasText(serviceSession)) {
+	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+	    }
+		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String memberName = updateRequest.getMemberName();
@@ -261,6 +261,14 @@ public class MemberImpl implements MemberService{
 	@Override
 	//修改會員手機
 	public MemberResponse updatePhone(MemberRequest updateRequest) {
+	    // 取得客戶端Session
+	    HttpSession clientSession = updateRequest.getHttpSession();
+	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+	    String serviceSession = (String) session.getAttribute(clientSession.getId());
+	    if (!StringUtils.hasText(serviceSession)) {
+	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+	    }
+		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String phone = updateRequest.getPhone();
@@ -297,6 +305,14 @@ public class MemberImpl implements MemberService{
 	@Override
 	//修改會員生日
 	public MemberResponse updateBirthday(MemberRequest updateRequest) {
+	    // 取得客戶端Session
+	    HttpSession clientSession = updateRequest.getHttpSession();
+	    // 驗證客戶端Id與伺服器端Id，判斷是否有登入
+	    String serviceSession = (String) session.getAttribute(clientSession.getId());
+	    if (!StringUtils.hasText(serviceSession)) {
+	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+	    }
+		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String birth = updateRequest.getBirth();
