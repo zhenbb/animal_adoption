@@ -14,6 +14,9 @@ public interface MemberService {
 	//會員登入
 	public MemberResponse logIn(MemberRequest accountRequest);
 	
+	//會員登入驗證
+	public MemberResponse logInVerify(MemberRequest accountRequest);
+	
 	//會員登出
 	public MemberResponse logOut(MemberRequest accountRequest);
 	

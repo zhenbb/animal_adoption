@@ -19,9 +19,10 @@ public class MemberResponse {
 		
 	}
 
-	public MemberResponse(String sessionId, int verifyCode, String message) {
+	public MemberResponse(String sessionId, int verifyCode, Member member, String message) {
 		this.sessionId = sessionId;
 		this.verifyCode = verifyCode;
+		this.member = member;
 		this.message = message;
 	}
 
