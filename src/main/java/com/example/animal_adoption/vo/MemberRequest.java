@@ -24,6 +24,9 @@ public class MemberRequest {
 	@JsonProperty("birthday")
 	private String birth;
 	
+	@JsonProperty("verify_code")
+	private int verifyCode;
+	
 	private HttpSession httpSession;
 
 	public MemberRequest() {
@@ -69,12 +72,16 @@ public class MemberRequest {
 		this.birth = birth;
 	}
 
-	public HttpSession getHttpSession() {
-		return httpSession;
+	public int getVerifyCode() {
+		return verifyCode;
 	}
 
-	public void setHttpSession(HttpSession httpSession) {
-		this.httpSession = httpSession;
+	public void setVerifyCode(int verifyCode) {
+		this.verifyCode = verifyCode;
+	}
+
+	public HttpSession getHttpSession() {
+		return httpSession;
 	}
 	
 }
