@@ -1,5 +1,7 @@
 package com.example.animal_adoption.vo;
 
+import com.example.animal_adoption.entity.Member;
+
 import java.util.Map;
 
 public class CheckOutRequst {
@@ -9,11 +11,10 @@ public class CheckOutRequst {
     private int price;
     private int stock;
     private Map<Integer, Integer> carMap;
+    private Member member;
 
     public CheckOutRequst() {
     }
-
-
 
     public int getCarId() {
         return carId;
@@ -53,5 +54,12 @@ public class CheckOutRequst {
 
     public void setCarMap(Map<Integer, Integer> carMap) {
         this.carMap = carMap;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
