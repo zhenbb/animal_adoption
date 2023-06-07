@@ -65,7 +65,7 @@ public class MemberImpl implements MemberService{
 	    // 新增會員資料
 		Member member = new Member();
 	    // 字串轉LocalDate
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	    LocalDate localDateBirth = LocalDate.parse(birth, formatter);
 	    
 		member.setMemberId(memberId);
@@ -137,9 +137,8 @@ public class MemberImpl implements MemberService{
 		double random = Math.random()*10000;
 		int verifyCode = (int)Math.round(random);
 		
-		// 設定session驗證碼時間為3分鐘
+		// 設定session驗證碼
 		session.setAttribute("verifyCode", verifyCode);  
-		session.setMaxInactiveInterval(180);
 	
 		String serviceSessionId = session.getId();
 		
@@ -328,7 +327,7 @@ public class MemberImpl implements MemberService{
 	    Optional<Member> op = memberDao.findById(memberId);
 	    LocalDate birthOfDao = op.get().getBirth();
 	    // 字串轉LocalDate
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	    LocalDate localDateBirth = LocalDate.parse(birth, formatter);
 	    if (localDateBirth.equals(birthOfDao)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_BIRTHDAY.getMessage());
