@@ -176,9 +176,4 @@ public class CartImpl implements CartService {
         return new CartResponse(RtnCode.ADD_ORDER_SUCCESS.getMessage());
     }
 
-    @Override
-    public CartResponse getCartProduct(GetCartProductRequest getCartProductRequest) {
-        return null;
-    }
 }
-

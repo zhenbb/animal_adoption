@@ -17,4 +17,11 @@ public interface ProductDao extends JpaRepository<Product,Integer> {
 			+ " WHERE p.name REGEXP %:keyword% OR p.category REGEXP %:keyword%", nativeQuery = true)
 	public List<Product> searchAllByKeywordRegexp(@Param("keyword") String str);
 
+	@Query(value = "SELECT product_id FROM product", nativeQuery = true)
+	public List<Product> byProductId(@Param("input") int input);
+
+	public List<Product> findAllByProductIdIn(List<Integer> productList);
+
+
+
 }

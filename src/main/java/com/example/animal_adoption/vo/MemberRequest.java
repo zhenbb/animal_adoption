@@ -8,30 +8,30 @@ import com.example.animal_adoption.entity.Member;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MemberRequest {
-	
+
 	@JsonProperty("member_id")
 	private String memberId;
-	
+
 	@JsonProperty("password")
 	private String pwd;
-	
+
 	@JsonProperty("member_name")
 	private String memberName;
-	
+
 	@JsonProperty("phone")
 	private String phone;
-	
+
 	@JsonProperty("birthday")
 	private String birth;
-	
+
 	@JsonProperty("verify_code")
 	private int verifyCode;
-	
+
 	private HttpSession httpSession;
 
 	public MemberRequest() {
 	}
-	
+
 	public String getMemberId() {
 		return memberId;
 	}
@@ -83,5 +83,5 @@ public class MemberRequest {
 	public HttpSession getHttpSession() {
 		return httpSession;
 	}
-	
+
 }

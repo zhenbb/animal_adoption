@@ -4,19 +4,19 @@ import com.example.animal_adoption.entity.Member;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MemberResponse {
-	
+
 	@JsonProperty("session_id")
 	private String sessionId;
-	
+
 	@JsonProperty("verify_code")
 	private int verifyCode;
-	
+
 	private Member member;
-	
+
 	private String message;
 
 	public MemberResponse() {
-		
+
 	}
 
 	public MemberResponse(String sessionId, int verifyCode, Member member, String message) {
@@ -66,5 +66,5 @@ public class MemberResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 }

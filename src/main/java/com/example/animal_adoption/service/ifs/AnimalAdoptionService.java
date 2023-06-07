@@ -27,7 +27,7 @@ public interface AnimalAdoptionService {
   
   // 新增商品 nana
   // 審查員(管理員)需先登入
-  public ProductResponse addProduct(ProductRequest ProductRequest);
+  public ProductResponse addProduct(boolean isAdministrator, ProductRequest addProductRequest);
   
   // 更新商品系列 nana
   // 審查員(管理員)需先登入

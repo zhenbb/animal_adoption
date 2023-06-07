@@ -1,41 +1,27 @@
 package com.example.animal_adoption.vo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+public class ProductRequest {
 
-public class ProductUpdateRequest {
 
-	@JsonProperty("is_admin")
-	private boolean isAdmin;
-
-	@JsonProperty("product_id")
-	private int productId;
-	
-	@JsonProperty("product_name")
 	private String productName;
-	
-	@JsonProperty("price")
-	private int price;
 
-	@JsonProperty("category")
 	private String category;
 
-	@JsonProperty("stock")
+	private int price;
+
 	private int stock;
 
-	public boolean isAdmin() {
-		return isAdmin;
+	public ProductRequest() {
+		super();
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
 
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public ProductRequest(String productName, String category, int price, int stock) {
+		super();
+		this.productName = productName;
+		this.category = category;
+		this.price = price;
+		this.stock = stock;
 	}
 
 	public String getProductName() {
