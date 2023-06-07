@@ -20,7 +20,7 @@ public interface ProductDao extends JpaRepository<Product,Integer> {
 	@Query(value = "SELECT product_id FROM product", nativeQuery = true)
 	public List<Product> byProductId(@Param("input") int input);
 
-	public List<Product> findAllByProductId(List<Integer> List);
+	public List<Product> findAllByProductIdIn(List<Integer> productList);
 
 
 

@@ -16,7 +16,7 @@ public class Car {
   @Column(name = "car_id")
   private int carId;
 
-  @Column(name = "carMap")
+  @Column(name = "car_map")
   private String carMap;
 
   public int getCarId() {

@@ -33,11 +33,6 @@ public class MemberController {
 		return memberService.logIn(accountRequest);
 	}
 	
-	@PostMapping(value = "log_in_verify")
-	public MemberResponse logInVerify(@RequestBody MemberRequest accountRequest) {		
-		return memberService.logInVerify(accountRequest);
-	}
-	
 	@PostMapping(value = "log_out")
 	public MemberResponse logOut(@RequestBody MemberRequest accountRequest) {
 		return memberService.logOut(accountRequest);

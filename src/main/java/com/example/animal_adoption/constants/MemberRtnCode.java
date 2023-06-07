@@ -2,7 +2,7 @@ package com.example.animal_adoption.constants;
 
 
 public enum MemberRtnCode {
-	
+
 	LOG_IN_SUCCESS("200", "登入成功"),
 	LOG_IN_VERIFY_SUCCESS("200", "登入驗證成功"),
 	LOG_OUT_SUCCESS("200", "登出成功"),
@@ -20,8 +20,8 @@ public enum MemberRtnCode {
 	SAME_BIRTHDAY("400", "生日不可與原本相同"),
 	NOT_LOG_IN("400", "未登入會員"),
 	VERIFY_CODE_ERROR("400", "驗證碼錯誤"),
-	
-	
+
+
 	INCORRECT_INFO_ERROR("400", "資料不正確"),
 	INPUT_EMPTY_VALUE_ERROR("400", "輸入值為空"),
 	INPUT_NOT_ALLOWED_BLANK_ERROR("400", "輸入不得為空白"),
@@ -54,4 +54,3 @@ public enum MemberRtnCode {
 	}
 	
 }
-

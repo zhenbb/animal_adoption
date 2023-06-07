@@ -13,15 +13,15 @@ import com.example.animal_adoption.service.ifs.CartService;
 import com.example.animal_adoption.vo.AddCartRequst;
 import com.example.animal_adoption.vo.CartResponse;
 import com.example.animal_adoption.vo.CheckOutRequst;
+import com.example.animal_adoption.vo.GetCartProductRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 @Service
 public class CartImpl implements CartService {
@@ -39,15 +39,15 @@ public class CartImpl implements CartService {
     private OrderDao orderDao;
 
     @Override
-    public CartResponse addProduct(AddCartRequst requst) {
+    public CartResponse addProduct(AddCartRequst addCartRequst) {
 //        取得會員的購物車資料：根據會員的member_id，從資料庫中取得會員的購物車資料。
 //        新增商品到購物車：根據商品的資料，建立一個新的Produce物件，並將其加入會員的購物車。
 //        更新資料庫：將更新後的購物車資料儲存回資料庫，並更新會員的購物車流水號。
 
-        Member member = requst.getMember();
-        Integer carId = member.getCarId();
-
-        List<Product> cartList = new ArrayList<>(productDao.byProductId(requst.getProductId()));
+        Member member = addCartRequst.getMember();
+        Optional<Member> info = memberDao.findById(member.getMemberId());
+        Integer carId = info.get().getCarId();
+        List<Product> cartList = new ArrayList<>(productDao.findAllById(Collections.singleton(addCartRequst.getProductId())));
         //查詢商品是否存在
         if (cartList.isEmpty()) {
             return new CartResponse(RtnCode.NOT_FOUND_PRODUCT_ERROR.getMessage());
@@ -55,13 +55,13 @@ public class CartImpl implements CartService {
         //查詢庫存
         for (Product item : cartList) {
             int stock = item.getStock();
-            if (stock < requst.getSales()) {
+            if (stock < addCartRequst.getSales()) {
                 return new CartResponse(RtnCode.ADD_PRODUCT_ERROR.getMessage());
             }
         }
-
         //將商品放入Map轉換成字串存入資料庫
-        Map<Integer, Integer> shoppingCart = new HashMap<>(requst.getProductId(), requst.getSales());
+        Map<Integer, Integer> shoppingCart = new HashMap<>();
+        shoppingCart.put(addCartRequst.getProductId(), addCartRequst.getSales());
         ObjectMapper mapper = new ObjectMapper();
         String mapStr;
         try {
@@ -75,13 +75,26 @@ public class CartImpl implements CartService {
         //更新會員購物車存入
         if (carId == null) {
             carDao.save(car);
-            Car cart = carDao.byCarMap(mapStr);
+            Car cart = carDao.save(car);
             int id = cart.getCarId();
-            member.setCarId(id);
-            memberDao.save(member);
+            info.get().setCarId(id);
+            memberDao.save(info.get());
             //存入商品至購物車(會員資料中無購物車的)
         } else {
+            Optional<Car> oldCart = carDao.findById(carId);
+            String oldcartMapSt = oldCart.get().getCarMap();
+            ObjectMapper mapper1 = new ObjectMapper();
+            Map<Integer, Integer> oldCartMap = new HashMap<>();
+            //將Map字串轉回Map
+            try {
+                oldCartMap = mapper1.readValue(oldcartMapSt, new TypeReference<Map<Integer, Integer>>() {
+                });
+                System.out.println(oldCartMap);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
             Map<Integer, Integer> newCart = new HashMap<>();
+            newCart.putAll(oldCartMap);
             newCart.putAll(shoppingCart);
             String newMapStr;
             try {
@@ -92,32 +105,38 @@ public class CartImpl implements CartService {
             Car newCar = new Car();
             newCar.setCarMap(newMapStr);
             carDao.save(newCar);
+            int newId = newCar.getCarId();
+            info.get().setCarId(newId);
+            memberDao.save(info.get());
         }
         return new CartResponse(RtnCode.ADD_PRODUCT_SUCCESS.getMessage());
     }
 
+
     @Override
     public CartResponse checkOut(CheckOutRequst checkOutRequst) {
 
-
+        Optional<Member> member = memberDao.findById(checkOutRequst.getMember().getMemberId());
+        Integer carId = member.get().getCarId();
+        System.out.println(carId);
         //從會員資料中找到購物車ID
-        int carid = checkOutRequst.getCarId();
         //查詢購物車ID
-        Car cart = carDao.byCarId(carid);
+        Optional<Car> cart = carDao.findById(carId);
         //找到購物車Map字串
-        String cartMap = cart.getCarMap();
+        String cartMap = cart.get().getCarMap();
         ObjectMapper mapper = new ObjectMapper();
         Map<Integer, Integer> shoppingCartMap = new HashMap<>();
         //將Map字串轉回Map
         try {
-            shoppingCartMap = mapper.readValue(cartMap, Map.class);
-//            System.out.println(shoppingCart);
+            shoppingCartMap = mapper.readValue(cartMap, new TypeReference<Map<Integer, Integer>>() {
+            });
+            System.out.println(shoppingCartMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         //將字串的Key值加入List並從資料庫中找到商品
         List<Integer> productIdList = new ArrayList<>(shoppingCartMap.keySet());
-        List<Product> orderList = productDao.findAllByProductId(productIdList);
+        List<Product> orderList = productDao.findAllByProductIdIn(productIdList);
         List<Product> saveList = new ArrayList<>();
         int totalPrice = 0;
         for (Product product : orderList) {
@@ -137,11 +156,24 @@ public class CartImpl implements CartService {
                 }
             }
         }
+        System.out.println(totalPrice);
         productDao.saveAll(saveList);
         Order newOrder = new Order();
-        newOrder.setOrderMap(cartMap);
+        newOrder.setCheckoutMap(cartMap);
         orderDao.save(newOrder);
+
+        Order order = orderDao.findByCheckoutMap(cartMap);
+
+
+        if (member.get().getCheckoutId() == null) {
+            String checkoutId = order.getCheckoutId() + "," + " ";
+            member.get().setCheckoutId(checkoutId);
+        } else {
+            String newCheckoutId = member.get().getCheckoutId() + order.getCheckoutId() + "," + " ";
+            member.get().setCheckoutId(newCheckoutId);
+        }
+        memberDao.save(member.get());
         return new CartResponse(RtnCode.ADD_ORDER_SUCCESS.getMessage());
     }
-}
 
+}
