@@ -33,7 +33,6 @@ class AnimalAdoptionApplicationTests {
 		ProductResponse res = aniService.updateProductName(true, 2, "牽繩 3m");
 		System.out.println(res.getMessage());
 	}
-
-
+	
 
 }
