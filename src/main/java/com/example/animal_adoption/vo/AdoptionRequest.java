@@ -16,6 +16,7 @@ public class AdoptionRequest {
 
   @JsonProperty()
   private HttpSession httpSession;
+
   public AdoptionRequest() {
   }
 

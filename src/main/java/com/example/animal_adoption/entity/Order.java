@@ -6,28 +6,28 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="order")
+@Table(name = "checkout")
 public class Order {
 
     @Id
-    @Column(name = "order_id")
-    private int carId;
-    @Column(name = "orderMap")
-    private String orderMap;
+    @Column(name = "checkout_id")
+    private int checkoutId;
+    @Column(name = "checkout_map")
+    private String checkoutMap;
 
-    public int getCarId() {
-        return carId;
+    public int getCheckoutId() {
+        return checkoutId;
     }
 
-    public void setCarId(int carId) {
-        this.carId = carId;
+    public void setCheckoutId(int checkoutId) {
+        this.checkoutId = checkoutId;
     }
 
-    public String getOrderMap() {
-        return orderMap;
+    public String getCheckoutMap() {
+        return checkoutMap;
     }
 
-    public void setOrderMap(String orderMap) {
-        this.orderMap = orderMap;
+    public void setCheckoutMap(String checkoutMap) {
+        this.checkoutMap = checkoutMap;
     }
 }
