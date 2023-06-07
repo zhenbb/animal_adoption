@@ -1,7 +1,6 @@
 package com.example.animal_adoption.vo;
 
-import javax.servlet.http.HttpSession;
-
+import com.example.animal_adoption.entity.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductAddRequest {
@@ -10,22 +9,7 @@ public class ProductAddRequest {
 	private boolean isAdministrator;
 
 	@JsonProperty("product")
-	private ProductRequest productRequest;
+	private Product product; 
 
-	public boolean isAdministrator() {
-		return isAdministrator;
-	}
-
-	public void setAdministrator(boolean isAdministrator) {
-		this.isAdministrator = isAdministrator;
-	}
-
-	public ProductRequest getProductRequest() {
-		return productRequest;
-	}
-
-	public void setProductRequest(ProductRequest productRequest) {
-		this.productRequest = productRequest;
-	}
 
 }
