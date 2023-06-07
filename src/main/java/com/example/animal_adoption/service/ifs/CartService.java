@@ -10,8 +10,6 @@ public interface CartService {
 
     public CartResponse addProduct(AddCartRequst addCartRequst);
 
-    public CartResponse deleteProduct(DeleteCartProductRequst deleteCartProductRequst);
-
     public CartResponse checkOut(CheckOutRequst checkOutRequst);
 
 }

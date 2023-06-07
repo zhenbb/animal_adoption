@@ -13,7 +13,6 @@ import com.example.animal_adoption.service.ifs.CartService;
 import com.example.animal_adoption.vo.AddCartRequst;
 import com.example.animal_adoption.vo.CartResponse;
 import com.example.animal_adoption.vo.CheckOutRequst;
-import com.example.animal_adoption.vo.DeleteCartProductRequst;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -112,40 +111,6 @@ public class CartImpl implements CartService {
         return new CartResponse(RtnCode.ADD_PRODUCT_SUCCESS.getMessage());
     }
 
-    @Override
-    public CartResponse deleteProduct(DeleteCartProductRequst deleteCartProductRequst) {
-
-        Member member = deleteCartProductRequst.getMember();
-        Integer carId = member.getCarId();
-
-        List<Product> cartList = new ArrayList<>(productDao.byProductId(deleteCartProductRequst.getProductId()));
-        //查詢商品是否存在
-        if (cartList.isEmpty()) {
-            return new CartResponse(RtnCode.NOT_FOUND_PRODUCT_ERROR.getMessage());
-        }
-        Optional<Car> cart = carDao.findById(carId);
-        if (!cart.isPresent()) {
-            return new CartResponse(RtnCode.NOT_FOUND_PRODUCT_ERROR.getMessage());
-        }
-        String cartMap = cart.get().getCarMap();
-        ObjectMapper mapper = new ObjectMapper();
-        Map<Integer, Integer> shoppingCartMap = new HashMap<>();
-        try {
-            shoppingCartMap = mapper.readValue(cartMap, new TypeReference<Map<Integer, Integer>>() {
-            });
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        List<Integer> productIdList = new ArrayList<>(shoppingCartMap.keySet());
-        List<Product> orderList = productDao.findAllByProductIdIn(productIdList);
-        List<Product> saveList = new ArrayList<>();
-        for (Product product : orderList) {
-            for (Map.Entry<Integer, Integer> item : shoppingCartMap.entrySet()) {
-
-            }
-        }
-        return null;
-    }
 
     @Override
     public CartResponse checkOut(CheckOutRequst checkOutRequst) {
