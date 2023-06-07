@@ -16,12 +16,8 @@ public class Car {
   @Column(name = "car_id")
   private int carId;
 
-  @Column(name = "product_id")
-  private String productId;
-
-  @Column(name = "quantity")
-  private int quantity;
-
+  @Column(name = "carMap")
+  private String carMap;
 
   public int getCarId() {
     return carId;
@@ -31,21 +27,11 @@ public class Car {
     this.carId = carId;
   }
 
-  public String getProductId() {
-    return productId;
+  public String getCarMap() {
+    return carMap;
   }
 
-  public void setProductId(String productId) {
-    this.productId = productId;
+  public void setCarMap(String carMap) {
+    this.carMap = carMap;
   }
-
-  public int getQuantity() {
-    return quantity;
-  }
-
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
-  }
-
-
 }

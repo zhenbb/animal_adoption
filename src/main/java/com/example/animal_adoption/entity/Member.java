@@ -14,6 +14,9 @@ public class Member {
   @Id
   @Column(name = "member_id")
   private String memberId;
+  
+  @Column(name = "password")
+  private String pwd;
 
   @Column(name = "member_name")
   private String memberName;
@@ -28,14 +31,20 @@ public class Member {
   private String fav;
 
   @Column(name = "car_id")
-  private String carId;
+  private Integer carId;
 
   @Column(name = "order_id")
   private String orderId;
 
   @Column(name = "is_administrator")
   private boolean isAdministrator;
+  
+  
+  @Column(name = "is_active")
+  private boolean isActive;
 
+  public Member() {
+  }
 
   public String getMemberId() {
     return memberId;
@@ -43,6 +52,14 @@ public class Member {
 
   public void setMemberId(String memberId) {
     this.memberId = memberId;
+  }
+
+  public String getPwd() {
+	return pwd;
+  }
+
+  public void setPwd(String pwd) {
+	this.pwd = pwd;
   }
 
   public String getMemberName() {
@@ -77,11 +94,11 @@ public class Member {
     this.fav = fav;
   }
 
-  public String getCarId() {
+  public Integer getCarId() {
     return carId;
   }
 
-  public void setCarId(String carId) {
+  public void setCarId(Integer carId) {
     this.carId = carId;
   }
 
@@ -100,4 +117,13 @@ public class Member {
   public void setAdministrator(boolean administrator) {
     isAdministrator = administrator;
   }
+
+  public boolean isActive() {
+	  return isActive;
+  }
+
+  public void setActive(boolean isActive) {
+	  this.isActive = isActive;
+  }
+  
 }
