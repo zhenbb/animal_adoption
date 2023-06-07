@@ -13,6 +13,7 @@ import com.example.animal_adoption.service.ifs.CartService;
 import com.example.animal_adoption.vo.AddCartRequst;
 import com.example.animal_adoption.vo.CartResponse;
 import com.example.animal_adoption.vo.CheckOutRequst;
+import com.example.animal_adoption.vo.GetCartProductRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -173,6 +174,11 @@ public class CartImpl implements CartService {
         }
         memberDao.save(member.get());
         return new CartResponse(RtnCode.ADD_ORDER_SUCCESS.getMessage());
+    }
+
+    @Override
+    public CartResponse getCartProduct(GetCartProductRequest getCartProductRequest) {
+        return null;
     }
 }
 
