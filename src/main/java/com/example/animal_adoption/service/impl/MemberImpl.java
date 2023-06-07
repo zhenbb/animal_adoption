@@ -75,7 +75,7 @@ public class MemberImpl implements MemberService{
 		member.setBirth(localDateBirth);
 		member.setFav(null);
 		member.setCarId(null);
-		member.setOrderId(null);
+		member.setCheckoutId(null);
 		member.setAdministrator(false);
 
 
