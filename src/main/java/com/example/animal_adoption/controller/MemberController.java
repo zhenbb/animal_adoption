@@ -1,17 +1,16 @@
 package com.example.animal_adoption.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.animal_adoption.constants.MemberRtnCode;
 import com.example.animal_adoption.service.ifs.MemberService;
 import com.example.animal_adoption.vo.MemberRequest;
 import com.example.animal_adoption.vo.MemberResponse;
 
+@CrossOrigin
 @RestController
 public class MemberController {
 	
@@ -28,6 +27,7 @@ public class MemberController {
 		return memberService.activeAccount(accountRequest);
 	}
 	
+//	@CrossOrigin(origins="http://localhost:8080/log_in")
 	@PostMapping(value = "log_in")
 	public MemberResponse logIn(@RequestBody MemberRequest accountRequest) {		
 		return memberService.logIn(accountRequest);
