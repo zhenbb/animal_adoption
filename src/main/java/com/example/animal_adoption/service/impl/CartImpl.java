@@ -10,10 +10,7 @@ import com.example.animal_adoption.repository.MemberDao;
 import com.example.animal_adoption.repository.OrderDao;
 import com.example.animal_adoption.repository.ProductDao;
 import com.example.animal_adoption.service.ifs.CartService;
-import com.example.animal_adoption.vo.AddCartRequst;
-import com.example.animal_adoption.vo.CartResponse;
-import com.example.animal_adoption.vo.CheckOutRequst;
-import com.example.animal_adoption.vo.GetCartProductRequest;
+import com.example.animal_adoption.vo.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -176,10 +173,73 @@ public class CartImpl implements CartService {
         return new CartResponse(RtnCode.ADD_ORDER_SUCCESS.getMessage());
     }
 
+    @Override
+    public CartResponse getCartProduct(GetCartProductRequest getCartProductRequest) {
 
-	@Override
-	public CartResponse getCartProduct(GetCartProductRequest getCartProductRequest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        Optional<Member> member = memberDao.findById(getCartProductRequest.getMember().getMemberId());
+        Integer carId = member.get().getCarId();
+        System.out.println(carId);
+        //從會員資料中找到購物車ID
+        //查詢購物車ID
+        Optional<Car> cart = carDao.findById(carId);
+        //找到購物車Map字串
+        String cartMap = cart.get().getCarMap();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<Integer, Integer> shoppingCartMap = new HashMap<>();
+        //將Map字串轉回Map
+        try {
+            shoppingCartMap = mapper.readValue(cartMap, new TypeReference<Map<Integer, Integer>>() {
+            });
+            System.out.println(shoppingCartMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        //將字串的Key值加入List並從資料庫中找到商品
+        List<Integer> productIdList = new ArrayList<>(shoppingCartMap.keySet());
+        List<Product> orderList = productDao.findAllByProductIdIn(productIdList);
+
+        return new CartResponse(orderList);
+    }
+
+    @Override
+    public CartResponse modifyProductQuantity(DeleteProductRequest deleteProductRequest) {
+
+        Optional<Member> member = memberDao.findById(deleteProductRequest.getMember().getMemberId());
+        Integer carId = member.get().getCarId();
+        System.out.println(carId);
+        //從會員資料中找到購物車ID
+        //查詢購物車ID
+        Optional<Car> cart = carDao.findById(carId);
+        //找到購物車Map字串
+        String cartMap = cart.get().getCarMap();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<Integer, Integer> shoppingCartMap = new HashMap<>();
+        //將Map字串轉回Map
+        try {
+            shoppingCartMap = mapper.readValue(cartMap, new TypeReference<Map<Integer, Integer>>() {
+            });
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        List<Integer> productIdList = new ArrayList<>(shoppingCartMap.keySet());
+        List<Product> orderList = productDao.findAllByProductIdIn(productIdList);
+        List<Product> saveList = new ArrayList<>();
+        for (Product product : orderList) {
+            for (Map.Entry<Integer, Integer> item : shoppingCartMap.entrySet()) {
+                if (item.getKey().equals(deleteProductRequest.getProductId())) {
+                    item.setValue(deleteProductRequest.getQuantity());
+                }
+                Integer key = item.getKey();
+                if (key.equals(product.getProductId())) {
+                    int sales = deleteProductRequest.getQuantity();
+                    if (sales > product.getStock()) {
+                        return new CartResponse(RtnCode.OUT_OF_STOCK_ERROR.getMessage());
+                    }
+                    product.setStock(product.getStock() + key - sales);
+                    saveList.add(product);
+                }
+            }
+        }
+        return new CartResponse(RtnCode.MODIFY_THE_QUANTITY.getMessage());
+    }
 }

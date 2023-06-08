@@ -33,11 +33,15 @@ public enum RtnCode {
 
     //cart
     ADD_PRODUCT_SUCCESS("200","新增購物車成功"),
+    MODIFY_THE_QUANTITY("200","更改數量成功"),
     ADD_ORDER_SUCCESS("200","新增訂單成功"),
     ADD_PRODUCT_ERROR("400","商品庫存不足"),
     NOT_FOUND_PRODUCT_ERROR("400","找不到商品，可能已被下架或售完"),
     NOT_FOUND_CART_ERROR("400","購物車為空"),
-    OUT_OF_STOCK_ERROR("400","庫存不足");
+    OUT_OF_STOCK_ERROR("400","庫存不足"),
+    ;
+
+
 
 
     private String code;

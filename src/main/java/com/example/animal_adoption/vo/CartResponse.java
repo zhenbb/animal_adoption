@@ -1,14 +1,20 @@
 package com.example.animal_adoption.vo;
 
+import com.example.animal_adoption.entity.Product;
+
+import java.util.List;
 import java.util.Map;
 
 public class CartResponse {
 
     private int carId;
-
     private Map<String,Integer> carMap;
-
     private String message;
+    private List<Product> cartList;
+
+    public CartResponse(List<Product> cartList) {
+        this.cartList = cartList;
+    }
 
     public CartResponse() {
     }
@@ -39,5 +45,13 @@ public class CartResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public List<Product> getCartList() {
+        return cartList;
+    }
+
+    public void setCartList(List<Product> cartList) {
+        this.cartList = cartList;
     }
 }

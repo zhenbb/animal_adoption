@@ -4,6 +4,7 @@ import com.example.animal_adoption.service.ifs.CartService;
 import com.example.animal_adoption.vo.AddCartRequst;
 import com.example.animal_adoption.vo.CartResponse;
 import com.example.animal_adoption.vo.CheckOutRequst;
+import com.example.animal_adoption.vo.GetCartProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping(value = "add_cart")
+    @PostMapping(value = "addCart")
     public CartResponse addCart(@RequestBody AddCartRequst addCartRequst) {
         return cartService.addProduct(addCartRequst);
     }
@@ -24,5 +25,9 @@ public class CartController {
         return cartService.checkOut(checkOutRequst);
     }
 
+    @PostMapping(value = "getCartProduct")
+    public CartResponse getCartProduct(@RequestBody GetCartProductRequest getCartProductRequest){
+        return cartService.getCartProduct(getCartProductRequest);
+    }
 
 }
