@@ -26,40 +26,4 @@ public class AnimalAdoptionController {
     return animalAdoptionService.eligibilityReview(reviewRequest);
   }
 
-<<<<<<< HEAD
-  
-  
-  @PostMapping(value = "add_product")
-  public ProductResponse addProduct(@RequestBody ProductAddRequest request) {
-    return animalAdoptionService.addProduct(request.isAdministrator(),request.getProductRequest());
-  }
-  
-
-  @PostMapping(value = "update_product_name")
-  public ProductResponse updateProductName(@RequestBody ProductUpdateRequest request) {
-    return animalAdoptionService.updateProductName(request.isAdmin(),request.getProductId(),request.getProductName());
-  }
-  
-  @PostMapping(value = "update_product_price")
-  public ProductResponse updateProductPrice(@RequestBody ProductUpdateRequest request) {
-    return animalAdoptionService.updateProductPrice(request.isAdmin(),request.getProductId(),request.getPrice());
-  }
-  
-  @PostMapping(value = "update_product_category")
-  public ProductResponse updateProductCategory(@RequestBody ProductUpdateRequest request) {
-    return animalAdoptionService.updateProductCategory(request.isAdmin(),request.getProductId(),request.getCategory());
-  }
-  
-  @PostMapping(value = "update_product_stock")
-  public ProductResponse updateProductStock(@RequestBody ProductUpdateRequest request) {
-    return animalAdoptionService.updateProductStock(request.isAdmin(),request.getProductId(),request.getStock());
-  }
-  
-  @PostMapping(value = "search_product")
-  public ProductResponse searchProduct(@RequestBody ProductSearchRequest request) {
-    return animalAdoptionService.searchKeyword(request.getKeyword());
-  }
-  
-=======
->>>>>>> product_nana
 }

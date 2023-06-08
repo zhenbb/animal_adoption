@@ -159,4 +159,10 @@ public class ProductImpl implements ProductService {
 		return new ProductResponse(result, RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
 	}
 
+	@Override
+	public ProductResponse searchKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

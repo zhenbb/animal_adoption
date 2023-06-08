@@ -23,27 +23,4 @@ public interface AnimalAdoptionService {
   // 會員需先登入
   public AnimalAdoptionResponse deleteFavorite(FavoriteRequest favoriteRequest);
   
-<<<<<<< HEAD
-  // 新增商品 nana
-  // 審查員(管理員)需先登入
-  public ProductResponse addProduct(boolean isAdministrator, ProductRequest addProductRequest);
-  
-  // 更新商品系列 nana
-  // 審查員(管理員)需先登入
-  //1. 更改庫存
-  public ProductResponse updateProductStock(boolean isAdministrator, int productId, int stock);
-  
-  //2. 更新商品名稱
-  public ProductResponse updateProductName(boolean isAdministrator, int productId, String productName);
-  
-  //3. 更新商品價格
-  public ProductResponse updateProductPrice(boolean isAdministrator, int productId, int price);
-  
-  //4. 更新商品分類
-  public ProductResponse updateProductCategory(boolean isAdministrator, int productId, String category);
-  
-  //搜尋商品
-  public ProductResponse searchKeyword(String keyword);
-=======
->>>>>>> product_nana
 }
