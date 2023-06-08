@@ -24,8 +24,6 @@ import com.example.animal_adoption.vo.AdoptionRequest;
 import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.EligibilityReviewRequest;
 import com.example.animal_adoption.vo.FavoriteRequest;
-import com.example.animal_adoption.vo.ProductRequest;
-import com.example.animal_adoption.vo.ProductResponse;
 
 @Service
 public class AnimalAdoptionImpl implements AnimalAdoptionService {
@@ -276,6 +274,7 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
                 || member.getBirth() == null;
     }
 
+<<<<<<< HEAD
 
     // 新增商品 nana
     @Override
@@ -428,6 +427,8 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     //搜尋功能(可多關鍵字、可用空格區分)@Query+regexp
     @Override
     public ProductResponse searchKeyword(String keyword) {
+=======
+>>>>>>> product_nana
 
         //防呆
         if (!StringUtils.hasText(keyword)) {

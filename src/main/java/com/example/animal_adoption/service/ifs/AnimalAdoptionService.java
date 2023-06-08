@@ -4,8 +4,6 @@ import com.example.animal_adoption.vo.AdoptionRequest;
 import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.EligibilityReviewRequest;
 import com.example.animal_adoption.vo.FavoriteRequest;
-import com.example.animal_adoption.vo.ProductRequest;
-import com.example.animal_adoption.vo.ProductResponse;
 
 public interface AnimalAdoptionService {
 
@@ -25,6 +23,7 @@ public interface AnimalAdoptionService {
   // 會員需先登入
   public AnimalAdoptionResponse deleteFavorite(FavoriteRequest favoriteRequest);
   
+<<<<<<< HEAD
   // 新增商品 nana
   // 審查員(管理員)需先登入
   public ProductResponse addProduct(boolean isAdministrator, ProductRequest addProductRequest);
@@ -45,4 +44,6 @@ public interface AnimalAdoptionService {
   
   //搜尋商品
   public ProductResponse searchKeyword(String keyword);
+=======
+>>>>>>> product_nana
 }

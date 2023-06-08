@@ -9,10 +9,6 @@ import com.example.animal_adoption.service.ifs.AnimalAdoptionService;
 import com.example.animal_adoption.vo.AdoptionRequest;
 import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.EligibilityReviewRequest;
-import com.example.animal_adoption.vo.ProductAddRequest;
-import com.example.animal_adoption.vo.ProductResponse;
-import com.example.animal_adoption.vo.ProductSearchRequest;
-import com.example.animal_adoption.vo.ProductUpdateRequest;
 
 @RestController
 public class AnimalAdoptionController {
@@ -30,6 +26,7 @@ public class AnimalAdoptionController {
     return animalAdoptionService.eligibilityReview(reviewRequest);
   }
 
+<<<<<<< HEAD
   
   
   @PostMapping(value = "add_product")
@@ -63,4 +60,6 @@ public class AnimalAdoptionController {
     return animalAdoptionService.searchKeyword(request.getKeyword());
   }
   
+=======
+>>>>>>> product_nana
 }
