@@ -21,18 +21,4 @@ class AnimalAdoptionApplicationTests {
 
 	}
 
-	// Product 商品用
-	@Test
-	public void addProductTest() {
-		ProductRequest pr = new ProductRequest("花邊項圈(小)","狗,貓",120,10);
-		ProductResponse proRes = aniService.addProduct(true, pr);
-		System.out.println(proRes.getMessage());
-	}
-	@Test
-	public void updateProductTest() {
-		ProductResponse res = aniService.updateProductName(true, 2, "牽繩 3m");
-		System.out.println(res.getMessage());
-	}
-	
-
 }

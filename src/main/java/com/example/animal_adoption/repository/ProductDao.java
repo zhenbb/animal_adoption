@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.animal_adoption.entity.Product;
-
+ 
 @Repository
 public interface ProductDao extends JpaRepository<Product,Integer> {
 	
