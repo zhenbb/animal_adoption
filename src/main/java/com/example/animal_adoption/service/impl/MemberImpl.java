@@ -75,8 +75,10 @@ public class MemberImpl implements MemberService{
 		member.setBirth(localDateBirth);
 		member.setFav(null);
 		member.setCarId(null);
-		member.setCheckoutId(null);
+		member.setOrderId(null);
 		member.setAdministrator(false);
+		
+		memberDao.save(member);
 
 
 		return new MemberResponse(member, MemberRtnCode.SIGN_UP_SUCCESS.getMessage());

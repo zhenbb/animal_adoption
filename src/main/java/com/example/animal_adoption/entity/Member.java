@@ -33,8 +33,8 @@ public class Member {
     @Column(name = "car_id")
     private Integer carId;
 
-    @Column(name = "checkout_id")
-    private String checkoutId;
+    @Column(name = "order_id")
+    private String orderId;
 
     @Column(name = "is_administrator")
     private boolean isAdministrator;
@@ -102,15 +102,15 @@ public class Member {
         this.carId = carId;
     }
 
-    public String getCheckoutId() {
-        return checkoutId;
-    }
+    public String getOrderId() {
+		return orderId;
+	}
 
-    public void setCheckoutId(String orderId) {
-        this.checkoutId = orderId;
-    }
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 
-    public boolean isAdministrator() {
+	public boolean isAdministrator() {
         return isAdministrator;
     }
 
