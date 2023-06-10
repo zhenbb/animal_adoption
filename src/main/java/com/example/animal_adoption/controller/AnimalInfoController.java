@@ -19,9 +19,9 @@ public class AnimalInfoController {
 	    return animalInfoService.animalAdd(animalInfoRequest.getAnimal());
 	  }
 	
-	@PostMapping(value = "deleteByName")
-	  public AnimalInfoResponse deleteByName(@RequestBody AnimalInfoRequest animalInfoRequest) {
-	    return animalInfoService.deleteByName(animalInfoRequest.getAnimalId());
+	@PostMapping(value = "deleteById")
+	  public AnimalInfoResponse deleteById(@RequestBody AnimalInfoRequest animalInfoRequest) {
+	    return animalInfoService.deleteById(animalInfoRequest.getAnimalId());
 	  }
 	
 	@PostMapping(value = "animalModify")

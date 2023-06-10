@@ -11,7 +11,7 @@ public interface AnimalInfoService {
 	public AnimalInfoResponse animalAdd(List<Animal> animalList);
 	
 	//刪除
-	public AnimalInfoResponse deleteByName(int animalId);
+	public AnimalInfoResponse deleteById(int animalId);
 	
 	//修改
 	public AnimalInfoResponse animalModify(List<Animal> animalList);

@@ -42,7 +42,7 @@ public class AnimalInfoImpl implements AnimalInfoService {
 
 	// 刪除動物資訊(刪除值依照流水號,若無此流水號則會回傳0)
 	@Override
-	public AnimalInfoResponse deleteByName(int animalId) {
+	public AnimalInfoResponse deleteById(int animalId) {
 		int deleteAnimal = animalDao.deleteByName(animalId);
 		if (deleteAnimal == 0) {
 			return new AnimalInfoResponse(RtnCode.NOT_FOUND.getMessage());
