@@ -1,14 +1,13 @@
 package com.example.animal_adoption.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.animal_adoption.service.ifs.AnimalInfoService;
 import com.example.animal_adoption.vo.AnimalInfoRequest;
 import com.example.animal_adoption.vo.AnimalInfoResponse;
 
+@CrossOrigin
 @RestController
 public class AnimalInfoController {
 
@@ -29,4 +28,9 @@ public class AnimalInfoController {
 	  public AnimalInfoResponse animalModify(@RequestBody AnimalInfoRequest animalInfoRequest) {
 	    return animalInfoService.animalModify(animalInfoRequest.getAnimal());
 	  }
+
+  @GetMapping(value = "findAll")
+  public AnimalInfoResponse findAll(){
+    return animalInfoService.findAll();
+  }
 }

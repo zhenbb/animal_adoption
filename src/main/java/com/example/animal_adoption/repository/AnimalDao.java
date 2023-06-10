@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AnimalDao extends JpaRepository<Animal,Integer> {
 	
@@ -18,4 +20,6 @@ public interface AnimalDao extends JpaRepository<Animal,Integer> {
 	@Query("delete from Animal where animalId = :animalId")
 	public int deleteByName(
 			@Param("animalId")int animalId);
+
+  public List<Animal> findAll();
 }

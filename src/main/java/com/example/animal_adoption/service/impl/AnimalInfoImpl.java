@@ -82,4 +82,9 @@ public class AnimalInfoImpl implements AnimalInfoService {
 		return new AnimalInfoResponse(RtnCode.MODIFY_SUCCESS.getMessage());
 	}
 
+  @Override
+  public AnimalInfoResponse findAll(){
+    List<Animal> animalList = animalDao.findAll();
+    return new AnimalInfoResponse(animalList,RtnCode.FIND_SUCCESS.getMessage());
+  }
 }

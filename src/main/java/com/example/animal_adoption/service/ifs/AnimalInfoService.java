@@ -15,5 +15,7 @@ public interface AnimalInfoService {
 	
 	//修改
 	public AnimalInfoResponse animalModify(List<Animal> animalList);
+
+  public AnimalInfoResponse findAll();
 	
 }
