@@ -2,7 +2,6 @@ package com.example.animal_adoption.service.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +14,6 @@ import org.springframework.util.StringUtils;
 import com.example.animal_adoption.constants.RtnCode;
 import com.example.animal_adoption.entity.Animal;
 import com.example.animal_adoption.entity.Member;
-import com.example.animal_adoption.entity.Product;
 import com.example.animal_adoption.repository.AnimalDao;
 import com.example.animal_adoption.repository.MemberDao;
 import com.example.animal_adoption.repository.ProductDao;
@@ -46,12 +44,12 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     public AnimalAdoptionResponse adoption(AdoptionRequest adoptionRequest) {
 
         // 取得客戶端Session
-        HttpSession clientSession = adoptionRequest.getHttpSession();
-        // 驗證客戶端Id與伺服器端Id，判斷是否有登入
-        String serviceSession = (String) session.getAttribute(clientSession.getId());
-        if (!StringUtils.hasText(serviceSession)) {
-            return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
-        }
+        //HttpSession clientSession = adoptionRequest.getHttpSession();
+        //// 驗證客戶端Id與伺服器端Id，判斷是否有登入
+        //String serviceSession = (String) session.getAttribute(clientSession.getId());
+        //if (!StringUtils.hasText(serviceSession)) {
+        //    return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
+        //}
 
         // 取出欲領寵物資訊
         Animal animal = adoptionRequest.getAnimal();
@@ -84,7 +82,7 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     }
 
     @Override
-    // 增加我的最愛
+    // 認養資格審查
     // 會員需先登入
     public AnimalAdoptionResponse eligibilityReview(EligibilityReviewRequest reviewRequest) {
 
