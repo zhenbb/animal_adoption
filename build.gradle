@@ -17,7 +17,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'mysql:mysql-connector-java:8.0.31'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // jakarta.mail
+    implementation group: 'jakarta.mail', name: 'jakarta.mail-api', version: '2.1.1'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
