@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.animal_adoption.entity.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -78,6 +79,8 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
             return new AnimalAdoptionResponse(RtnCode.HAS_BEEN_ADOPTED_ERROR.getMessage());
         }
 
+        Mail mail = new Mail();
+        mail.sendMail(animal.toString()+"\n"+member.toString());
         return new AnimalAdoptionResponse(theAnimal, member, RtnCode.SUBMIT_SUCCESS.getMessage());
     }
 
@@ -86,13 +89,13 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     // 會員需先登入
     public AnimalAdoptionResponse eligibilityReview(EligibilityReviewRequest reviewRequest) {
 
-        // 取得伺服器Session
-        HttpSession clientSession = reviewRequest.getHttpSession();
-        // 驗證客戶端Id與伺服器端Id，判斷是否有登入
-        String serviceSession = (String) session.getAttribute(clientSession.getId());
-        if (!StringUtils.hasText(serviceSession)) {
-            return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
-        }
+        //// 取得伺服器Session
+        //HttpSession clientSession = reviewRequest.getHttpSession();
+        //// 驗證客戶端Id與伺服器端Id，判斷是否有登入
+        //String serviceSession = (String) session.getAttribute(clientSession.getId());
+        //if (!StringUtils.hasText(serviceSession)) {
+        //    return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
+        //}
 
         // 取出欲領寵物資訊
         Animal animal = reviewRequest.getAnimal();
@@ -134,13 +137,13 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     // 會員需先登入
     public AnimalAdoptionResponse addFavorite(FavoriteRequest favoriteRequest) {
 
-        // 取得客戶端Session
-        HttpSession clientSession = favoriteRequest.getHttpSession();
-        // 驗證客戶端Id與伺服器端Id，判斷是否有登入
-        String serviceSession = (String) session.getAttribute(clientSession.getId());
-        if (!StringUtils.hasText(serviceSession)) {
-            return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
-        }
+        //// 取得客戶端Session
+        //HttpSession clientSession = favoriteRequest.getHttpSession();
+        //// 驗證客戶端Id與伺服器端Id，判斷是否有登入
+        //String serviceSession = (String) session.getAttribute(clientSession.getId());
+        //if (!StringUtils.hasText(serviceSession)) {
+        //    return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
+        //}
 
         // 取出會員資訊
         Member member = favoriteRequest.getMember();
@@ -194,13 +197,13 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     // 會員需先登入
     public AnimalAdoptionResponse deleteFavorite(FavoriteRequest favoriteRequest) {
 
-        // 取得客戶端Session
-        HttpSession clientSession = favoriteRequest.getHttpSession();
-        // 驗證客戶端Id與伺服器端Id，判斷是否有登入
-        String serviceSession = (String) session.getAttribute(clientSession.getId());
-        if (!StringUtils.hasText(serviceSession)) {
-            return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
-        }
+        //// 取得客戶端Session
+        //HttpSession clientSession = favoriteRequest.getHttpSession();
+        //// 驗證客戶端Id與伺服器端Id，判斷是否有登入
+        //String serviceSession = (String) session.getAttribute(clientSession.getId());
+        //if (!StringUtils.hasText(serviceSession)) {
+        //    return new AnimalAdoptionResponse(RtnCode.NOT_LOGGED_IN.getMessage());
+        //}
 
         // 取出會員資訊
         Member member = favoriteRequest.getMember();

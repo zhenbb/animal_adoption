@@ -18,8 +18,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'mysql:mysql-connector-java:8.0.31'
 
-    // jakarta.mail
-    implementation group: 'jakarta.mail', name: 'jakarta.mail-api', version: '2.1.1'
+    // Jakarta郵件API
+    implementation 'jakarta.mail:jakarta.mail-api:2.1.0'
+    // Jakarta郵件實現
+    implementation 'org.eclipse.angus:jakarta.mail:2.0.1'
+    // Jakarta Activation API
+    implementation 'jakarta.activation:jakarta.activation-api:2.0.0'
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -13,11 +13,11 @@ public class Mail {
 
   private String customer = "ms0565119@gmail.com"; // 收件者email
 
-  private String subject = "測試郵寄"; // 標題
+  private String subject = "認養申請"; // 標題
 
-  private String txt = "Hey"; // 信件內容
+  //private String txt = "Hey"; // 信件內容
 
-  public void SendMAil() {
+  public void sendMail(String text) {
     Properties prop = new Properties();
 
     prop.setProperty("mail.transport.protocol", "smtp");
@@ -48,7 +48,7 @@ public class Mail {
 
       message.setSubject(subject);
 
-      message.setContent(txt,"text/html;charset=UTF-8");
+      message.setContent(text,"text/html;charset=UTF-8");
 
       // transport
       Transport transport = session.getTransport();
