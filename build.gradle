@@ -25,6 +25,10 @@ dependencies {
     // Jakarta Activation API
     implementation 'jakarta.activation:jakarta.activation-api:2.0.0'
 
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

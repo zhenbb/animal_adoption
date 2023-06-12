@@ -4,10 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.animal_adoption.constants.MemberRtnCode;
 import com.example.animal_adoption.constants.SessionCode;
@@ -131,8 +128,8 @@ public class MemberController {
 		
 		return memberService.updateBirthday(updateRequest);
 	}
-	
-	@PostMapping(value= "update_session_interval")
+
+  @GetMapping(value= "update_session_interval")
 	public void updateSessionInterval(HttpSession httpSession) {
 		// 設定session時間: 30分鐘 
 		httpSession.setMaxInactiveInterval(1800);  // (單位是秒)

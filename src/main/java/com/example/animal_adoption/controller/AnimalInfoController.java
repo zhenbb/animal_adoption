@@ -7,6 +7,8 @@ import com.example.animal_adoption.service.ifs.AnimalInfoService;
 import com.example.animal_adoption.vo.AnimalInfoRequest;
 import com.example.animal_adoption.vo.AnimalInfoResponse;
 
+import java.io.IOException;
+
 @CrossOrigin
 @RestController
 public class AnimalInfoController {
@@ -32,5 +34,10 @@ public class AnimalInfoController {
   @GetMapping(value = "findAll")
   public AnimalInfoResponse findAll(){
     return animalInfoService.findAll();
+  }
+
+  @PostMapping(value = "upLordImg")
+  public AnimalInfoResponse upLordImg(@RequestBody AnimalInfoRequest animalInfoRequest) throws IOException {
+    return animalInfoService.upLordImg(animalInfoRequest.getImg(),animalInfoRequest.getSort(),animalInfoRequest.getId());
   }
 }

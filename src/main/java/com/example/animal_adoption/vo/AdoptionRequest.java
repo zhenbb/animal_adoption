@@ -14,9 +14,6 @@ public class AdoptionRequest {
   @JsonProperty("animal")
   private Animal animal;
 
-  @JsonProperty()
-  private HttpSession httpSession;
-
   public AdoptionRequest() {
   }
 
@@ -36,7 +33,4 @@ public class AdoptionRequest {
     this.animal = animal;
   }
 
-  public HttpSession getHttpSession() {
-    return httpSession;
-  }
 }

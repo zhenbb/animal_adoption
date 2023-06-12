@@ -1,5 +1,6 @@
 package com.example.animal_adoption.service.ifs;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.example.animal_adoption.entity.Animal;
@@ -17,5 +18,7 @@ public interface AnimalInfoService {
 	public AnimalInfoResponse animalModify(List<Animal> animalList);
 
   public AnimalInfoResponse findAll();
+
+  public AnimalInfoResponse upLordImg(String imgBase64,String sort,int id) throws IOException;
 	
 }

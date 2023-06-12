@@ -15,8 +15,6 @@ public class FavoriteRequest {
   @JsonProperty("animal")
   private List<Animal> animal;
 
-  @JsonProperty()
-  private HttpSession httpSession;
   public FavoriteRequest() {
   }
 
@@ -29,7 +27,4 @@ public class FavoriteRequest {
     return animal;
   }
 
-  public HttpSession getHttpSession() {
-    return httpSession;
-  }
 }

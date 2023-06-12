@@ -1,8 +1,10 @@
 package com.example.animal_adoption.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.animal_adoption.util.Base64ToImg2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -86,5 +88,10 @@ public class AnimalInfoImpl implements AnimalInfoService {
   public AnimalInfoResponse findAll(){
     List<Animal> animalList = animalDao.findAll();
     return new AnimalInfoResponse(animalList,RtnCode.FIND_SUCCESS.getMessage());
+  }
+  @Override
+  public AnimalInfoResponse upLordImg(String imgBase64,String sort,int id) throws IOException {
+    Base64ToImg2.Base64ToImg(imgBase64,sort,id);
+    return  new AnimalInfoResponse(RtnCode.FIND_SUCCESS.getMessage());
   }
 }

@@ -14,8 +14,6 @@ public class EligibilityReviewRequest {
   @JsonProperty("animal")
   private Animal animal;
 
-  @JsonProperty()
-  private HttpSession httpSession;
   public EligibilityReviewRequest() {
   }
 
@@ -35,7 +33,4 @@ public class EligibilityReviewRequest {
     this.animal = animal;
   }
 
-  public HttpSession getHttpSession() {
-    return httpSession;
-  }
 }
