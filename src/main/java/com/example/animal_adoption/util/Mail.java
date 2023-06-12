@@ -1,4 +1,4 @@
-package com.example.animal_adoption.entity;
+package com.example.animal_adoption.util;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
