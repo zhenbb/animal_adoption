@@ -2,20 +2,24 @@ package com.example.animal_adoption.vo;
 
 import com.example.animal_adoption.entity.Member;
 
+import java.util.List;
+import java.util.Map;
+
 public class AddCartRequst {
 
-    private int productId;
+    private List<Integer> productId;
+    private Map<Integer, Integer> products;
     private int carId;
     private int sales;
     private int price;
     private Member member;
 
-    public int getProductId() {
+    public List<Integer> getProductId() {
         return productId;
     }
 
-    public void setProduceId(int produceId) {
-        this.productId = produceId;
+    public void setProductId(List<Integer> productId) {
+        this.productId = productId;
     }
 
     public int getCarId() {
@@ -42,15 +46,19 @@ public class AddCartRequst {
         this.price = price;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
     public Member getMember() {
         return member;
     }
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Map<Integer, Integer> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Map<Integer, Integer> products) {
+        this.products = products;
     }
 }

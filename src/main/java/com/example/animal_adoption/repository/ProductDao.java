@@ -1,7 +1,10 @@
 package com.example.animal_adoption.repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
+import com.example.animal_adoption.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +24,5 @@ public interface ProductDao extends JpaRepository<Product,Integer> {
 	public List<Product> byProductId(@Param("input") int input);
 
 	public List<Product> findAllByProductIdIn(List<Integer> productList);
-
-
 
 }

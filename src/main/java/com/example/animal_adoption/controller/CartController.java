@@ -6,10 +6,12 @@ import com.example.animal_adoption.vo.CartResponse;
 import com.example.animal_adoption.vo.CheckOutRequst;
 import com.example.animal_adoption.vo.GetCartProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 public class CartController {
 
