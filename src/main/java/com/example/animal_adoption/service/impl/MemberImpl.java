@@ -271,7 +271,7 @@ public class MemberImpl implements MemberService{
 	    
 	    // 判斷資料是否與原本相同
 	    Optional<Member> op = memberDao.findById(memberId);
-	    if (op.get().getBirth().equals(birth)) {
+	    if (op.get().getBirth().equals(localDateBirth)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_BIRTHDAY.getMessage());
 	    }
 	    
