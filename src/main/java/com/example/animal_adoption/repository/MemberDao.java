@@ -14,9 +14,4 @@ public interface MemberDao extends JpaRepository<Member, String> {
 	
 	public Member findByMemberIdAndPwdAndIsActive(String memberId, String pwd, boolean isActive);
 
-	public Member findByMemberIdAndPwdAndMemberName(String memberId, String pwd, String memberName);
-	
-	public Member findByMemberIdAndPwdAndPhone(String memberId, String pwd, String phone);
-	
-	public Member findByMemberIdAndPwdAndBirth(String memberId, String pwd, LocalDate birth);
 }

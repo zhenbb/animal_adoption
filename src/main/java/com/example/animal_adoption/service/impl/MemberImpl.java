@@ -170,8 +170,8 @@ public class MemberImpl implements MemberService{
 	    }
 
 	    // 判斷資料是否與原本相同
-	    Member member = memberDao.findByMemberIdAndPwd(memberId, pwd);
-	    if (member != null) {
+	    Optional<Member> op = memberDao.findById(memberId);
+	    if (op.get().getPwd().equals(pwd)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_PWD.getMessage());
 	    }
 
@@ -183,9 +183,9 @@ public class MemberImpl implements MemberService{
 	    }
 
 	    // 更新密碼
-	    member.setPwd(pwd);
+	    op.get().setPwd(pwd);
 
- 		memberDao.save(member);
+ 		memberDao.save(op.get());
 
  		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
@@ -195,7 +195,6 @@ public class MemberImpl implements MemberService{
 	public MemberResponse updateMemberName(MemberRequest updateRequest) {
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
-		String pwd = updateRequest.getPwd();
 		String memberName = updateRequest.getMemberName();
 
 		// 判斷資料是否為空
@@ -205,15 +204,15 @@ public class MemberImpl implements MemberService{
 	    }
 
 	    // 判斷資料是否與原本相同
-	    Member member = memberDao.findByMemberIdAndPwdAndMemberName(memberId, pwd, memberName);
-	    if (member != null) {
+	    Optional<Member> op = memberDao.findById(memberId);
+	    if (op.get().getMemberName().equals(memberName)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_MEMBER_NAME.getMessage());
 	    }
 
 	    // 更新姓名
-	    member.setMemberName(memberName);
+	    op.get().setMemberName(memberName);
 
- 		memberDao.save(member);
+ 		memberDao.save(op.get());
 
  		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
@@ -223,7 +222,6 @@ public class MemberImpl implements MemberService{
 	public MemberResponse updatePhone(MemberRequest updateRequest) {
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
-		String pwd = updateRequest.getPwd();
 		String phone = updateRequest.getPhone();
 
 		// 判斷資料是否為空
@@ -234,8 +232,8 @@ public class MemberImpl implements MemberService{
 
 
 	    // 判斷資料是否與原本相同
-	    Member member = memberDao.findByMemberIdAndPwdAndPhone(memberId, pwd, phone);
-	    if (member != null) {
+	    Optional<Member> op = memberDao.findById(memberId);
+	    if (op.get().getPhone().equals(phone)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_PHONE.getMessage());
 	    }
 
@@ -247,9 +245,9 @@ public class MemberImpl implements MemberService{
 	    }
 
 	    // 更新手機
-	    member.setPhone(phone);
+	    op.get().setPhone(phone);
 
- 		memberDao.save(member);
+ 		memberDao.save(op.get());
 
  		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
@@ -259,7 +257,6 @@ public class MemberImpl implements MemberService{
 	public MemberResponse updateBirthday(MemberRequest updateRequest) {
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
-		String pwd = updateRequest.getPwd();
 		String birth = updateRequest.getBirth();
 		
 		// 判斷資料是否為空
@@ -273,15 +270,15 @@ public class MemberImpl implements MemberService{
 	    LocalDate localDateBirth = LocalDate.parse(birth, formatter);
 	    
 	    // 判斷資料是否與原本相同
-	    Member member = memberDao.findByMemberIdAndPwdAndBirth(memberId, pwd, localDateBirth);
-	    if (member != null) {
+	    Optional<Member> op = memberDao.findById(memberId);
+	    if (op.get().getBirth().equals(birth)) {
 	    	return new MemberResponse(MemberRtnCode.SAME_BIRTHDAY.getMessage());
 	    }
 	    
 	    // 更新生日
-	    member.setBirth(localDateBirth);;
+	    op.get().setBirth(localDateBirth);;
  		
- 		memberDao.save(member);
+ 		memberDao.save(op.get());
 	    
  		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
 	}
