@@ -17,9 +17,6 @@ public interface MemberService {
 	//會員登入驗證
 	public MemberResponse logInVerify(MemberRequest accountRequest);
 
-	//會員登出
-	public MemberResponse logOut(MemberRequest accountRequest);
-
 	//修改會員密碼
 	public MemberResponse updatePwd(MemberRequest updateRequest);
 

@@ -25,6 +25,12 @@ public class MemberResponse {
 		this.member = member;
 		this.message = message;
 	}
+	
+	public MemberResponse(String sessionId, Member member, String message) {
+		this.sessionId = sessionId;
+		this.member = member;
+		this.message = message;
+	}
 
 	public MemberResponse(Member member, String message) {
 		this.member = member;
