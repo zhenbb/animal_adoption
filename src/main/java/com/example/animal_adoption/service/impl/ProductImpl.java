@@ -1,5 +1,5 @@
 package com.example.animal_adoption.service.impl;
- 
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -128,17 +128,17 @@ public class ProductImpl implements ProductService {
 		String bookCate = category.substring(1, category.length() - 1);
 		List<String> opCateList = Arrays.asList(opCate.split(", "));
 		List<String> bookCateList = Arrays.asList(bookCate.split(", "));
-		
-		//針對新分類 轉換為不重複的Set
-		Set<String> bookCateSet = new LinkedHashSet<>(bookCateList); 
-		
+
+		// 針對新分類 轉換為不重複的Set
+		Set<String> bookCateSet = new LinkedHashSet<>(bookCateList);
+
 		// 步驟2/3--先比較List & Set長度，只要不同就直接上傳
 		if (opCateList.size() != bookCateSet.size()) {
 			result.setCategory(category);
 			productDao.save(result);
 			return new ProductResponse(RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
 		}
-		
+
 		// 步驟3/3--同樣長度的[]-->比較內容是否完全一樣
 		int count = 0;
 		for (String bookArr : bookCateSet) {
@@ -151,8 +151,8 @@ public class ProductImpl implements ProductService {
 		if (count == opCateList.size()) {
 			return new ProductResponse(RtnCode.PRODUCT_NO_CHANGE.getMessage());
 		}
-		
-		//完成後上傳
+
+		// 完成後上傳
 		String newCate = String.join(", ", bookCateSet);
 		result.setCategory(newCate);
 		productDao.save(result);
@@ -161,8 +161,31 @@ public class ProductImpl implements ProductService {
 
 	@Override
 	public ProductResponse searchKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		// 防呆
+		if (!StringUtils.hasText(keyword)) {
+			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
+		}
+		List<Product> result = productDao.searchAllByKeywordRegexp(keyword);
+		if (result.size() == 0) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
+		}
+		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
+	}
+
+	
+	//前端要用的功能
+	//展示前12新商品
+	@Override
+	public ProductResponse showTop12NewProduct() {
+		
+		List<Product> result = productDao.findTop12OrderByProductIdDesc(); 
+		
+		if (result.size() == 0) {
+			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
+		}
+		
+		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
+
 	}
 
 }

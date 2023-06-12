@@ -1,13 +1,19 @@
 package com.example.animal_adoption.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ProductAddRequest {
-	
+
+	@JsonProperty("product_id")
 	private String productName;
-	
+
+	@JsonProperty("category")
 	private String category;
-	
+
+	@JsonProperty("price")
 	private int price;
-	
+
+	@JsonProperty("stock")
 	private int stock;
 
 	public ProductAddRequest() {
