@@ -15,11 +15,11 @@ public interface AnimalAdoptionService {
   // 審查員(管理員)需先登入
   public AnimalAdoptionResponse eligibilityReview(EligibilityReviewRequest reviewRequest);
 
-  // 批次增加收藏，僅保存寵物資訊正確收藏，不正確寵物不保存
+  // 增加收藏
   // 會員需先登入
   public AnimalAdoptionResponse addFavorite(FavoriteRequest favoriteRequest);
 
-  // 批次刪除，僅刪除寵物資訊正確收藏，不正確寵物不執行
+  // 刪除收藏
   // 會員需先登入
   public AnimalAdoptionResponse deleteFavorite(FavoriteRequest favoriteRequest);
   

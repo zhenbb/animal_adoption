@@ -84,6 +84,7 @@ public class AnimalInfoImpl implements AnimalInfoService {
 		return new AnimalInfoResponse(RtnCode.MODIFY_SUCCESS.getMessage());
 	}
 
+
   @Override
   public AnimalInfoResponse findAll(){
     List<Animal> animalList = animalDao.findAll();
@@ -93,5 +94,11 @@ public class AnimalInfoImpl implements AnimalInfoService {
   public AnimalInfoResponse upLordImg(String imgBase64,String sort,int id) throws IOException {
     Base64ToImg2.Base64ToImg(imgBase64,sort,id);
     return  new AnimalInfoResponse(RtnCode.FIND_SUCCESS.getMessage());
+  }
+
+  @Override
+  public AnimalInfoResponse findByAnimalId(int animalId){
+    Animal animal = animalDao.findByAnimalId(animalId);
+    return  new AnimalInfoResponse(animal,RtnCode.FIND_SUCCESS.getMessage());
   }
 }

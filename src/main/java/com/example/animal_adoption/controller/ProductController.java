@@ -93,9 +93,9 @@ public class ProductController {
 		return productService.searchKeyword(Request.getKeyword());
 	}
 
-	@GetMapping(value = "show_top12_new_product")
-	public ProductResponse showTop12NewProduct() {
-		return productService.showTop12NewProduct();
-	}
+	//@GetMapping(value = "show_top12_new_product")
+	//public ProductResponse showTop12NewProduct() {
+	//	return productService.showTop12NewProduct();
+	//}
 
 }

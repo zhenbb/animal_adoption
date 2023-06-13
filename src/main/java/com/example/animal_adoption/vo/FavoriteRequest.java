@@ -1,30 +1,25 @@
 package com.example.animal_adoption.vo;
 
-import com.example.animal_adoption.entity.Animal;
-import com.example.animal_adoption.entity.Member;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 public class FavoriteRequest {
 
-  @JsonProperty("member")
-  private Member member;
+  @JsonProperty("member_id")
+  private String memberID;
 
-  @JsonProperty("animal")
-  private List<Animal> animal;
+  @JsonProperty("animal_id")
+  private int animalId;
 
   public FavoriteRequest() {
   }
 
-  public Member getMember() {
-    return member;
+  public String getMemberId() {
+    return memberID;
   }
 
 
-  public List<Animal> getAnimal() {
-    return animal;
+  public int getAnimalId() {
+    return animalId;
   }
 
 }
