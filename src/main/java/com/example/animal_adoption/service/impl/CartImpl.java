@@ -44,25 +44,29 @@ public class CartImpl implements CartService {
         Member member = addCartRequst.getMember();
         Optional<Member> info = memberDao.findById(member.getMemberId());
         Integer carId = info.get().getCarId();
-        List<Product> cartList = new ArrayList<>(productDao.findAllById(Collections.singleton(addCartRequst.getProductId())));
-        //查詢商品是否存在
-        if (cartList.isEmpty()) {
+        Map<Integer, Integer> carMap = addCartRequst.getProducts();
+        List<Integer> cartList = new ArrayList<>(carMap.keySet());
+        List<Product> productList = productDao.findAllById(cartList);
+//      查詢商品是否存在
+        if (productList.isEmpty()) {
             return new CartResponse(RtnCode.NOT_FOUND_PRODUCT_ERROR.getMessage());
         }
-        //查詢庫存
-        for (Product item : cartList) {
-            int stock = item.getStock();
-            if (stock < addCartRequst.getSales()) {
+//      查詢庫存
+        for (Product product : productList) {
+            int stock = product.getStock();
+            int requestedQuantity = carMap.get(product.getProductId()); // 從 carMap 中取得商品的數量
+
+            if (stock < requestedQuantity) {
                 return new CartResponse(RtnCode.ADD_PRODUCT_ERROR.getMessage());
             }
         }
-        //將商品放入Map轉換成字串存入資料庫
-        Map<Integer, Integer> shoppingCart = new HashMap<>();
-        shoppingCart.put(addCartRequst.getProductId(), addCartRequst.getSales());
+//      將商品放入Map轉換成字串存入資料庫
+//        Map<Integer, Integer> shoppingCart = new HashMap<>();
+//        shoppingCart.put(cartList.get(), addCartRequst.getSales());
         ObjectMapper mapper = new ObjectMapper();
         String mapStr;
         try {
-            mapStr = mapper.writeValueAsString(shoppingCart);
+            mapStr = mapper.writeValueAsString(carMap);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +96,7 @@ public class CartImpl implements CartService {
             }
             Map<Integer, Integer> newCart = new HashMap<>();
             newCart.putAll(oldCartMap);
-            newCart.putAll(shoppingCart);
+            newCart.putAll(carMap);
             String newMapStr;
             try {
                 newMapStr = mapper.writeValueAsString(newCart);
