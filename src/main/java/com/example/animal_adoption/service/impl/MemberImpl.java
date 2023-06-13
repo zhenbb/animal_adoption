@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 //import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,6 @@ import com.example.animal_adoption.vo.MemberRequest;
 
 @Service
 public class MemberImpl implements MemberService{
-
-//	@Autowired
-//	HttpSession session;
 
 	@Autowired
 	MemberDao memberDao;
@@ -135,30 +134,16 @@ public class MemberImpl implements MemberService{
 	}
 
 	@Override
-	//會員登入驗證
-	public MemberResponse logInVerify(MemberRequest accountRequest) {
-		// 取出輸入的會員資訊
-		String memberId = accountRequest.getMemberId();
-		String pwd = accountRequest.getPwd();
-
-		// 判斷資料是否為空
-	    if (!StringUtils.hasText(memberId)
-	    		|| !StringUtils.hasText(pwd)) {
-	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
-	    }
-
-		// 判斷會員是否已經存在和生效
-		Member member = memberDao.findByMemberIdAndPwdAndIsActive(memberId, pwd, true);
-		if (member == null) {
-			return new MemberResponse(MemberRtnCode.MEMBER_NOT_PRESENT_OR_INFO_ERROR_OR_NOT_ACTIVE.getMessage());
-		}
-
-		return new MemberResponse(member, MemberRtnCode.LOG_IN_VERIFY_SUCCESS.getMessage());
-	}
-
-	@Override
 	//修改會員密碼
-	public MemberResponse updatePwd(MemberRequest updateRequest) {
+	public MemberResponse updatePwd(MemberRequest updateRequest, HttpSession httpSession) {
+		// session判斷是否有登入
+		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
+		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
+		
+	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+	    }
+		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String pwd = updateRequest.getPwd();
@@ -192,7 +177,7 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員姓名
-	public MemberResponse updateMemberName(MemberRequest updateRequest) {
+	public MemberResponse updateMemberName(MemberRequest updateRequest, HttpSession httpSession) {
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String memberName = updateRequest.getMemberName();
@@ -219,7 +204,7 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員手機
-	public MemberResponse updatePhone(MemberRequest updateRequest) {
+	public MemberResponse updatePhone(MemberRequest updateRequest, HttpSession httpSession) {
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String phone = updateRequest.getPhone();
@@ -254,7 +239,7 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員生日
-	public MemberResponse updateBirthday(MemberRequest updateRequest) {
+	public MemberResponse updateBirthday(MemberRequest updateRequest, HttpSession httpSession) {
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String birth = updateRequest.getBirth();

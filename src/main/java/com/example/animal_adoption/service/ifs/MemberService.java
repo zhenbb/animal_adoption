@@ -1,6 +1,9 @@
 package com.example.animal_adoption.service.ifs;
 
 import com.example.animal_adoption.vo.MemberResponse;
+
+import javax.servlet.http.HttpSession;
+
 import com.example.animal_adoption.vo.MemberRequest;
 
 public interface MemberService {
@@ -14,20 +17,17 @@ public interface MemberService {
 	//會員登入
 	public MemberResponse logIn(MemberRequest accountRequest);
 
-	//會員登入驗證
-	public MemberResponse logInVerify(MemberRequest accountRequest);
-
 	//修改會員密碼
-	public MemberResponse updatePwd(MemberRequest updateRequest);
+	public MemberResponse updatePwd(MemberRequest updateRequest, HttpSession httpSession);
 
 	//修改會員姓名
-	public MemberResponse updateMemberName(MemberRequest updateRequest);
+	public MemberResponse updateMemberName(MemberRequest updateRequest, HttpSession httpSession);
 
 	//修改會員手機
-	public MemberResponse updatePhone(MemberRequest updateRequest);
+	public MemberResponse updatePhone(MemberRequest updateRequest, HttpSession httpSession);
 
 	//修改會員生日
-	public MemberResponse updateBirthday(MemberRequest updateRequest);
+	public MemberResponse updateBirthday(MemberRequest updateRequest, HttpSession httpSession);
 
 
 
