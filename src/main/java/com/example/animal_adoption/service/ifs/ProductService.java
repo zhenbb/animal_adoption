@@ -2,7 +2,7 @@ package com.example.animal_adoption.service.ifs;
 
 import com.example.animal_adoption.vo.ProductAddRequest;
 import com.example.animal_adoption.vo.ProductResponse;
-
+  
 public interface ProductService {
 	// 新增商品 nana
 	public ProductResponse addProduct(ProductAddRequest productAddRequest);
@@ -21,5 +21,10 @@ public interface ProductService {
 
 	//搜尋功能(可多關鍵字、可用空格區分)@Query+regexp
 	public ProductResponse searchKeyword(String keyword);
+	
+	//前端用
+	//展示最新4樣商品
+	public ProductResponse showTop12NewProduct();
+	
 	
 }

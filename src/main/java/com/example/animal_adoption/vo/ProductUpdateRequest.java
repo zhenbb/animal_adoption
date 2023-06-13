@@ -1,5 +1,7 @@
 package com.example.animal_adoption.vo;
 
+import javax.servlet.http.HttpSession;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductUpdateRequest {
