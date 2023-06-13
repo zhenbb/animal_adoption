@@ -4,9 +4,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.animal_adoption.constants.RtnCode;
 import com.example.animal_adoption.service.ifs.ProductService;
@@ -15,20 +17,23 @@ import com.example.animal_adoption.vo.ProductResponse;
 import com.example.animal_adoption.vo.ProductSearchRequest;
 import com.example.animal_adoption.vo.ProductUpdateRequest;
 
+//@CrossOrigin
+@RestController
 public class ProductController {
 
 	@Autowired
 	private ProductService productService;
 
 	// 新增商品
+//	@CrossOrigin(value="http://127.0.0.1:5501")
 	@PostMapping(value = "add_product")
-	public ProductResponse signUp(@RequestBody ProductAddRequest request, HttpSession httpsession) {
-		String memberId = (String) httpsession.getAttribute("memberId");
-		String pwd = (String) httpsession.getAttribute("pwd");
-
-		if (!StringUtils.hasText(memberId) || !StringUtils.hasText(pwd)) {
-			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
-		}
+	public ProductResponse addProduct(@RequestBody ProductAddRequest request, HttpSession httpsession) {
+//		檢查登入
+//		String memberId = (String) httpsession.getAttribute("memberId");
+//		String pwd = (String) httpsession.getAttribute("pwd");
+//		if (!StringUtils.hasText(memberId) || !StringUtils.hasText(pwd)) {
+//			return new ProductResponse(RtnCode.PRODUCT_NOT_ADMINISTRATOR.getMessage());
+//		}
 
 		return productService.addProduct(request);
 	}

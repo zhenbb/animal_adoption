@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.example.animal_adoption.constants.RtnCode;
@@ -16,6 +17,7 @@ import com.example.animal_adoption.service.ifs.ProductService;
 import com.example.animal_adoption.vo.ProductAddRequest;
 import com.example.animal_adoption.vo.ProductResponse;
 
+@Service
 public class ProductImpl implements ProductService {
 
 	@Autowired
@@ -39,8 +41,11 @@ public class ProductImpl implements ProductService {
 //		if(!CollectionUtils.isEmpty(resultList)) {
 //			System.out.println("有重複名字的商品，是否要重複新增？");
 //		}
-		Product product = new Product(0, productAddRequest.getProductName(), productAddRequest.getCategory(),
-				productAddRequest.getPrice(), productAddRequest.getStock());
+		Product product = new Product(0, 
+				productAddRequest.getProductName(), 
+				productAddRequest.getCategory(),
+				productAddRequest.getPrice(), 
+				productAddRequest.getStock());
 		productDao.save(product);
 		return new ProductResponse(product, RtnCode.PRODUCT_ADD_SUCCESS.getMessage());
 	}
@@ -173,20 +178,26 @@ public class ProductImpl implements ProductService {
 		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
 	}
 
+	@Override
+	public ProductResponse showTop12NewProduct() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	//前端要用的功能
 	//展示前12新商品
-	@Override
-	public ProductResponse showTop12NewProduct() {
-		
-		List<Product> result = productDao.findTop12OrderByProductIdDesc(); 
-		
-		if (result.size() == 0) {
-			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
-		}
-		
-		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
-
-	}
+//	@Override
+//	public ProductResponse showTop12NewProduct() {
+//		
+//		List<Product> result = productDao.findTop12OrderByProductIdDesc(); 
+//		
+//		if (result.size() == 0) {
+//			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
+//		}
+//		
+//		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
+//
+//	}
 
 }
