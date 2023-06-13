@@ -153,7 +153,10 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     Member member = temp1.get();
 
     // 取出會員收寵物資訊
-    StringBuffer favAnimal = new StringBuffer(member.getFav());
+    StringBuffer favAnimal = new StringBuffer();
+    if (StringUtils.hasText(member.getFav())){
+      favAnimal.append(member.getFav());
+    }
 
     // 判斷資料是否為空
     if (memberCheck(member)) {
@@ -179,7 +182,7 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     }
 
     // 判斷領寵物是否存在
-    if (animalDao.existsById(animal.getAnimalId())) {
+    if (!animalDao.existsById(animal.getAnimalId())) {
       return new AnimalAdoptionResponse(RtnCode.INCORRECT_INFO_ERROR.getMessage());
     }
 
@@ -212,7 +215,10 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     }
     Member member = temp1.get();
     // 取出會員收寵物資訊
-    StringBuffer favAnimal = new StringBuffer(member.getFav());
+    StringBuffer favAnimal = new StringBuffer();
+    if (StringUtils.hasText(member.getFav())){
+      favAnimal.append(member.getFav());
+    }
 
     // 判斷資料是否為空
     if (memberCheck(member)) {
@@ -237,7 +243,7 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     }
 
     // 判斷領寵物是否存在
-    if (animalDao.existsById(animal.getAnimalId())) {
+    if (!animalDao.existsById(animal.getAnimalId())) {
       return new AnimalAdoptionResponse(RtnCode.INCORRECT_INFO_ERROR.getMessage());
     }
 

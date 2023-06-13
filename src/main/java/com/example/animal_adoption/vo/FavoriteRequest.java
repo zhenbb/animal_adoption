@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FavoriteRequest {
 
   @JsonProperty("member_id")
-  private String memberID;
+  private String memberId;
 
   @JsonProperty("animal_id")
   private int animalId;
@@ -14,12 +14,10 @@ public class FavoriteRequest {
   }
 
   public String getMemberId() {
-    return memberID;
+    return memberId;
   }
-
 
   public int getAnimalId() {
     return animalId;
   }
-
 }

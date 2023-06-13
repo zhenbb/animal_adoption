@@ -13,7 +13,7 @@ import com.example.animal_adoption.vo.AnimalAdoptionResponse;
 import com.example.animal_adoption.vo.EligibilityReviewRequest;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin
 public class AnimalAdoptionController {
 
   @Autowired
