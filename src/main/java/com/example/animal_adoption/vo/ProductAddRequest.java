@@ -3,6 +3,11 @@ package com.example.animal_adoption.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductAddRequest {
+	
+
+//	目前先用前端去判斷
+//	@JsonProperty("is_admin")
+//	private boolean isAdmin;
 
 	@JsonProperty("product_id")
 	private String productName;
@@ -15,7 +20,7 @@ public class ProductAddRequest {
 
 	@JsonProperty("stock")
 	private int stock;
-
+	
 	public ProductAddRequest() {
 		super();
 	}
@@ -59,7 +64,5 @@ public class ProductAddRequest {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-
-	
 	
 }

@@ -159,6 +159,7 @@ public class ProductImpl implements ProductService {
 		return new ProductResponse(result, RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
 	}
 
+	//搜尋關鍵字
 	@Override
 	public ProductResponse searchKeyword(String keyword) {
 		// 防呆
