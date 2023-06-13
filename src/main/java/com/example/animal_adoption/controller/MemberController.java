@@ -46,6 +46,9 @@ public class MemberController {
 		// 設定驗證碼到session
 		httpSession.setAttribute("verifyCode", verifyCode);
 		
+		System.out.println(httpSession.getId());
+		System.out.println(httpSession.getAttribute("verifyCode"));
+		
 		res.setSessionId(httpSession.getId());
 		res.setVerifyCode(verifyCode);
 		
@@ -59,9 +62,12 @@ public class MemberController {
 			return res;
 		}
 		
-		Integer verifyCode = (Integer) httpSession.getAttribute("verifyCode"); 		
+		Integer verifyCode = (Integer) httpSession.getAttribute("verifyCode"); 	
+		
+		System.out.println(httpSession.getId());
+		System.out.println(verifyCode);
 	    // 判斷驗證碼是否錯誤
-		if (accountRequest.getVerifyCode() != verifyCode) {
+		if (verifyCode == null || accountRequest.getVerifyCode() != verifyCode) {
 			return new MemberResponse(MemberRtnCode.VERIFY_CODE_ERROR.getMessage());
 		}
 		
