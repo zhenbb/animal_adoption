@@ -36,36 +36,12 @@ public class MemberController {
 			return res;
 		}
 		
-		// 產生驗證碼
-		double random = Math.random()*10000;
-		int verifyCode = (int)Math.round(random);
-
-		// 設定驗證碼到session
-		httpSession.setAttribute("verifyCode", verifyCode);
-		
-		res.setSessionId(httpSession.getId());
-		res.setVerifyCode(verifyCode);
-		
-		return res;
-	}
-	
-	@PostMapping(value = "log_in_verify")
-	public MemberResponse logInVerify(@RequestBody MemberRequest accountRequest, HttpSession httpSession) {		
-		MemberResponse res = memberService.logInVerify(accountRequest);
-		if (!res.getMessage().equals(MemberRtnCode.LOG_IN_VERIFY_SUCCESS.getMessage())) {
-			return res;
-		}
-		
-		Integer verifyCode = (Integer) httpSession.getAttribute("verifyCode"); 		
-	    // 判斷驗證碼是否錯誤
-		if (accountRequest.getVerifyCode() != verifyCode) {
-			return new MemberResponse(MemberRtnCode.VERIFY_CODE_ERROR.getMessage());
-		}
-		
 		// 設定帳號密碼到session
 		httpSession.setAttribute(SessionCode.MEMBER_ID.getCode(), accountRequest.getMemberId());
 		httpSession.setAttribute(SessionCode.MEMBER_PWD.getCode(), accountRequest.getPwd());
 		httpSession.setMaxInactiveInterval(1800);
+		
+		res.setSessionId(httpSession.getId());
 		
 		return res;
 	}
@@ -79,54 +55,22 @@ public class MemberController {
 	
 	@PostMapping(value = "update_pwd")
 	public MemberResponse updatePwd(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
-		// session判斷是否有登入
-		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
-		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
-		
-	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
-	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-	    }
-	    
-		return memberService.updatePwd(updateRequest);
+		return memberService.updatePwd(updateRequest, httpSession);
 	}
 	
 	@PostMapping(value = "update_member_name")
-	public MemberResponse updateMemberName(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
-		// session判斷是否有登入
-		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
-		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
-		
-	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
-	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-	    }
-	    
-		return memberService.updateMemberName(updateRequest);
+	public MemberResponse updateMemberName(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {    
+		return memberService.updateMemberName(updateRequest, httpSession);
 	}
 	
 	@PostMapping(value = "update_phone")
 	public MemberResponse updatePhone(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
-		// session判斷是否有登入
-		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
-		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
-		
-	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
-	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-	    }
-		
-		return memberService.updatePhone(updateRequest);
+		return memberService.updatePhone(updateRequest, httpSession);
 	}
 	
 	@PostMapping(value = "update_birthday")
 	public MemberResponse updateBirthday(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
-		// session判斷是否有登入
-		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
-		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
-		
-	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
-	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-	    }
-		
-		return memberService.updateBirthday(updateRequest);
+		return memberService.updateBirthday(updateRequest, httpSession);
 	}
 
   @GetMapping(value= "update_session_interval")
