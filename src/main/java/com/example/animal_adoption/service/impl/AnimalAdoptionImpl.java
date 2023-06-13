@@ -154,12 +154,6 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
 
     // 取出會員收寵物資訊
     StringBuffer favAnimal = new StringBuffer(member.getFav());
-    // 用於保存失敗訊息
-    List<String> messageList = new ArrayList<>();
-    // 用於保存收藏失敗寵物訊息
-    List<Animal> failAnimal = new ArrayList<>();
-    // 用於計算第幾筆資料
-    int count = 1;
 
     // 判斷資料是否為空
     if (memberCheck(member)) {
@@ -219,12 +213,6 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     Member member = temp1.get();
     // 取出會員收寵物資訊
     StringBuffer favAnimal = new StringBuffer(member.getFav());
-    // 用於保存失敗訊息
-    List<String> messageList = new ArrayList<>();
-    // 用於保存刪除失敗寵物訊息
-    List<Animal> failAnimal = new ArrayList<>();
-    // 用於計算第幾筆資料
-    int count = 1;
 
     // 判斷資料是否為空
     if (memberCheck(member)) {
