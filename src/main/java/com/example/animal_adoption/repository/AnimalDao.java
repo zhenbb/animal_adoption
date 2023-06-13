@@ -22,4 +22,6 @@ public interface AnimalDao extends JpaRepository<Animal,Integer> {
 			@Param("animalId")int animalId);
 
   public List<Animal> findAll();
+
+  public Animal findByAnimalId(int animalId);
 }

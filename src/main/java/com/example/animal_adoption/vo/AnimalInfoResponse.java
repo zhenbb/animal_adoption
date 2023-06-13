@@ -6,6 +6,8 @@ import com.example.animal_adoption.entity.Animal;
 
 public class AnimalInfoResponse {
 
+  private Animal animal;
+
 	private List<Animal> animalList;
 
 	private String message;
@@ -14,7 +16,20 @@ public class AnimalInfoResponse {
 
 	}
 
-	public AnimalInfoResponse(String message) {
+  public Animal getAnimal() {
+    return animal;
+  }
+
+  public void setAnimal(Animal animal) {
+    this.animal = animal;
+  }
+
+  public AnimalInfoResponse(Animal animal, String message) {
+    this.animal = animal;
+    this.message = message;
+  }
+
+  public AnimalInfoResponse(String message) {
 		super();
 		this.message = message;
 	}

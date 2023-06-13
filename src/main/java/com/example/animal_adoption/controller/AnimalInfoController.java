@@ -40,4 +40,9 @@ public class AnimalInfoController {
   public AnimalInfoResponse upLordImg(@RequestBody AnimalInfoRequest animalInfoRequest) throws IOException {
     return animalInfoService.upLordImg(animalInfoRequest.getImg(),animalInfoRequest.getSort(),animalInfoRequest.getId());
   }
+
+  @PostMapping(value = "findByAnimalId")
+  public AnimalInfoResponse findByAnimalId(@RequestBody AnimalInfoRequest animalInfoRequest){
+    return animalInfoService.findByAnimalId(animalInfoRequest.getAnimalId());
+  }
 }

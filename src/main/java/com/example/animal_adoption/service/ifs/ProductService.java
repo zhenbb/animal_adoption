@@ -24,7 +24,7 @@ public interface ProductService {
 	
 	//前端用
 	//展示最新4樣商品
-	public ProductResponse showTop12NewProduct();
+	//public ProductResponse showTop12NewProduct();
 	
 	
 }
