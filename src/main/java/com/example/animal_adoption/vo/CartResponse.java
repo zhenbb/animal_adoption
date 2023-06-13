@@ -12,6 +12,7 @@ public class CartResponse {
     private String message;
     private List<Product> cartList;
 
+
     public CartResponse(List<Product> cartList) {
         this.cartList = cartList;
     }
