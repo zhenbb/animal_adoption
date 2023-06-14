@@ -30,19 +30,19 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "log_in")
-	public MemberResponse logIn(@RequestBody MemberRequest accountRequest) {		
-//		MemberResponse res = memberService.logIn(accountRequest);
-//		if (!res.getMessage().equals(MemberRtnCode.LOG_IN_SUCCESS.getMessage())) {
-//			return res;
-//		}
+	public MemberResponse logIn(@RequestBody MemberRequest accountRequest, HttpSession httpSession) {		
+		MemberResponse res = memberService.logIn(accountRequest, httpSession);
+		if (!res.getMessage().equals(MemberRtnCode.LOG_IN_SUCCESS.getMessage())) {
+			return res;
+		}
 		
-//		// 設定帳號密碼到session
-//		httpSession.setAttribute(SessionCode.MEMBER_ID.getCode(), accountRequest.getMemberId());
-//		httpSession.setAttribute(SessionCode.MEMBER_PWD.getCode(), accountRequest.getPwd());
-//		httpSession.setMaxInactiveInterval(1800);
-//		
-//		res.setSessionId(httpSession.getId());
-//		
+		// 設定帳號密碼到session
+		httpSession.setAttribute(SessionCode.MEMBER_ID.getCode(), accountRequest.getMemberId());
+		httpSession.setAttribute(SessionCode.MEMBER_PWD.getCode(), accountRequest.getPwd());
+		httpSession.setMaxInactiveInterval(1800);
+		
+		res.setSessionId(httpSession.getId());
+		
 //		System.out.println(httpSession.getId());
 
 		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
@@ -56,28 +56,28 @@ public class MemberController {
 //	}
 	
 	@PostMapping(value = "update_pwd")
-	public MemberResponse updatePwd(@RequestBody MemberRequest updateRequest) {
-		return memberService.updatePwd(updateRequest);
+	public MemberResponse updatePwd(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
+		return memberService.updatePwd(updateRequest, httpSession);
 	}
 	
 	@PostMapping(value = "update_member_name")
-	public MemberResponse updateMemberName(@RequestBody MemberRequest updateRequest) {    
-		return memberService.updateMemberName(updateRequest);
+	public MemberResponse updateMemberName(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {    
+		return memberService.updateMemberName(updateRequest, httpSession);
 	}
 	
 	@PostMapping(value = "update_phone")
-	public MemberResponse updatePhone(@RequestBody MemberRequest updateRequest) {
-		return memberService.updatePhone(updateRequest);
+	public MemberResponse updatePhone(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
+		return memberService.updatePhone(updateRequest, httpSession);
 	}
 	
 	@PostMapping(value = "update_birthday")
-	public MemberResponse updateBirthday(@RequestBody MemberRequest updateRequest) {
-		return memberService.updateBirthday(updateRequest);
+	public MemberResponse updateBirthday(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
+		return memberService.updateBirthday(updateRequest, httpSession);
 	}
 	
 	@PostMapping(value = "get_member_info")
-	public MemberResponse getMemberInfo(@RequestBody MemberRequest updateRequest) {
-		return memberService.getMemberInfo(updateRequest);
+	public MemberResponse getMemberInfo(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
+		return memberService.getMemberInfo(updateRequest, httpSession);
 	}
 
 	@GetMapping(value= "update_session_interval")
