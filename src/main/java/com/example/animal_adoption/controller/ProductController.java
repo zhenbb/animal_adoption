@@ -94,22 +94,6 @@ public class ProductController {
 	public ProductResponse searchKeyword(@RequestBody ProductSearchRequest Request) {
 		return productService.searchKeyword(Request.getKeyword());
 	}
-<<<<<<< HEAD
-
-	//@GetMapping(value = "show_top12_new_product")
-	//public ProductResponse showTop12NewProduct() {
-	//	return productService.showTop12NewProduct();
-	//}
-=======
-	
-	// 前端用
-	// 秀出全部的商品
-	@GetMapping(value ="find_all")
-	public ProductResponse findAll() {
-		return new ProductResponse(productDao.findAll(), RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
-	}
-	
->>>>>>> product_3
 
 	// session判斷是否有登入
 	private boolean checkLogin(HttpSession httpSession) {

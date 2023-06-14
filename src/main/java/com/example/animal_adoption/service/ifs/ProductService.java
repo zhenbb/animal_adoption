@@ -22,12 +22,4 @@ public interface ProductService {
 	//搜尋功能(可多關鍵字、可用空格區分)@Query+regexp
 	public ProductResponse searchKeyword(String keyword);
 	
-<<<<<<< HEAD
-	//前端用
-	//展示最新4樣商品
-	//public ProductResponse showTop12NewProduct();
-	
-	
-=======
->>>>>>> product_3
 }

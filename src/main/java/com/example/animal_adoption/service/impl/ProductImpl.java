@@ -178,24 +178,5 @@ public class ProductImpl implements ProductService {
 		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
 	}
 
-<<<<<<< HEAD
-	
-	//前端要用的功能
-	//展示前12新商品
-	//@Override
-	//public ProductResponse showTop12NewProduct() {
-	//
-	//	List<Product> result = productDao.findTop12OrderByProductIdDesc();
-	//
-	//	if (result.size() == 0) {
-	//		return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
-	//	}
-	//
-	//	return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
-  //
-	//}
-=======
-
->>>>>>> product_3
 
 }

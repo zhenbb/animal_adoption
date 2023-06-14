@@ -25,20 +25,4 @@ public interface ProductDao extends JpaRepository<Product,Integer> {
 	public List<Product> byProductId(@Param("input") int input);
 
 	public List<Product> findAllByProductIdIn(List<Integer> productList);
-<<<<<<< HEAD
-
-
-	//前端會需要的功能：
-	//展示所有商品 (商品頁)
-	//public List<Product> findAllOrderByProductIdDesc();
-	
-	//展示最新12個商品(首頁)
-	//public List<Product> findTop12OrderByProductIdDesc();
-	
-	//展示銷量最好前四 (啊..突然想到我們資料庫沒有這個東東)
-//	public List<Product> findTop4OrderBySold();
-
-=======
-	
->>>>>>> product_3
 }
