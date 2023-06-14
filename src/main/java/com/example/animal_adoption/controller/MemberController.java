@@ -43,15 +43,17 @@ public class MemberController {
 		
 		res.setSessionId(httpSession.getId());
 		
+//		System.out.println(httpSession.getId());
+
 		return res;
 	}
 	
-	@PostMapping(value = "log_out")
-	public MemberResponse logOut(@RequestBody MemberRequest accountRequest, HttpSession httpSession) {
-		httpSession.removeAttribute(SessionCode.MEMBER_ID.getCode());
-		httpSession.removeAttribute(SessionCode.MEMBER_PWD.getCode());
-		return new MemberResponse(MemberRtnCode.LOG_OUT_SUCCESS.getMessage());
-	}
+//	@PostMapping(value = "log_out")
+//	public MemberResponse logOut(@RequestBody MemberRequest accountRequest) {
+//		httpSession.removeAttribute(SessionCode.MEMBER_ID.getCode());
+//		httpSession.removeAttribute(SessionCode.MEMBER_PWD.getCode());
+//		return new MemberResponse(MemberRtnCode.LOG_OUT_SUCCESS.getMessage());
+//	}
 	
 	@PostMapping(value = "update_pwd")
 	public MemberResponse updatePwd(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
@@ -72,8 +74,13 @@ public class MemberController {
 	public MemberResponse updateBirthday(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
 		return memberService.updateBirthday(updateRequest, httpSession);
 	}
+	
+	@PostMapping(value = "get_member_info")
+	public MemberResponse getMemberInfo(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
+		return memberService.getMemberInfo(updateRequest, httpSession);
+	}
 
-  @GetMapping(value= "update_session_interval")
+	@GetMapping(value= "update_session_interval")
 	public void updateSessionInterval(HttpSession httpSession) {
 		// 設定session時間: 30分鐘 
 		httpSession.setMaxInactiveInterval(1800);  // (單位是秒)

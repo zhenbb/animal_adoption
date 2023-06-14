@@ -29,6 +29,7 @@ public interface MemberService {
 	//修改會員生日
 	public MemberResponse updateBirthday(MemberRequest updateRequest, HttpSession httpSession);
 
-
+	//提取會員資料
+	public MemberResponse getMemberInfo(MemberRequest updateRequest, HttpSession httpSession);
 
 }
