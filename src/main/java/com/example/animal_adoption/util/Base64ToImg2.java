@@ -17,7 +17,7 @@ public class Base64ToImg2 {
 
   //// 圖片轉換成 Base64 字串
   //public static String getImageStr() {
-  //  String imgFile = "D:\\tupian\\a.jpg"; // 待處理的圖片
+  //  String imgFile = "D:\\tupian\\a.png"; // 待處理的圖片
   //  try {
   //    byte[] data = Files.readAllBytes(Path.of(imgFile));
   //    Base64.Encoder encoder = Base64.getEncoder();
@@ -37,7 +37,7 @@ public class Base64ToImg2 {
   //  Base64.Decoder decoder = Base64.getDecoder();
   //  try {
   //    byte[] b = decoder.decode(imgStr);
-  //    Path imgFilePath = Path.of("D:\\Intellij_java\\animal_adoption\\src\\main\\resources\\img\\new.jpg"); // 新生成的圖片路徑
+  //    Path imgFilePath = Path.of("D:\\Intellij_java\\animal_adoption\\src\\main\\resources\\img\\new.png"); // 新生成的圖片路徑
   //    Files.write(imgFilePath, b, StandardOpenOption.CREATE);
   //    return true;
   //  } catch (IOException e) {
@@ -95,7 +95,7 @@ public class Base64ToImg2 {
   //      imageBytes = outputStream.toByteArray();
   //    }
   //
-  //    try (FileOutputStream fileOutputStream = new FileOutputStream("D:\\Intellij_java\\animal_adoption\\src\\main\\resources\\img\\image.jpg")) {
+  //    try (FileOutputStream fileOutputStream = new FileOutputStream("D:\\Intellij_java\\animal_adoption\\src\\main\\resources\\img\\image.png")) {
   //      fileOutputStream.write(imageBytes);
   //    } catch (IOException e) {
   //      // 處理異常
@@ -140,10 +140,10 @@ public class Base64ToImg2 {
       int maxSerialNumber = Arrays.stream(files)
               .filter(File::isFile)
               .map(File::getName)
-              // 圖片檔案名稱為 id - SerialNumber .jpg
-              .filter(name -> name.matches("\\d+-\\d+\\.jpg"))
+              // 圖片檔案名稱為 id - SerialNumber .png
+              .filter(name -> name.matches("\\d+-\\d+\\.png"))
               .map(name -> {
-                String[] parts = name.replace(".jpg", "").split("-");
+                String[] parts = name.replace(".png", "").split("-");
                 return Integer.parseInt(parts[1]);
               })
               .max(Comparator.naturalOrder())
@@ -153,7 +153,7 @@ public class Base64ToImg2 {
       int nextSerialNumber = maxSerialNumber + 1;
 
       // 使用生成的流水編號命名當前照片
-      String fileName = id + "-" + nextSerialNumber + ".jpg";
+      String fileName = id + "-" + nextSerialNumber + ".png";
 
       byte[] b = decoder.decode(stringTooLong);
       Path imgFilePath = Path.of(filePath + "\\" + fileName);
@@ -187,10 +187,10 @@ public class Base64ToImg2 {
     int maxSerialNumber = Arrays.stream(files)
             .filter(File::isFile)
             .map(File::getName)
-            // 圖片檔案名稱為 id - SerialNumber .jpg 且以 '1-' 開頭
-            .filter(name -> name.matches(id + "-\\d+\\.jpg"))
+            // 圖片檔案名稱為 id - SerialNumber .png 且以 '1-' 開頭
+            .filter(name -> name.matches(id + "-\\d+\\.png"))
             .map(name -> {
-              String[] parts = name.replace(".jpg", "").split("-");
+              String[] parts = name.replace(".png", "").split("-");
               return Integer.parseInt(parts[1]);
             })
             .max(Comparator.naturalOrder())
