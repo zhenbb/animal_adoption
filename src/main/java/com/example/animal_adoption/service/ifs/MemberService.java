@@ -15,7 +15,7 @@ public interface MemberService {
 	public MemberResponse activeAccount(MemberRequest accountRequest);
 
 	//會員登入
-	public MemberResponse logIn(MemberRequest accountRequest, HttpSession httpSession);
+	public MemberResponse logIn(MemberRequest accountRequest);
 
 	//修改會員密碼
 	public MemberResponse updatePwd(MemberRequest updateRequest, HttpSession httpSession);

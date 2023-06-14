@@ -31,7 +31,7 @@ public class MemberController {
 	
 	@PostMapping(value = "log_in")
 	public MemberResponse logIn(@RequestBody MemberRequest accountRequest, HttpSession httpSession) {		
-		MemberResponse res = memberService.logIn(accountRequest, httpSession);
+		MemberResponse res = memberService.logIn(accountRequest);
 		if (!res.getMessage().equals(MemberRtnCode.LOG_IN_SUCCESS.getMessage())) {
 			return res;
 		}
@@ -45,7 +45,7 @@ public class MemberController {
 		
 //		System.out.println(httpSession.getId());
 
-		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
+		return res;
 	}
 	
 //	@PostMapping(value = "log_out")

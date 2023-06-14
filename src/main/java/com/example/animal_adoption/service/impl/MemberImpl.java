@@ -113,7 +113,7 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//會員登入
-	public MemberResponse logIn(MemberRequest accountRequest, HttpSession httpSession) {
+	public MemberResponse logIn(MemberRequest accountRequest) {
 		// 取出輸入的會員資訊
 		String memberId = accountRequest.getMemberId();
 		String pwd = accountRequest.getPwd();
