@@ -94,14 +94,14 @@ public class ProductController {
 	public ProductResponse searchKeyword(@RequestBody ProductSearchRequest Request) {
 		return productService.searchKeyword(Request.getKeyword());
 	}
-	
-	//前端用
-	//秀出所有商品
-	@GetMapping(value="find_all")
+
+	// 前端用
+	// 秀出全部的商品
+	@GetMapping(value ="find_all")
 	public ProductResponse findAll() {
-		return new ProductResponse( productDao.findAll(),RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
-		
+		return new ProductResponse(productDao.findAll(), RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
 	}
+
 
 	// session判斷是否有登入
 	private boolean checkLogin(HttpSession httpSession) {
