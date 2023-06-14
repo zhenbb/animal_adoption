@@ -135,14 +135,14 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員密碼
-	public MemberResponse updatePwd(MemberRequest updateRequest, HttpSession httpSession) {
-		// session判斷是否有登入
-		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
-		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
-		
-	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
-	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
-	    }
+	public MemberResponse updatePwd(MemberRequest updateRequest) {
+//		// session判斷是否有登入
+//		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
+//		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
+//		
+//	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//	    }
 		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
@@ -177,7 +177,15 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員姓名
-	public MemberResponse updateMemberName(MemberRequest updateRequest, HttpSession httpSession) {
+	public MemberResponse updateMemberName(MemberRequest updateRequest) {
+//		// session判斷是否有登入
+//		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
+//		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
+//		
+//	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//	    }
+		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String memberName = updateRequest.getMemberName();
@@ -204,7 +212,15 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員手機
-	public MemberResponse updatePhone(MemberRequest updateRequest, HttpSession httpSession) {
+	public MemberResponse updatePhone(MemberRequest updateRequest) {
+//		// session判斷是否有登入
+//		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
+//		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
+//		
+//	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//	    }
+		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String phone = updateRequest.getPhone();
@@ -239,7 +255,15 @@ public class MemberImpl implements MemberService{
 
 	@Override
 	//修改會員生日
-	public MemberResponse updateBirthday(MemberRequest updateRequest, HttpSession httpSession) {
+	public MemberResponse updateBirthday(MemberRequest updateRequest) {
+//		// session判斷是否有登入
+//		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
+//		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
+//		
+//	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//	    }
+		
 		// 取出輸入的會員資訊
 		String memberId = updateRequest.getMemberId();
 		String birth = updateRequest.getBirth();
@@ -266,6 +290,29 @@ public class MemberImpl implements MemberService{
  		memberDao.save(op.get());
 	    
  		return new MemberResponse(MemberRtnCode.UPDATE_MEMBER_INFO_SUCCESS.getMessage());
+	}
+
+	@Override
+	public MemberResponse getMemberInfo(MemberRequest updateRequest) {
+//		// session判斷是否有登入
+//		String sessionMemberId = (String) httpSession.getAttribute(SessionCode.MEMBER_ID.getCode());
+//		String sessionPwd = (String) httpSession.getAttribute(SessionCode.MEMBER_PWD.getCode());
+//		
+//	    if (!StringUtils.hasText(sessionMemberId) || !StringUtils.hasText(sessionPwd)) {
+//	      return new MemberResponse(MemberRtnCode.NOT_LOG_IN.getMessage());
+//	    }
+		
+		// 取出輸入的會員資訊
+		String memberId = updateRequest.getMemberId();
+		
+		// 判斷資料是否為空
+	    if (!StringUtils.hasText(memberId)) {
+	    	return new MemberResponse(MemberRtnCode.INCORRECT_INFO_ERROR.getMessage());
+	    }
+	    
+		Optional<Member> op = memberDao.findById(memberId);
+		
+		return new MemberResponse(op.get(), MemberRtnCode.GET_INFO_SUCCESS.getMessage());
 	}
 		
 }

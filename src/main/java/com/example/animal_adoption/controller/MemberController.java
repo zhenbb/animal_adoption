@@ -30,50 +30,57 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "log_in")
-	public MemberResponse logIn(@RequestBody MemberRequest accountRequest, HttpSession httpSession) {		
-		MemberResponse res = memberService.logIn(accountRequest);
-		if (!res.getMessage().equals(MemberRtnCode.LOG_IN_SUCCESS.getMessage())) {
-			return res;
-		}
+	public MemberResponse logIn(@RequestBody MemberRequest accountRequest) {		
+//		MemberResponse res = memberService.logIn(accountRequest);
+//		if (!res.getMessage().equals(MemberRtnCode.LOG_IN_SUCCESS.getMessage())) {
+//			return res;
+//		}
 		
-		// 設定帳號密碼到session
-		httpSession.setAttribute(SessionCode.MEMBER_ID.getCode(), accountRequest.getMemberId());
-		httpSession.setAttribute(SessionCode.MEMBER_PWD.getCode(), accountRequest.getPwd());
-		httpSession.setMaxInactiveInterval(1800);
-		
-		res.setSessionId(httpSession.getId());
-		
-		return res;
+//		// 設定帳號密碼到session
+//		httpSession.setAttribute(SessionCode.MEMBER_ID.getCode(), accountRequest.getMemberId());
+//		httpSession.setAttribute(SessionCode.MEMBER_PWD.getCode(), accountRequest.getPwd());
+//		httpSession.setMaxInactiveInterval(1800);
+//		
+//		res.setSessionId(httpSession.getId());
+//		
+//		System.out.println(httpSession.getId());
+
+		return new MemberResponse(MemberRtnCode.LOG_IN_SUCCESS.getMessage());
 	}
 	
-	@PostMapping(value = "log_out")
-	public MemberResponse logOut(@RequestBody MemberRequest accountRequest, HttpSession httpSession) {
-		httpSession.removeAttribute(SessionCode.MEMBER_ID.getCode());
-		httpSession.removeAttribute(SessionCode.MEMBER_PWD.getCode());
-		return new MemberResponse(MemberRtnCode.LOG_OUT_SUCCESS.getMessage());
-	}
+//	@PostMapping(value = "log_out")
+//	public MemberResponse logOut(@RequestBody MemberRequest accountRequest) {
+//		httpSession.removeAttribute(SessionCode.MEMBER_ID.getCode());
+//		httpSession.removeAttribute(SessionCode.MEMBER_PWD.getCode());
+//		return new MemberResponse(MemberRtnCode.LOG_OUT_SUCCESS.getMessage());
+//	}
 	
 	@PostMapping(value = "update_pwd")
-	public MemberResponse updatePwd(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
-		return memberService.updatePwd(updateRequest, httpSession);
+	public MemberResponse updatePwd(@RequestBody MemberRequest updateRequest) {
+		return memberService.updatePwd(updateRequest);
 	}
 	
 	@PostMapping(value = "update_member_name")
-	public MemberResponse updateMemberName(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {    
-		return memberService.updateMemberName(updateRequest, httpSession);
+	public MemberResponse updateMemberName(@RequestBody MemberRequest updateRequest) {    
+		return memberService.updateMemberName(updateRequest);
 	}
 	
 	@PostMapping(value = "update_phone")
-	public MemberResponse updatePhone(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
-		return memberService.updatePhone(updateRequest, httpSession);
+	public MemberResponse updatePhone(@RequestBody MemberRequest updateRequest) {
+		return memberService.updatePhone(updateRequest);
 	}
 	
 	@PostMapping(value = "update_birthday")
-	public MemberResponse updateBirthday(@RequestBody MemberRequest updateRequest, HttpSession httpSession) {
-		return memberService.updateBirthday(updateRequest, httpSession);
+	public MemberResponse updateBirthday(@RequestBody MemberRequest updateRequest) {
+		return memberService.updateBirthday(updateRequest);
+	}
+	
+	@PostMapping(value = "get_member_info")
+	public MemberResponse getMemberInfo(@RequestBody MemberRequest updateRequest) {
+		return memberService.getMemberInfo(updateRequest);
 	}
 
-  @GetMapping(value= "update_session_interval")
+	@GetMapping(value= "update_session_interval")
 	public void updateSessionInterval(HttpSession httpSession) {
 		// 設定session時間: 30分鐘 
 		httpSession.setMaxInactiveInterval(1800);  // (單位是秒)

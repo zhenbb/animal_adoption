@@ -18,17 +18,18 @@ public interface MemberService {
 	public MemberResponse logIn(MemberRequest accountRequest);
 
 	//修改會員密碼
-	public MemberResponse updatePwd(MemberRequest updateRequest, HttpSession httpSession);
+	public MemberResponse updatePwd(MemberRequest updateRequest);
 
 	//修改會員姓名
-	public MemberResponse updateMemberName(MemberRequest updateRequest, HttpSession httpSession);
+	public MemberResponse updateMemberName(MemberRequest updateRequest);
 
 	//修改會員手機
-	public MemberResponse updatePhone(MemberRequest updateRequest, HttpSession httpSession);
+	public MemberResponse updatePhone(MemberRequest updateRequest);
 
 	//修改會員生日
-	public MemberResponse updateBirthday(MemberRequest updateRequest, HttpSession httpSession);
+	public MemberResponse updateBirthday(MemberRequest updateRequest);
 
-
+	//提取會員資料
+	public MemberResponse getMemberInfo(MemberRequest updateRequest);
 
 }
