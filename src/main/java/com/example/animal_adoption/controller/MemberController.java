@@ -2,6 +2,8 @@ package com.example.animal_adoption.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.animal_adoption.constants.RtnCode;
+import com.example.animal_adoption.repository.MemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+
+  @Autowired
+  private MemberDao memberDao;
 	
 	@PostMapping(value = "sign_up")
 	public MemberResponse signUp(@RequestBody MemberRequest signUpRequest) {
@@ -85,6 +90,10 @@ public class MemberController {
 		// 設定session時間: 30分鐘 
 		httpSession.setMaxInactiveInterval(1800);  // (單位是秒)
 	}
-	
+
+  @PostMapping(value = "findByMemberId")
+  public MemberResponse getMemberInfo(@RequestBody MemberRequest updateRequest) {
+    return new MemberResponse(memberDao.findById(updateRequest.getMemberId()).get());
+  }
 
 }

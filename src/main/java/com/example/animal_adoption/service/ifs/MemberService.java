@@ -32,4 +32,5 @@ public interface MemberService {
 	//提取會員資料
 	public MemberResponse getMemberInfo(MemberRequest updateRequest, HttpSession httpSession);
 
+
 }
