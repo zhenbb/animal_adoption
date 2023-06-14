@@ -9,7 +9,7 @@ public class ProductAddRequest {
 //	@JsonProperty("is_admin")
 //	private boolean isAdmin;
 
-	@JsonProperty("product_id")
+	@JsonProperty("product_name")
 	private String productName;
 
 	@JsonProperty("category")
