@@ -110,10 +110,10 @@ public class Base64ToImg2 {
       String filePath = "";
       //  決定儲存位置
       if (sort.equals("a")) {
-        filePath += "D:\\Intellij_java\\animal_adoption\\src\\main\\resources\\img\\animal";
+        filePath += "C:\\IntelliJ IDEA Project\\animal_adoption\\src\\main\\resources\\img\\animal";
       }
       if (sort.equals("s")) {
-        filePath += "D:\\Intellij_java\\animal_adoption\\src\\main\\resources\\img\\shop";
+        filePath += "C:\\IntelliJ IDEA Project\\animal_adoption\\src\\main\\resources\\img\\shop";
       }
 
     try {
@@ -138,8 +138,12 @@ public class Base64ToImg2 {
       int maxSerialNumber = Arrays.stream(files)
               .filter(File::isFile)
               .map(File::getName)
-              .filter(name -> name.matches("\\d+-\\d+\\.jpg"))  // 假設圖片檔案名稱只包含數字且以 .jpg 結尾
-              .map(name -> Integer.parseInt(name.replace(".jpg", "")))
+              // 圖片檔案名稱為 id - SerialNumber .jpg
+              .filter(name -> name.matches("\\d+-\\d+\\.jpg"))
+              .map(name -> {
+                String[] parts = name.replace(".jpg", "").split("-");
+                return Integer.parseInt(parts[1]);
+              })
               .max(Comparator.naturalOrder())
               .orElse(0);
 
