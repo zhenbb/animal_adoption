@@ -22,5 +22,5 @@ public interface AnimalInfoService {
   public AnimalInfoResponse upLordImg(String imgBase64,String sort,int id) throws IOException;
 
   public AnimalInfoResponse findByAnimalId(int animalId);
-	
+
 }

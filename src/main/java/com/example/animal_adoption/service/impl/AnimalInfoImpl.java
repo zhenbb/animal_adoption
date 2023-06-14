@@ -84,18 +84,21 @@ public class AnimalInfoImpl implements AnimalInfoService {
 		return new AnimalInfoResponse(RtnCode.MODIFY_SUCCESS.getMessage());
 	}
 
-
+  // 尋找所有動物
   @Override
   public AnimalInfoResponse findAll(){
     List<Animal> animalList = animalDao.findAll();
     return new AnimalInfoResponse(animalList,RtnCode.FIND_SUCCESS.getMessage());
   }
+
+  // 上傳照片
   @Override
   public AnimalInfoResponse upLordImg(String imgBase64,String sort,int id) throws IOException {
     Base64ToImg2.Base64ToImg(imgBase64,sort,id);
     return  new AnimalInfoResponse(RtnCode.FIND_SUCCESS.getMessage());
   }
 
+  // 透過ID尋找動物
   @Override
   public AnimalInfoResponse findByAnimalId(int animalId){
     Animal animal = animalDao.findByAnimalId(animalId);

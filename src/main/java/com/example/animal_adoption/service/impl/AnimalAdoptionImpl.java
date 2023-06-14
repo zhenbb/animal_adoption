@@ -55,7 +55,11 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     // 取出欲領寵物資訊
     Animal animal = adoptionRequest.getAnimal();
     // 取出欲領養人資訊
-    Member member = adoptionRequest.getMember();
+    Optional<Member> temp1 = memberDao.findById( adoptionRequest.getMemberId());
+    if (!temp1.isPresent()) {
+      return new AnimalAdoptionResponse(RtnCode.INCORRECT_INFO_ERROR.getMessage());
+    }
+    Member member = temp1.get();
 
     // 判斷資料是否為空
     if (animalCheck(animal) || memberCheck(member)) {
@@ -63,17 +67,12 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     }
 
     // 判斷領寵物是否存在
-    Optional<Animal> temp = animalDao.findById(animal.getAnimalId());
-    if (!temp.isPresent()) {
+    Optional<Animal> temp2 = animalDao.findById(animal.getAnimalId());
+    if (!temp2.isPresent()) {
       return new AnimalAdoptionResponse(RtnCode.INCORRECT_INFO_ERROR.getMessage());
     }
 
-    // 判斷領養人是否存在
-    if (!memberDao.existsById(member.getMemberId())) {
-      return new AnimalAdoptionResponse(RtnCode.INCORRECT_INFO_ERROR.getMessage());
-    }
-
-    Animal theAnimal = temp.get();
+    Animal theAnimal = temp2.get();
     // 判寵物是否尚未被領養
     if (theAnimal.getAdoptDate() != null) {
       return new AnimalAdoptionResponse(RtnCode.HAS_BEEN_ADOPTED_ERROR.getMessage());

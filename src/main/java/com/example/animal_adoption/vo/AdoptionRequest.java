@@ -8,8 +8,8 @@ import javax.servlet.http.HttpSession;
 
 public class AdoptionRequest {
 
-  @JsonProperty("member")
-  private Member member;
+  @JsonProperty("member_id")
+  private String memberId;
 
   @JsonProperty("animal")
   private Animal animal;
@@ -17,12 +17,8 @@ public class AdoptionRequest {
   public AdoptionRequest() {
   }
 
-  public Member getMember() {
-    return member;
-  }
-
-  public void setMember(Member member) {
-    this.member = member;
+  public String getMemberId() {
+    return memberId;
   }
 
   public Animal getAnimal() {
