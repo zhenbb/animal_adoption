@@ -26,6 +26,7 @@ public class ProductImpl implements ProductService {
 	// 新增商品 nana
 	@Override
 	public ProductResponse addProduct(ProductAddRequest productAddRequest) {
+		
 		// 防呆 null/空白
 		if (productAddRequest == null || !StringUtils.hasText(productAddRequest.getProductName())
 				|| !StringUtils.hasText(productAddRequest.getCategory())) {
@@ -35,13 +36,10 @@ public class ProductImpl implements ProductService {
 		if (productAddRequest.getPrice() <= 0 || productAddRequest.getStock() < 0) {
 			return new ProductResponse(RtnCode.PRODUCT_DATA_ERROR.getMessage());
 		}
-
-		// 確認資料庫裡有沒有
-//		List<Product> resultList = productDao.findByName();
-//		if(!CollectionUtils.isEmpty(resultList)) {
-//			System.out.println("有重複名字的商品，是否要重複新增？");
-//		}
-		Product product = new Product(0, 
+		
+		//創建新商品 + 用0產生流水號
+		Product product = new Product(
+				0, 
 				productAddRequest.getProductName(), 
 				productAddRequest.getCategory(),
 				productAddRequest.getPrice(), 
@@ -50,6 +48,8 @@ public class ProductImpl implements ProductService {
 		return new ProductResponse(product, RtnCode.PRODUCT_ADD_SUCCESS.getMessage());
 	}
 
+	
+	
 	// 1. 更新商品庫存
 	@Override
 	public ProductResponse updateProductStock(int productId, int stock) {
@@ -178,26 +178,6 @@ public class ProductImpl implements ProductService {
 		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
 	}
 
-	@Override
-	public ProductResponse showTop12NewProduct() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	
-	//前端要用的功能
-	//展示前12新商品
-//	@Override
-//	public ProductResponse showTop12NewProduct() {
-//		
-//		List<Product> result = productDao.findTop12OrderByProductIdDesc(); 
-//		
-//		if (result.size() == 0) {
-//			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
-//		}
-//		
-//		return new ProductResponse(result, RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
-//
-//	}
 
 }
