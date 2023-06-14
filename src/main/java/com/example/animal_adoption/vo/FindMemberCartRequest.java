@@ -5,17 +5,28 @@ import com.example.animal_adoption.entity.Member;
 import java.util.List;
 import java.util.Map;
 
-public class CheckOutRequst {
-
+public class FindMemberCartRequest {
+    private List<Integer> productId;
+    private Map<Integer, Integer> products;
     private int carId;
-    private int productId;
+    private int sales;
     private int price;
-    private int sale;
-    private Map<Integer, Integer> carMap;
     private Member member;
 
+    public List<Integer> getProductId() {
+        return productId;
+    }
 
-    public CheckOutRequst() {
+    public void setProductId(List<Integer> productId) {
+        this.productId = productId;
+    }
+
+    public Map<Integer, Integer> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Map<Integer, Integer> products) {
+        this.products = products;
     }
 
     public int getCarId() {
@@ -26,12 +37,12 @@ public class CheckOutRequst {
         this.carId = carId;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getSales() {
+        return sales;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setSales(int sales) {
+        this.sales = sales;
     }
 
     public int getPrice() {
@@ -42,27 +53,11 @@ public class CheckOutRequst {
         this.price = price;
     }
 
-    public int getSale() {
-        return sale;
-    }
-
-    public void setSale(int sale) {
-        this.sale = sale;
-    }
-
-    public Map<Integer, Integer> getCarMap() {
-        return carMap;
-    }
-
-    public void setCarMap(Map<Integer, Integer> carMap) {
-        this.carMap = carMap;
-    }
-
     public Member getMember() {
         return member;
     }
+
     public void setMember(Member member) {
         this.member = member;
     }
-
 }

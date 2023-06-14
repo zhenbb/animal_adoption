@@ -7,9 +7,11 @@ public interface CartService {
 
     public CartResponse addProduct(AddCartRequst addCartRequst);
 
+    public CartInfoResponse findMemberCart(FindMemberCartRequest findMemberCartRequest);
+
     public CartResponse checkOut(CheckOutRequst checkOutRequst);
 
-    public CartResponse getCartProduct(GetCartProductRequest getCartProductRequest);
+    public CartInfoResponse getCartProduct(GetCartProductRequest getCartProductRequest);
 
     public CartResponse modifyProductQuantity(DeleteProductRequest deleteProductRequest);
 }

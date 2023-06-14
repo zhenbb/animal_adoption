@@ -1,10 +1,7 @@
 package com.example.animal_adoption.controller;
 
 import com.example.animal_adoption.service.ifs.CartService;
-import com.example.animal_adoption.vo.AddCartRequst;
-import com.example.animal_adoption.vo.CartResponse;
-import com.example.animal_adoption.vo.CheckOutRequst;
-import com.example.animal_adoption.vo.GetCartProductRequest;
+import com.example.animal_adoption.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +24,14 @@ public class CartController {
         return cartService.checkOut(checkOutRequst);
     }
 
+    @PostMapping(value = "findMemberCart")
+    public CartInfoResponse findMemberCart(@RequestBody FindMemberCartRequest findMemberCartRequest){
+        return cartService.findMemberCart(findMemberCartRequest);
+    }
+
+
     @PostMapping(value = "getCartProduct")
-    public CartResponse getCartProduct(@RequestBody GetCartProductRequest getCartProductRequest){
+    public CartInfoResponse getCartProduct(@RequestBody GetCartProductRequest getCartProductRequest){
         return cartService.getCartProduct(getCartProductRequest);
     }
 
