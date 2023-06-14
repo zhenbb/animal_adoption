@@ -97,7 +97,7 @@ public class ProductController {
 	
 	//前端用
 	//秀出所有商品
-	@GetMapping(value="find_All")
+	@GetMapping(value="find_all")
 	public ProductResponse findAll() {
 		return new ProductResponse( productDao.findAll(),RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
 		
