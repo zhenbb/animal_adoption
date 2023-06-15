@@ -19,8 +19,8 @@ public interface AnimalInfoService {
 
   public AnimalInfoResponse findAll();
 
-  public AnimalInfoResponse upLordImg(String imgBase64,String sort,int id) throws IOException;
-
   public AnimalInfoResponse findByAnimalId(int animalId);
+
+  public AnimalInfoResponse findBySpecies(boolean species);
 
 }

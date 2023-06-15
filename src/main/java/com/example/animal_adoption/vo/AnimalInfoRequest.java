@@ -12,6 +12,9 @@ public class AnimalInfoRequest {
 
   private int animalId;
 
+  @JsonProperty("species")
+  private boolean species;
+
   @JsonProperty("imgBase64")
   private String imgBase64;
 
@@ -21,12 +24,7 @@ public class AnimalInfoRequest {
   @JsonProperty("id")
   private int id;
 
-  public int getAnimalId() {
-    return animalId;
-  }
-
-  public void setAnimalId(int animalId) {
-    this.animalId = animalId;
+  public AnimalInfoRequest() {
   }
 
   public List<Animal> getAnimal() {
@@ -37,12 +35,20 @@ public class AnimalInfoRequest {
     this.animal = animal;
   }
 
-  public String getImg() {
-    return imgBase64;
+  public int getAnimalId() {
+    return animalId;
   }
 
-  public void setImg(String img) {
-    this.imgBase64 = imgBase64;
+  public void setAnimalId(int animalId) {
+    this.animalId = animalId;
+  }
+
+  public boolean isSpecies() {
+    return species;
+  }
+
+  public void setSpecies(boolean species) {
+    this.species = species;
   }
 
   public String getImgBase64() {
@@ -68,15 +74,4 @@ public class AnimalInfoRequest {
   public void setId(int id) {
     this.id = id;
   }
-
-  public AnimalInfoRequest(List<Animal> animal) {
-    super();
-    this.animal = animal;
-  }
-
-  public AnimalInfoRequest() {
-    super();
-
-  }
-
 }

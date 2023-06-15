@@ -36,13 +36,17 @@ public class AnimalInfoController {
     return animalInfoService.findAll();
   }
 
-  @PostMapping(value = "upLordImg")
-  public AnimalInfoResponse upLordImg(@RequestBody AnimalInfoRequest animalInfoRequest) throws IOException {
-    return animalInfoService.upLordImg(animalInfoRequest.getImg(),animalInfoRequest.getSort(),animalInfoRequest.getId());
-  }
+  // TODO
+  // 移動到ImgController
+
 
   @PostMapping(value = "findByAnimalId")
   public AnimalInfoResponse findByAnimalId(@RequestBody AnimalInfoRequest animalInfoRequest){
     return animalInfoService.findByAnimalId(animalInfoRequest.getAnimalId());
+  }
+
+  @PostMapping(value = "findBySpecies")
+  public AnimalInfoResponse findBySpecies(@RequestBody AnimalInfoRequest animalInfoRequest){
+    return animalInfoService.findBySpecies(animalInfoRequest.isSpecies());
   }
 }
