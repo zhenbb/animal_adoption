@@ -71,8 +71,8 @@ public class ProductController {
 
 	// 關鍵字搜尋
 	@PostMapping(value = "search_product")
-	public ProductResponse searchKeyword(@RequestBody ProductSearchRequest Request) {
-		return productService.searchKeyword(Request.getKeyword());
+	public ProductResponse searchKeyword(String keyword) {
+		return productService.searchKeyword(keyword);
 	}
 	
 	//前端用

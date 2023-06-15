@@ -168,6 +168,7 @@ public class ProductImpl implements ProductService {
 			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
 		}
 		List<Product> result = productDao.searchAllByKeywordRegexp(keyword);
+		
 		if (result.size() == 0) {
 			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
 		}
