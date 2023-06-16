@@ -287,7 +287,7 @@ public class MemberImpl implements MemberService{
 	    }
 	    
 	    // 更新生日
-	    op.get().setBirth(localDateBirth);;
+	    op.get().setBirth(localDateBirth);
  		
  		memberDao.save(op.get());
 	    

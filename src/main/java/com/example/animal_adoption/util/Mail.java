@@ -7,15 +7,9 @@ import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Mail {
-  private String userName = "ms0565119@gmail.com"; // 寄件者email
+  private final String userName = "ms0565119@gmail.com"; // 寄件者email
 
-  private String password = "ztzalkilgixjnksq"; // 收寄件者密碼
-
-  private String customer = "ms0565119@gmail.com"; // 收件者email
-
-  private String subject = "認養申請"; // 標題
-
-  //private String txt = "Hey"; // 信件內容
+  private final String password = "ztzalkilgixjnksq"; // 收寄件者密碼
 
   public void sendMail(String text) {
     Properties prop = new Properties();
@@ -44,8 +38,12 @@ public class Mail {
     try {
       message.setFrom(new InternetAddress(userName));
 
+      // 收件者email
+      String customer = "ms0565119@gmail.com";
       message.setRecipient(Message.RecipientType.TO, new InternetAddress(customer));
 
+      // 標題
+      String subject = "認養申請";
       message.setSubject(subject);
 
       message.setContent(text,"text/html;charset=UTF-8");

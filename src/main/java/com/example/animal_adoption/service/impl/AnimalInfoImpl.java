@@ -1,10 +1,8 @@
 package com.example.animal_adoption.service.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.animal_adoption.util.Base64ToImg2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;

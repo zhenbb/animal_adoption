@@ -1,8 +1,6 @@
 package com.example.animal_adoption.service.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -79,7 +77,7 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     }
 
     Mail mail = new Mail();
-    mail.sendMail(animal.toString() + "\n" + member.toString());
+    mail.sendMail(animal + "\n" + member);
     return new AnimalAdoptionResponse(theAnimal, member, RtnCode.SUBMIT_SUCCESS.getMessage());
   }
 

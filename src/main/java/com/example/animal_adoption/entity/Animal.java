@@ -115,8 +115,4 @@ public class Animal {
     this.adoptDate = adoptDate;
   }
 
-  @Override
-  public String toString() {
-    return "Animal:{\nanimalId: " + animalId + "\nanimalName: " + animalName + "\nsex: " + sex + "\nspecies: " + species + "\ntype: " + "\nregDate: " + regDate + "\nregCity: " + regCity + "}";
-  }
 }

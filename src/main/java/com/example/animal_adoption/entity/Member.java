@@ -126,9 +126,4 @@ public class Member {
     this.isActive = isActive;
   }
 
-  @Override
-  public String toString() {
-    return "Member:{\nmemberId: " + memberId + "\nmemberName: " + memberName + "\nphone: " + phone + "\nbirth: " + birth + "}";
-  }
-
 }
