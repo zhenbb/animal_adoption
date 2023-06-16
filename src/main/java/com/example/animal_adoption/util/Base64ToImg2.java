@@ -6,6 +6,7 @@ import com.example.animal_adoption.vo.ImgResponse;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -17,7 +18,7 @@ public class Base64ToImg2 {
 
   //// 圖片轉換成 Base64 字串
   //public static String getImageStr() {
-  //  String imgFile = "D:\\tupian\\a.png"; // 待處理的圖片
+  //  String imgFile = "D:\\utopian\\a.png"; // 待處理的圖片
   //  try {
   //    byte[] data = Files.readAllBytes(Path.of(imgFile));
   //    Base64.Encoder encoder = Base64.getEncoder();
@@ -107,7 +108,7 @@ public class Base64ToImg2 {
   //  }
   //}
 
-  public static ImgResponse base64ToImg(String imgBase64, String sort, int id) throws FileNotFoundException, IOException {
+  public static ImgResponse base64ToImg(String imgBase64, String sort, int id) throws IOException {
 
     String filePath = "";
     //  決定儲存位置
@@ -129,7 +130,7 @@ public class Base64ToImg2 {
 
     // 將 txt 檔案讀取並轉換成圖片
     FileInputStream fis = new FileInputStream(filePath + "\\base64.txt");
-    String stringTooLong = IOUtils.toString(fis, "UTF-8");
+    String stringTooLong = IOUtils.toString(fis, StandardCharsets.UTF_8);
     // 關閉檔案
     fis.close();
     Base64.Decoder decoder = Base64.getDecoder();
@@ -141,7 +142,7 @@ public class Base64ToImg2 {
               .filter(File::isFile)
               .map(File::getName)
               // 圖片檔案名稱為 id - SerialNumber .png
-              .filter(name -> name.matches("\\d+-\\d+\\.png"))
+              .filter(name -> name.matches(id + "-\\d+\\.png"))
               .map(name -> {
                 String[] parts = name.replace(".png", "").split("-");
                 return Integer.parseInt(parts[1]);

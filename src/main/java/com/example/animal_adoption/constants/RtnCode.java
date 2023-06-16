@@ -14,7 +14,7 @@ public enum RtnCode {
     PRODUCT_ALREADY_PRESENT("409", "重複新增"),
     PRODUCT_NO_CHANGE("409", "無項目變更"),
 
-    //	學生選課
+    //	animal
     ADD_FAVORITE_SUCCESS("200", "新增收藏成功"),
     ADD_INFO_SUCCESS("200", "新增資訊成功"),
     FIND_SUCCESS("200", "尋找成功"),
