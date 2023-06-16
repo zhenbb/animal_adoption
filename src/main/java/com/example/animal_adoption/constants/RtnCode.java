@@ -40,8 +40,9 @@ public enum RtnCode {
     NOT_FOUND_CART_ERROR("400","購物車為空"),
     OUT_OF_STOCK_ERROR("400","庫存不足"),
     INVALID_QUANTITY_ERROR("400","輸入數量不得為零或負數"),
-    ;
 
+    //img
+    COMPILE_SUCCESS("200","編譯成功");
 
 
 
