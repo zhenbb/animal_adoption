@@ -14,7 +14,7 @@ public enum RtnCode {
     PRODUCT_ALREADY_PRESENT("409", "重複新增"),
     PRODUCT_NO_CHANGE("409", "無項目變更"),
 
-    // animal
+    //	學生選課
     ADD_FAVORITE_SUCCESS("200", "新增收藏成功"),
     ADD_INFO_SUCCESS("200", "新增資訊成功"),
     FIND_SUCCESS("200", "尋找成功"),
@@ -39,10 +39,10 @@ public enum RtnCode {
     NOT_FOUND_PRODUCT_ERROR("400","找不到商品，可能已被下架或售完"),
     NOT_FOUND_CART_ERROR("400","購物車為空"),
     OUT_OF_STOCK_ERROR("400","庫存不足"),
+    INVALID_QUANTITY_ERROR("400","輸入數量不得為零或負數"),
+    ;
 
 
-    //img
-    COMPILE_SUCCESS("200","編譯成功");
 
 
     private String code;

@@ -8,14 +8,23 @@ import java.util.Map;
 public class CheckOutRequst {
 
     private int carId;
-    private int productId;
+    private Integer[] productId;
     private int price;
-    private int sale;
+    private Integer[] sales;
+
     private Map<Integer, Integer> carMap;
     private Member member;
 
 
     public CheckOutRequst() {
+    }
+
+    public Integer[] getSales() {
+        return sales;
+    }
+
+    public void setSale(Integer[] sales) {
+        this.sales = sales;
     }
 
     public int getCarId() {
@@ -26,11 +35,11 @@ public class CheckOutRequst {
         this.carId = carId;
     }
 
-    public int getProductId() {
+    public Integer[] getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer[] productId) {
         this.productId = productId;
     }
 
@@ -40,14 +49,6 @@ public class CheckOutRequst {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public int getSale() {
-        return sale;
-    }
-
-    public void setSale(int sale) {
-        this.sale = sale;
     }
 
     public Map<Integer, Integer> getCarMap() {

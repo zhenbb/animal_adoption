@@ -46,6 +46,12 @@ public class CartImpl implements CartService {
         Optional<Member> info = memberDao.findById(member.getMemberId());
         Integer carId = info.get().getCarId();
         Map<Integer, Integer> carMap = addCartRequst.getProducts();
+        for (Map.Entry<Integer, Integer> entry : carMap.entrySet()) {
+            Integer quantity = entry.getValue();
+            if (quantity <= 0) {
+                return new CartResponse(RtnCode.INVALID_QUANTITY_ERROR.getMessage());
+            }
+        }
         List<Integer> cartList = new ArrayList<>(carMap.keySet());
         List<Product> productList = productDao.findAllById(cartList);
 //      查詢商品是否存在
@@ -56,14 +62,10 @@ public class CartImpl implements CartService {
         for (Product product : productList) {
             int stock = product.getStock();
             int requestedQuantity = carMap.get(product.getProductId()); // 從 carMap 中取得商品的數量
-
             if (stock < requestedQuantity) {
                 return new CartResponse(RtnCode.ADD_PRODUCT_ERROR.getMessage());
             }
         }
-//      將商品放入Map轉換成字串存入資料庫
-//        Map<Integer, Integer> shoppingCart = new HashMap<>();
-//        shoppingCart.put(cartList.get(), addCartRequst.getSales());
         ObjectMapper mapper = new ObjectMapper();
         String mapStr;
         try {
@@ -84,10 +86,11 @@ public class CartImpl implements CartService {
             //存入商品至購物車(會員資料中無購物車的)
         } else {
             Optional<Car> oldCart = carDao.findById(carId);
+            System.out.println(oldCart);
             String oldcartMapSt = oldCart.get().getCarMap();
             ObjectMapper mapper1 = new ObjectMapper();
             Map<Integer, Integer> oldCartMap = new HashMap<>();
-            //將Map字串轉回Map
+//            將Map字串轉回Map
             try {
                 oldCartMap = mapper1.readValue(oldcartMapSt, new TypeReference<Map<Integer, Integer>>() {
                 });
@@ -135,7 +138,7 @@ public class CartImpl implements CartService {
         String shoppingCartMapJson = new Gson().toJson(shoppingCartMap);
 
 
-        return new CartInfoResponse(orderList,shoppingCartMapJson);
+        return new CartInfoResponse(orderList, shoppingCartMapJson);
     }
 
 
@@ -143,54 +146,77 @@ public class CartImpl implements CartService {
     public CartResponse checkOut(CheckOutRequst checkOutRequst) {
 
         Optional<Member> member = memberDao.findById(checkOutRequst.getMember().getMemberId());
-        Map<Integer, Integer> cartMap = new HashMap<>();
-        cartMap.put(checkOutRequst.getProductId(),checkOutRequst.getSale());
-        int carId = member.get().getCarId();
-        Optional<Car> cart = carDao.findById(carId);
-        String memberCart = cart.get().getCarMap();
+        Optional<Car> memberCart = carDao.findById(member.get().getCarId());
+        String memberCartMapSt = memberCart.get().getCarMap();
         ObjectMapper mapper = new ObjectMapper();
-        Map<Integer, Integer> shoppingCartMap = new HashMap<>();
-        //將Map字串轉回Map
+        Map<Integer, Integer> memberCartMap = new HashMap<>();
+        //將Map字串轉回Map`
         try {
-            shoppingCartMap = mapper.readValue(memberCart, new TypeReference<Map<Integer, Integer>>() {
+            memberCartMap = mapper.readValue(memberCartMapSt, new TypeReference<Map<Integer, Integer>>() {
             });
-            System.out.println(shoppingCartMap);
+//            System.out.println(memberCartMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        for (Integer key : cartMap.keySet()) {
-            shoppingCartMap.remove(key);
+        Integer[] productId = checkOutRequst.getProductId();
+        Integer[] sales = checkOutRequst.getSales();
+        Map<Integer, Integer> orderMap = new LinkedHashMap<>();
+        for (int i = 0; i < productId.length; i++) {
+            orderMap.put(productId[i], sales[i]);
         }
-        ObjectMapper mapper2 = new ObjectMapper();
-        String mapStr;
-        if (shoppingCartMap.isEmpty()){
-            member.get().setCarId(null);
-        }else {
-            //Map轉成字串
-            try {
-                mapStr = mapper2.writeValueAsString(shoppingCartMap);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            Car car = new Car();
-            car.setCarMap(mapStr);
-            carDao.save(car);
-            member.get().setCarId(carDao.save(car).getCarId());
-
-        }
-        String mapStr2;
+        List<Integer> productIdList = new ArrayList<>(orderMap.keySet());
+        List<Product> orderList = productDao.findAllByProductIdIn(productIdList);
+        String newMemberCartMapSt;
         try {
-            mapStr2 = mapper2.writeValueAsString(cartMap);
+            newMemberCartMapSt = mapper.writeValueAsString(memberCartMap);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
+        if (memberCartMap.isEmpty()) {
+            member.get().setCarId(null);
+            memberDao.save(member.get());
+        } else {
+            Car car = new Car();
+            car.setCarMap(newMemberCartMapSt);
+            carDao.save(car);
+            member.get().setCarId(carDao.save(car).getCarId());
+            int carId = car.getCarId();
+            member.get().setCarId(carId);
+            memberDao.save(member.get());
+        }
         Order order = new Order();
-        order.setCheckoutMap(mapStr2);
+        order.setCheckoutMap(newMemberCartMapSt);
+        System.out.println(newMemberCartMapSt);
         orderDao.save(order);
-        Order order2 = orderDao.findByCheckoutMap(mapStr2);
-        member.get().setCheckoutId(String.valueOf(order2.getCheckoutId()));
+        Order order2 = orderDao.findByCheckoutMap(newMemberCartMapSt);  //回傳參數多餘1個，無法查詢
+        if (member.get().getCheckoutId() == null) {
+            String checkoutId = order2.getCheckoutId() + "," + " ";
+            member.get().setCheckoutId(checkoutId);
+        } else {
+            String newCheckoutId = member.get().getCheckoutId() + order2.getCheckoutId() + "," + " ";
+            member.get().setCheckoutId(newCheckoutId);
+        }
+        int totalPrice = 0;
+        for (Product product : orderList) {
+            for (Map.Entry<Integer, Integer> item : orderMap.entrySet()) {
+                if (item.getValue() < 0) {
+                    return new CartResponse(RtnCode.NOT_FOUND_PRODUCT_ERROR.getMessage());
+                }
+                Integer key = item.getKey();
+                if (key.equals(product.getProductId())) {
+                    int quantity = item.getValue();
+                    if (quantity > product.getStock()) {
+                        return new CartResponse(RtnCode.OUT_OF_STOCK_ERROR.getMessage());
+                    }
+                    totalPrice += product.getPrice() * quantity;
+                    product.setStock(product.getStock() - quantity);
+                    memberCartMap.remove(item.getKey());
+                }
+            }
+        }
         memberDao.save(member.get());
-        return new CartResponse(RtnCode.ADD_ORDER_SUCCESS.getMessage());
+        return new CartResponse("總金額為：" + totalPrice + RtnCode.ADD_ORDER_SUCCESS.getMessage());
     }
 
     @Override
@@ -218,7 +244,7 @@ public class CartImpl implements CartService {
         List<Integer> productIdList = new ArrayList<>(shoppingCartMap.keySet());
         List<Product> orderList = productDao.findAllByProductIdIn(productIdList);
 
-        return new CartInfoResponse(orderList,"購物車物品");
+        return new CartInfoResponse(orderList, "購物車物品");
     }
 
     @Override
@@ -261,5 +287,12 @@ public class CartImpl implements CartService {
             }
         }
         return new CartResponse(RtnCode.MODIFY_THE_QUANTITY.getMessage());
+    }
+
+    @Override
+    public CartResponse getOrderProduct(GetOrderProductRequest getOrderProductRequest) {
+        Optional<Member> member = memberDao.findById(getOrderProductRequest.getMember().getMemberId());
+        String orderList = member.get().getCheckoutId();
+        return null;
     }
 }
