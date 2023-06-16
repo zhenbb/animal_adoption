@@ -24,4 +24,6 @@ public interface AnimalDao extends JpaRepository<Animal,Integer> {
   public List<Animal> findAll();
 
   public Animal findByAnimalId(int animalId);
+
+  public List<Animal> findBySpecies(boolean species);
 }

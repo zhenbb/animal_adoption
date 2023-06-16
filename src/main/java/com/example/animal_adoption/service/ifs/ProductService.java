@@ -1,11 +1,10 @@
 package com.example.animal_adoption.service.ifs;
 
-import com.example.animal_adoption.vo.ProductAddRequest;
 import com.example.animal_adoption.vo.ProductResponse;
   
 public interface ProductService {
 	// 新增商品 nana
-	public ProductResponse addProduct(ProductAddRequest productAddRequest);
+	public ProductResponse addProduct(String productName, String category, int price, int stock);
 
 	// 1. 更新商品庫存
 	public ProductResponse updateProductStock(int productId, int stock);

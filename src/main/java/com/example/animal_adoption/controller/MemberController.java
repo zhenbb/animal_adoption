@@ -91,9 +91,4 @@ public class MemberController {
 		httpSession.setMaxInactiveInterval(1800);  // (單位是秒)
 	}
 
-  @PostMapping(value = "findByMemberId")
-  public MemberResponse getMemberInfo(@RequestBody MemberRequest updateRequest) {
-    return new MemberResponse(memberDao.findById(updateRequest.getMemberId()).get());
-  }
-
 }

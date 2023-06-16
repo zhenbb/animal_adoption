@@ -9,6 +9,10 @@ public class ImgResponse {
   public ImgResponse() {
   }
 
+  public ImgResponse(String message) {
+    this.message = message;
+  }
+
   public ImgResponse(int count, String message) {
     this.count = count;
     this.message = message;

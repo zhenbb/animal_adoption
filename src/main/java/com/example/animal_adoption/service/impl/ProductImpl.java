@@ -25,25 +25,20 @@ public class ProductImpl implements ProductService {
 
 	// 新增商品 nana
 	@Override
-	public ProductResponse addProduct(ProductAddRequest productAddRequest) {
+	public ProductResponse addProduct(String productName, String category, int price , int stock) {
 		
 		// 防呆 null/空白
-		if (productAddRequest == null || !StringUtils.hasText(productAddRequest.getProductName())
-				|| !StringUtils.hasText(productAddRequest.getCategory())) {
+		if ( !StringUtils.hasText(productName)
+				|| !StringUtils.hasText(category)) {
 			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
 		}
 		// 數字錯誤
-		if (productAddRequest.getPrice() <= 0 || productAddRequest.getStock() < 0) {
+		if (price <= 0 || stock < 0) {
 			return new ProductResponse(RtnCode.PRODUCT_DATA_ERROR.getMessage());
 		}
-		
+			
 		//創建新商品 + 用0產生流水號
-		Product product = new Product(
-				0, 
-				productAddRequest.getProductName(), 
-				productAddRequest.getCategory(),
-				productAddRequest.getPrice(), 
-				productAddRequest.getStock());
+		Product product = new Product(0, productName, category, price, stock);
 		productDao.save(product);
 		return new ProductResponse(product, RtnCode.PRODUCT_ADD_SUCCESS.getMessage());
 	}
@@ -87,7 +82,7 @@ public class ProductImpl implements ProductService {
 		Product result = resultOp.get();
 		result.setProductName(productName);
 		productDao.save(result);
-		return new ProductResponse(RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
+		return new ProductResponse(result, RtnCode.PRODUCT_UPDATE_SUCCESS.getMessage());
 	}
 
 	// 3. 更新商品價格
@@ -129,9 +124,10 @@ public class ProductImpl implements ProductService {
 
 		// 檢查分類是否沒修改
 		// 步驟1/3--抓出字串+去頭去尾+分割+加入List
-		String opCate = result.getCategory().substring(1, result.getCategory().length() - 1);
-		String bookCate = category.substring(1, category.length() - 1);
-		List<String> opCateList = Arrays.asList(opCate.split(", "));
+		String opCate = result.getCategory();
+		String cate = opCate.length() > 1 ? opCate.substring(0, opCate.length() - 1) : opCate;
+		String bookCate = category.length() > 1 ? category.substring(0, category.length() - 1) : category;
+		List<String> opCateList = Arrays.asList(cate.split(", "));
 		List<String> bookCateList = Arrays.asList(bookCate.split(", "));
 
 		// 針對新分類 轉換為不重複的Set
@@ -172,6 +168,7 @@ public class ProductImpl implements ProductService {
 			return new ProductResponse(RtnCode.PRODUCT_CANNOT_EMPTY.getMessage());
 		}
 		List<Product> result = productDao.searchAllByKeywordRegexp(keyword);
+		
 		if (result.size() == 0) {
 			return new ProductResponse(RtnCode.PRODUCT_NOT_FOUND.getMessage());
 		}

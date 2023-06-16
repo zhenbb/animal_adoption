@@ -78,6 +78,8 @@ public class MemberImpl implements MemberService{
 		member.setCheckoutId(null);
 		member.setAdministrator(false);
 		
+		member.setActive(true);
+		
 		memberDao.save(member);
 
 

@@ -107,7 +107,7 @@ public class Base64ToImg2 {
   //  }
   //}
 
-  public static void Base64ToImg(String imgBase64, String sort, int id) throws FileNotFoundException, IOException {
+  public static ImgResponse base64ToImg(String imgBase64, String sort, int id) throws FileNotFoundException, IOException {
 
     String filePath = "";
     //  決定儲存位置
@@ -170,6 +170,7 @@ public class Base64ToImg2 {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    return new ImgResponse(RtnCode.COMPILE_SUCCESS.getMessage());
   }
 
   // String sort, int id

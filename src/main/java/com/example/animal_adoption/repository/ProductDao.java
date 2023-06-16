@@ -15,10 +15,11 @@ import com.example.animal_adoption.entity.Product;
 @Repository
 public interface ProductDao extends JpaRepository<Product,Integer> {
 	
-	//搜尋關鍵字(正則) 搜尋商品名及分類
-	@Query(value="SELECT * FROM product AS p"
-			+ " WHERE p.product_name REGEXP %:keyword% OR p.category REGEXP %:keyword%", nativeQuery = true)
-	public List<Product> searchAllByKeywordRegexp(@Param("keyword") String str);
+	//搜尋關鍵字(正則) 搜尋商品名及分類	
+	@Query(value = "SELECT p FROM product AS p "
+			+ "WHERE p.product_name REGEXP %:keyword% OR p.category REGEXP %:keyword% ", nativeQuery = true)
+	public List<Product> searchAllByKeywordRegexp(@Param("keyword") String keyword);
+
 	
 	//購物車
 	@Query(value = "SELECT product_id FROM product", nativeQuery = true)
