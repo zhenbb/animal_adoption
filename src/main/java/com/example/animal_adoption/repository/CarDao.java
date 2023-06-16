@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarDao extends JpaRepository<Car, Integer> {
 
-    @Query(value = "SELECT carMap FROM car", nativeQuery = true)
+    @Query(value = "SELECT car_map FROM car", nativeQuery = true)
     public Car byCarMap(@Param("input") String input);
 
     @Query(value = "SELECT car_id FROM car", nativeQuery = true)

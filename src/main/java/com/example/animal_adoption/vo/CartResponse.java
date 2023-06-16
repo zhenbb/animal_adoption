@@ -8,6 +8,7 @@ import java.util.Map;
 public class CartResponse {
 
     private int carId;
+    private int totalPrice;
     private Map<String,Integer> carMap;
     private String message;
     private List<Product> cartList;
@@ -21,6 +22,11 @@ public class CartResponse {
     }
 
     public CartResponse(String message) {
+        this.message = message;
+    }
+
+    public CartResponse(int totalPrice, String message) {
+        this.totalPrice = totalPrice;
         this.message = message;
     }
 

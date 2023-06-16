@@ -14,4 +14,6 @@ public interface CartService {
     public CartInfoResponse getCartProduct(GetCartProductRequest getCartProductRequest);
 
     public CartResponse modifyProductQuantity(DeleteProductRequest deleteProductRequest);
+
+    public CartResponse getOrderProduct(GetOrderProductRequest getOrderProductRequest);
 }
