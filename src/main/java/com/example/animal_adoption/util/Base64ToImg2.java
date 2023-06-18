@@ -16,16 +16,19 @@ import java.util.Comparator;
 
 public class Base64ToImg2 {
 
+  static final String animalFilePath = "C:\\WebStorm Project\\rocket_vue\\public\\img\\animal";
+  static final String productFilePath = "C:\\WebStorm Project\\rocket_vue\\public\\img\\productWall_img";
+
   // Base64轉圖片功能
   public static ImgResponse base64ToImg(String imgBase64, String sort, int id) throws IOException {
 
     String filePath = "";
     //  決定儲存位置
     if (sort.equals("a")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\animal";
+      filePath += animalFilePath;
     }
     if (sort.equals("s")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\productWall_img";
+      filePath += productFilePath;
     }
 
     try {
@@ -89,10 +92,10 @@ public class Base64ToImg2 {
     String filePath = "";
     //  決定儲存位置
     if (sort.equals("a")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\animal";
+      filePath += animalFilePath;
     }
     if (sort.equals("s")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\pruductWall_img";
+      filePath += productFilePath;
     }
 
     File[] files = new File(filePath).listFiles();
