@@ -12,6 +12,8 @@ public class AnimalInfoResponse {
 
 	private String message;
 
+  private int animalId;
+
 	public AnimalInfoResponse() {
 
 	}
@@ -40,7 +42,12 @@ public class AnimalInfoResponse {
 		this.message = message;
 	}
 
-	public List<Animal> getAnimalList() {
+  public AnimalInfoResponse(int animalId,String message) {
+    this.message = message;
+    this.animalId = animalId;
+  }
+
+  public List<Animal> getAnimalList() {
 		return animalList;
 	}
 
@@ -56,4 +63,11 @@ public class AnimalInfoResponse {
 		this.message = message;
 	}
 
+  public int getAnimalId() {
+    return animalId;
+  }
+
+  public void setAnimalId(int animalId) {
+    this.animalId = animalId;
+  }
 }

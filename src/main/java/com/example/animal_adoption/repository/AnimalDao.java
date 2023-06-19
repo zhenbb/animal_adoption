@@ -26,4 +26,7 @@ public interface AnimalDao extends JpaRepository<Animal,Integer> {
   public Animal findByAnimalId(int animalId);
 
   public List<Animal> findBySpecies(boolean species);
+
+  @Query(value = "SELECT MAX(animal_id) FROM animal",nativeQuery = true)
+  public int findLastId();
 }

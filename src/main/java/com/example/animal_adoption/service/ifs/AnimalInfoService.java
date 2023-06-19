@@ -23,4 +23,7 @@ public interface AnimalInfoService {
 
   public AnimalInfoResponse findBySpecies(boolean species);
 
+  // 尋找資料流水號最後一位
+  public AnimalInfoResponse findLastId();
+
 }
