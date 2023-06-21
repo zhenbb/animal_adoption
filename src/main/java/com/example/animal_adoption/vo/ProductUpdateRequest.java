@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductUpdateRequest {
 
-	@JsonProperty("is_admin")
-	private boolean isAdmin;
 
 	@JsonProperty("product_id")
 	private int productId;
@@ -21,15 +19,7 @@ public class ProductUpdateRequest {
 
 	@JsonProperty("stock")
 	private int stock;
-
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
+	
 	public int getProductId() {
 		return productId;
 	}

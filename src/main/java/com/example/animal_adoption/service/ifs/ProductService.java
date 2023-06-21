@@ -19,7 +19,11 @@ public interface ProductService {
 	public ProductResponse updateProductCategory(int productId, String category); 
 
 	//搜尋功能(可多關鍵字、可用空格區分)@Query+regexp
-	public ProductResponse searchKeyword(String keyword);
+//	public ProductResponse searchKeyword(String keyword);
+	
+	//搜尋功能(三種搜尋)
+	public ProductResponse searchByNameAndCategories(String strName, String strCate, String strCate2);
+
 	
 
 }

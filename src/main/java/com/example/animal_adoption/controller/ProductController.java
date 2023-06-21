@@ -5,16 +5,13 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.animal_adoption.constants.MemberRtnCode;
 import com.example.animal_adoption.constants.RtnCode;
-import com.example.animal_adoption.constants.SessionCode;
 import com.example.animal_adoption.entity.Product;
 import com.example.animal_adoption.repository.ProductDao;
 import com.example.animal_adoption.service.ifs.ProductService;
@@ -44,7 +41,7 @@ public class ProductController {
 	
 	// 更新 1. 商品名稱
 	@PostMapping(value = "update_product_name")
-	public ProductResponse updateProductName(@RequestBody ProductUpdateRequest request,HttpSession httpSession) {
+	public ProductResponse updateProductName(@RequestBody ProductUpdateRequest request, HttpSession httpSession) {
 		return productService.updateProductName(request.getProductId(), request.getProductName());
 	}
 
@@ -70,14 +67,20 @@ public class ProductController {
 	}
 
 	// 關鍵字搜尋
-	@PostMapping(value = "search_product")
-	public ProductResponse searchKeyword(String keyword) {
-		return productService.searchKeyword(keyword);
+//	@PostMapping(value = "search_product")
+//	public ProductResponse searchKeyword(String keyword) {
+//		return productService.searchKeyword(keyword);
+//	}
+	
+	// 關鍵字搜尋(名字*1, 分類*2)
+	@PostMapping(value = "search_by_name_and_categories")
+	public ProductResponse searchByNameAndCategory(@RequestBody ProductSearchRequest request) {
+		return productService.searchByNameAndCategories(request.getStrName(),request.getStrCate(),request.getStrCate2());
 	}
 	
 	//前端用
 	//秀出所有商品
-	@GetMapping(value="find_all")
+	@GetMapping(value="find_all_product")
 	public ProductResponse findAll() {
 		return new ProductResponse(productDao.findAll(),RtnCode.PRODUCT_SEARCH_SUCCESS.getMessage());
 		
