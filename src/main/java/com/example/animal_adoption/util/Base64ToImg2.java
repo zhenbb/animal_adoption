@@ -1,11 +1,10 @@
 package com.example.animal_adoption.util;
 
 
-import com.example.animal_adoption.constants.RtnCode;
-import com.example.animal_adoption.vo.ImgResponse;
-import org.apache.commons.io.IOUtils;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,17 +14,34 @@ import java.util.Base64;
 import java.util.Comparator;
 import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.example.animal_adoption.constants.RtnCode;
+import com.example.animal_adoption.vo.ImgResponse;
+
+@Component
 public class Base64ToImg2 {
 
-  // Base64轉圖片功能
-  public static ImgResponse base64ToImg(String imgBase64, String sort, int id) throws IOException {
+    private static String filePath;
 
-	// 環境變數 (至application.properties中修改。import java.io.File)
-	String filePath  = System.getenv("IMAGE_FOLDER_PATH");
+    @Autowired
+    public Base64ToImg2(@Value("${IMAGE_FOLDER_PATH}") String filePath) {
+        Base64ToImg2.filePath = filePath;
+    }
+    
+    // Base64轉圖片功能
+    public static ImgResponse base64ToImg(String imgBase64, String sort, int id) throws IOException {
+		
 	// 確保資料夾路徑不為空
 	if (filePath  == null || filePath .isEmpty()) {
 		throw new IllegalArgumentException("未設置圖片資料夾路徑的環境變數 IMAGE_FOLDER_PATH");
 	}
+	
+	// 還原儲存路徑
+	  filePath = filePath.replace("\\animal", "").replace("\\productWall_img", "");
 
     //  決定儲存位置
     if (sort.equals("a")) {
@@ -100,7 +116,15 @@ public class Base64ToImg2 {
 
   // 數檔案數量功能
   public static ImgResponse countImg(String sort, int id) {
-    String filePath = "";
+
+	// 確保資料夾路徑不為空
+	if (filePath  == null || filePath .isEmpty()) {
+		throw new IllegalArgumentException("未設置圖片資料夾路徑的環境變數 IMAGE_FOLDER_PATH");
+	}
+
+	// 還原儲存路徑
+	  filePath = filePath.replace("\\animal", "").replace("\\productWall_img", "");
+
     //  決定儲存位置
     if (sort.equals("a")) {
       filePath += "\\animal";
