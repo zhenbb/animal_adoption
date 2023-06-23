@@ -19,14 +19,20 @@ public class Base64ToImg2 {
   // Base64轉圖片功能
   public static ImgResponse base64ToImg(String imgBase64, String sort, int id) throws IOException {
 
-    String filePath = "";
+	// 環境變數 (至application.properties中修改。import java.io.File)
+	String filePath  = System.getenv("IMAGE_FOLDER_PATH");
+	// 確保資料夾路徑不為空
+	if (filePath  == null || filePath .isEmpty()) {
+		throw new IllegalArgumentException("未設置圖片資料夾路徑的環境變數 IMAGE_FOLDER_PATH");
+	}
+	  
     //  決定儲存位置
-    if (sort.equals("a")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\animal";
-    }
-    if (sort.equals("s")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\productWall_img";
-    }
+	if (sort.equals("a")) {
+	  filePath += "\\animal";
+	}
+	if (sort.equals("s")) {
+	  filePath += "\\productWall_img";
+	}
 
     try {
       // 寫入到 txt 檔案
