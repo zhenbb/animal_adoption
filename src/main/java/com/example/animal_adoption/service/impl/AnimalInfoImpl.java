@@ -113,4 +113,10 @@ public class AnimalInfoImpl implements AnimalInfoService {
     return new AnimalInfoResponse(animals, RtnCode.FIND_SUCCESS.getMessage());
 
   }
+
+  @Override
+  public AnimalInfoResponse findLastId(){
+    int animalId = animalDao.findLastId();
+    return new AnimalInfoResponse(animalId, RtnCode.FIND_SUCCESS.getMessage());
+  }
 }

@@ -126,4 +126,12 @@ public class Member {
     this.isActive = isActive;
   }
 
+  @Override
+  public String toString() {
+    return "Member{" +
+            "memberId='" + memberId + '\'' +
+            ", memberName='" + memberName + '\'' +
+            ", phone='" + phone + '\'' +
+            '}';
+  }
 }

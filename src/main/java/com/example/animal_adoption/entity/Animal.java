@@ -115,4 +115,11 @@ public class Animal {
     this.adoptDate = adoptDate;
   }
 
+  @Override
+  public String toString() {
+    return "Animal{" +
+            "animalId=" + animalId +
+            ", animalName='" + animalName + '\'' +
+            '}';
+  }
 }

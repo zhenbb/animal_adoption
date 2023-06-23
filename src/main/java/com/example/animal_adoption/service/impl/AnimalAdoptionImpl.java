@@ -77,7 +77,7 @@ public class AnimalAdoptionImpl implements AnimalAdoptionService {
     }
 
     Mail mail = new Mail();
-    mail.sendMail(animal + "\n" + member);
+    mail.sendMail(animal.toString() + member.toString());
     return new AnimalAdoptionResponse(theAnimal, member, RtnCode.SUBMIT_SUCCESS.getMessage());
   }
 

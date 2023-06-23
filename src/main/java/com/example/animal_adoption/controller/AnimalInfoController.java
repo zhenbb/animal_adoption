@@ -49,4 +49,9 @@ public class AnimalInfoController {
   public AnimalInfoResponse findBySpecies(@RequestBody AnimalInfoRequest animalInfoRequest){
     return animalInfoService.findBySpecies(animalInfoRequest.isSpecies());
   }
+
+  @GetMapping(value = "findLastId")
+  public AnimalInfoResponse findLastId(){
+    return animalInfoService.findLastId();
+  }
 }
