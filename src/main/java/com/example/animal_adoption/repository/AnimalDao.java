@@ -27,6 +27,9 @@ public interface AnimalDao extends JpaRepository<Animal,Integer> {
 
   public List<Animal> findBySpecies(boolean species);
 
-  @Query(value = "SELECT MAX(animal_id) FROM animal",nativeQuery = true)
+  @Query(value = "SELECT AUTO_INCREMENT " +
+          "FROM information_schema.TABLES " +
+          "WHERE TABLE_NAME = 'animal' " +
+          "  AND TABLE_SCHEMA = 'animal_adoption'",nativeQuery = true)
   public int findLastId();
 }
