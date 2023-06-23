@@ -29,10 +29,10 @@ public class Base64ToImg2 {
 
     //  決定儲存位置
     if (sort.equals("a")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\animal";
+      filePath += "\\animal";
     }
     if (sort.equals("s")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\productWall_img";
+      filePath += "\\productWall_img";
     }
 
     // 生成唯一的檔名
@@ -103,10 +103,10 @@ public class Base64ToImg2 {
     String filePath = "";
     //  決定儲存位置
     if (sort.equals("a")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\animal";
+      filePath += "\\animal";
     }
     if (sort.equals("s")) {
-      filePath += "C:\\WebStorm Project\\rocket_vue\\src\\img\\pruductWall_img";
+      filePath += "\\pruductWall_img";
     }
 
     File[] files = new File(filePath).listFiles();
