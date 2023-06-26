@@ -9,25 +9,26 @@ import javax.persistence.Table;
 @Table(name = "checkout")
 public class Order {
 
-    @Id
-    @Column(name = "checkout_id")
-    private int checkoutId;
-    @Column(name = "checkout_map")
-    private String checkoutMap;
+  @Id
+  @Column(name = "checkout_id")
+  private int checkoutId;
 
-    public int getCheckoutId() {
-        return checkoutId;
-    }
+  @Column(name = "checkout_map")
+  private String checkoutMap;
 
-    public void setCheckoutId(int checkoutId) {
-        this.checkoutId = checkoutId;
-    }
+  public int getCheckoutId() {
+    return checkoutId;
+  }
 
-    public String getCheckoutMap() {
-        return checkoutMap;
-    }
+  public void setCheckoutId(int checkoutId) {
+    this.checkoutId = checkoutId;
+  }
 
-    public void setCheckoutMap(String checkoutMap) {
-        this.checkoutMap = checkoutMap;
-    }
+  public String getCheckoutMap() {
+    return checkoutMap;
+  }
+
+  public void setCheckoutMap(String checkoutMap) {
+    this.checkoutMap = checkoutMap;
+  }
 }

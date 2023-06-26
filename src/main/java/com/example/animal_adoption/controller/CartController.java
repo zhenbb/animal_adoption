@@ -3,10 +3,7 @@ package com.example.animal_adoption.controller;
 import com.example.animal_adoption.service.ifs.CartService;
 import com.example.animal_adoption.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -29,9 +26,14 @@ public class CartController {
         return cartService.findMemberCart(findMemberCartRequest);
     }
 
+
     @PostMapping(value = "getCartProduct")
     public CartInfoResponse getCartProduct(@RequestBody GetCartProductRequest getCartProductRequest){
         return cartService.getCartProduct(getCartProductRequest);
     }
 
+    @PostMapping(value = "getOrderProduct")
+    public OrderResponse getOrderProduct(@RequestBody GetOrderProductRequest getOrderProductRequest){
+        return cartService.getOrderProduct(getOrderProductRequest);
+    }
 }

@@ -1,9 +1,11 @@
 package com.example.animal_adoption.vo;
 
+import com.example.animal_adoption.entity.Car;
 import com.example.animal_adoption.entity.Product;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class CartResponse {
 
@@ -11,8 +13,8 @@ public class CartResponse {
     private int totalPrice;
     private Map<String,Integer> carMap;
     private String message;
+    private Product product;
     private List<Product> cartList;
-
 
     public CartResponse(List<Product> cartList) {
         this.cartList = cartList;
@@ -21,14 +23,11 @@ public class CartResponse {
     public CartResponse() {
     }
 
+
     public CartResponse(String message) {
         this.message = message;
     }
 
-    public CartResponse(int totalPrice, String message) {
-        this.totalPrice = totalPrice;
-        this.message = message;
-    }
 
     public int getCarId() {
         return carId;
@@ -60,5 +59,21 @@ public class CartResponse {
 
     public void setCartList(List<Product> cartList) {
         this.cartList = cartList;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
